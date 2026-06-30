@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-brand: #8b1a1a;
+    --color-forest: #1a3c2e;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    @apply text-gray-900 bg-white font-sans antialiased;
+  }
+  a {
+    @apply text-iitbhu hover:text-iitbhu-dark transition-colors;
+  }
+}
+
+@layer utilities {
+  .container-app {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}

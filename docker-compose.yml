@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  mongodb:
+    image: mongo:7
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: carbon-portal
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
+  server:
+    build: ./server
+    ports:
+      - '5000:5000'
+    depends_on:
+      - mongodb
+      - redis
+    env_file: ./server/.env
+    volumes:
+      - ./server/src:/app/src
+
+  client:
+    build: ./client
+    ports:
+      - '5173:5173'
+    depends_on:
+      - server
+    env_file: ./client/.env
+
+volumes:
+  mongodb_data:
+  redis_data:
