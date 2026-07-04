@@ -26,6 +26,9 @@
   select option {
     @apply bg-black text-white;
   }
+  input:not([type="checkbox"]):not([type="radio"]), textarea {
+    @apply bg-black/60 border-white/10 text-white placeholder-gray-500 !important;
+  }
 }
 
 @layer utilities {
