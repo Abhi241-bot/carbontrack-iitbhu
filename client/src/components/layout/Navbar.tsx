@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, ShieldCheck, MapPin } from 'lucide-react';
+import { Menu, X, ChevronDown, ShieldCheck, MapPin, Globe } from 'lucide-react';
 import { useAuthStore } from '@/features/auth/authStore';
 import { UserRole } from '@shared/types/user.types';
 
@@ -9,12 +9,12 @@ function CarbonTrackLogo() {
     <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-label="Carbon Track logo">
       <path
         d="M15 2 C9 2 4 7 4 14 C4 21 8 27 15 27 C22 27 26 21 26 14 C26 7 21 2 15 2Z"
-        fill="#1a3c2e"
-        opacity="0.95"
+        fill="#ffffff"
+        opacity="0.2"
       />
       <path
         d="M15 2 C21 2 26 7 26 14 C26 21 22 27 15 27 C19 21 18 11 15 2Z"
-        fill="#2a5040"
+        fill="#ffffff"
         opacity="0.85"
       />
       <path
@@ -54,13 +54,13 @@ export default function Navbar() {
   }, []);
 
   const initials = user?.name
-    ? user.name
-        .split(' ')
-        .map((n) => n[0])
-        .join('')
-        .toUpperCase()
-        .slice(0, 2)
-    : '?';
+      ? user.name
+          .split(' ')
+          .map((n) => n[0])
+          .join('')
+          .toUpperCase()
+          .slice(0, 2)
+      : '?';
 
   function handleLogout() {
     clearAuth();
@@ -74,14 +74,26 @@ export default function Navbar() {
     <>
       <a
         href="/#about"
-        className="text-sm font-medium text-gray-600 hover:text-iitbhu transition-colors"
+        className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
         onClick={() => setMobileOpen(false)}
       >
         About
       </a>
       <Link
+        to="/map"
+        className={`flex items-center gap-1 text-sm font-medium transition-colors ${
+          location.pathname === '/map' ? 'text-white' : 'text-gray-300 hover:text-white'
+        }`}
+        onClick={() => setMobileOpen(false)}
+      >
+        <Globe size={13} />
+        Map
+      </Link>
+      <Link
         to="/dashboard"
-        className="text-sm font-medium text-gray-600 hover:text-iitbhu transition-colors"
+        className={`text-sm font-medium transition-colors ${
+          location.pathname === '/dashboard' ? 'text-white' : 'text-gray-300 hover:text-white'
+        }`}
         onClick={() => setMobileOpen(false)}
       >
         Dashboard
@@ -90,8 +102,8 @@ export default function Navbar() {
         to="/campus"
         className={`flex items-center gap-1 text-sm font-medium transition-colors ${
           location.pathname.startsWith('/campus') || location.pathname.startsWith('/buildings')
-            ? 'text-iitbhu'
-            : 'text-gray-600 hover:text-iitbhu'
+            ? 'text-white'
+            : 'text-gray-300 hover:text-white'
         }`}
         onClick={() => setMobileOpen(false)}
       >
@@ -101,7 +113,7 @@ export default function Navbar() {
       {isAdmin && (
         <Link
           to="/admin"
-          className="flex items-center gap-1 text-sm font-medium text-iitbhu hover:text-iitbhu-dark transition-colors"
+          className="flex items-center gap-1 text-sm font-medium text-gray-300 hover:text-white transition-colors"
           onClick={() => setMobileOpen(false)}
         >
           <ShieldCheck size={14} />
@@ -114,14 +126,14 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white shadow-sm border-b border-gray-100' : 'bg-transparent'
+        scrolled ? 'bg-black/50 backdrop-blur-md border-b border-white/10' : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Left — Logo */}
         <Link to="/" className="flex items-center gap-2 no-underline">
           <CarbonTrackLogo />
-          <span className="font-bold text-forest text-sm tracking-tight">CarbonTrack</span>
+          <span className="font-bold text-white text-sm tracking-tight">CarbonTrack</span>
         </Link>
 
         {/* Center — Desktop nav */}
@@ -133,43 +145,50 @@ export default function Navbar() {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen((o) => !o)}
-                className="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-iitbhu focus:ring-offset-2 rounded-lg px-2 py-1"
+                className="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-black rounded-lg px-2 py-1"
                 aria-label="Account menu"
               >
-                <span className="w-8 h-8 rounded-full bg-iitbhu text-white text-xs font-bold flex items-center justify-center">
+                <span className="w-8 h-8 rounded-full bg-white text-black text-xs font-bold flex items-center justify-center">
                   {initials}
                 </span>
                 <ChevronDown
                   size={14}
-                  className={`text-gray-500 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
+                  className={`text-gray-300 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
                 />
               </button>
               {dropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-100 rounded-xl shadow-lg py-1 z-50">
-                  <div className="px-4 py-2 border-b border-gray-100">
-                    <p className="text-xs font-medium text-gray-500 truncate">{user?.name}</p>
+                <div className="absolute right-0 top-full mt-2 w-48 bg-black/80 backdrop-blur-md border border-white/10 rounded-xl shadow-[0_4px_30px_rgba(0,0,0,0.5)] py-1 z-50">
+                  <div className="px-4 py-2 border-b border-white/10">
+                    <p className="text-xs font-medium text-white truncate">{user?.name}</p>
                     <p className="text-xs text-gray-400 truncate">{user?.email}</p>
                   </div>
                   <Link
+                    to="/map"
+                    className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white no-underline transition-colors"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    Interactive Map
+                  </Link>
+                  <Link
                     to="/dashboard"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 no-underline"
+                    className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white no-underline transition-colors"
                     onClick={() => setDropdownOpen(false)}
                   >
                     Dashboard
                   </Link>
                   <Link
                     to="/buildings?filter=assigned"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 no-underline"
+                    className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white no-underline transition-colors"
                     onClick={() => setDropdownOpen(false)}
                   >
                     My Buildings
                   </Link>
                   {isAdmin && (
                     <>
-                      <hr className="my-1 border-gray-100" />
+                      <hr className="my-1 border-white/10" />
                       <Link
                         to="/admin"
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-iitbhu font-medium hover:bg-red-50 no-underline"
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-white font-medium hover:bg-white/10 no-underline transition-colors"
                         onClick={() => setDropdownOpen(false)}
                       >
                         <ShieldCheck size={14} />
@@ -177,10 +196,10 @@ export default function Navbar() {
                       </Link>
                     </>
                   )}
-                  <hr className="my-1 border-gray-100" />
+                  <hr className="my-1 border-white/10" />
                   <button
                     onClick={handleLogout}
-                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                    className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-white/10 transition-colors"
                   >
                     Logout
                   </button>
@@ -191,13 +210,13 @@ export default function Navbar() {
             <>
               <Link
                 to="/login"
-                className="text-sm font-medium text-gray-600 hover:bg-gray-100 px-3 py-1.5 rounded-lg transition-colors no-underline"
+                className="text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 px-3 py-1.5 rounded-lg transition-colors no-underline"
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className="text-sm font-medium bg-iitbhu text-white hover:bg-iitbhu-dark px-4 py-1.5 rounded-lg transition-colors no-underline"
+                className="text-sm font-medium bg-white text-black hover:bg-gray-200 px-4 py-1.5 rounded-lg transition-colors no-underline"
               >
                 Register
               </Link>
@@ -207,7 +226,7 @@ export default function Navbar() {
 
         {/* Mobile — hamburger */}
         <button
-          className="md:hidden p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-iitbhu"
+          className="md:hidden p-2 rounded-lg text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20"
           onClick={() => setMobileOpen((o) => !o)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
         >
@@ -217,24 +236,24 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       <div
-        className={`md:hidden bg-white border-b border-gray-100 overflow-hidden transition-all duration-300 ${
+        className={`md:hidden bg-black/90 backdrop-blur-lg border-b border-white/10 overflow-hidden transition-all duration-300 ${
           mobileOpen ? 'max-h-96' : 'max-h-0'
         }`}
       >
         <div className="px-4 py-4 flex flex-col gap-4">
           {navLinks}
-          <hr className="border-gray-100" />
+          <hr className="border-white/10" />
           {user ? (
             <>
               <div className="flex items-center gap-2 py-1">
-                <span className="w-8 h-8 rounded-full bg-iitbhu text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
+                <span className="w-8 h-8 rounded-full bg-white text-black text-xs font-bold flex items-center justify-center flex-shrink-0">
                   {initials}
                 </span>
-                <span className="text-sm text-gray-700 font-medium">{user.name}</span>
+                <span className="text-sm text-white font-medium">{user.name}</span>
               </div>
               <button
                 onClick={handleLogout}
-                className="text-left text-sm text-red-600 hover:text-red-700 font-medium"
+                className="text-left text-sm text-red-400 hover:text-red-300 font-medium transition-colors"
               >
                 Logout
               </button>
@@ -243,14 +262,14 @@ export default function Navbar() {
             <div className="flex gap-3">
               <Link
                 to="/login"
-                className="flex-1 text-center text-sm font-medium border border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-50 no-underline"
+                className="flex-1 text-center text-sm font-medium border border-white/20 text-white py-2 rounded-lg hover:bg-white/10 no-underline transition-colors"
                 onClick={() => setMobileOpen(false)}
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className="flex-1 text-center text-sm font-medium bg-iitbhu text-white py-2 rounded-lg hover:bg-iitbhu-dark no-underline"
+                className="flex-1 text-center text-sm font-medium bg-white text-black py-2 rounded-lg hover:bg-gray-200 no-underline transition-colors"
                 onClick={() => setMobileOpen(false)}
               >
                 Register

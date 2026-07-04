@@ -68,7 +68,7 @@ const ALL_SECTIONS: SectionKey[] = ['overview', 'civil', 'electrical', 'waste'];
 
 function StatusBadge({ status }: { status: string }) {
   const cfg: Record<string, string> = {
-    not_started: 'bg-gray-100 text-gray-400',
+    not_started: 'bg-white/10 text-gray-400',
     draft: 'bg-blue-100 text-blue-600',
     submitted: 'bg-amber-100 text-amber-700',
     under_review: 'bg-purple-100 text-purple-700',
@@ -100,7 +100,7 @@ function SectionPendingState({ status, section }: { status: string; section: Sec
     return (
       <div className="flex flex-col items-center justify-center h-64 text-center gap-3">
         <ClipboardList size={36} className="text-gray-200" />
-        <p className="text-sm font-medium text-gray-500">Data entry not started</p>
+        <p className="text-sm font-medium text-gray-400">Data entry not started</p>
         <p className="text-xs text-gray-400 max-w-xs">
           No data has been submitted for the {label} section of this building yet.
         </p>
@@ -241,11 +241,11 @@ function CarbonBreakdownTable({ cr }: { cr: any }) {
   return (
     <div className="space-y-4">
       {/* Metadata */}
-      <div className="flex items-center gap-3 flex-wrap text-xs text-gray-500">
+      <div className="flex items-center gap-3 flex-wrap text-xs text-gray-400">
         {cr.calculatedAt && (
           <span>
             Calculated:{' '}
-            <strong className="text-gray-700">
+            <strong className="text-gray-200">
               {new Date(cr.calculatedAt).toLocaleString('en-IN', {
                 day: 'numeric',
                 month: 'short',
@@ -259,7 +259,7 @@ function CarbonBreakdownTable({ cr }: { cr: any }) {
         {cr.efSnapshot?._snapshotTimestamp && (
           <span>
             EF as of:{' '}
-            <strong className="text-gray-700">
+            <strong className="text-gray-200">
               {new Date(cr.efSnapshot._snapshotTimestamp).toLocaleDateString('en-IN', {
                 day: 'numeric',
                 month: 'short',
@@ -283,9 +283,9 @@ function CarbonBreakdownTable({ cr }: { cr: any }) {
 
       {/* Per-component breakdown */}
       {hasGranular ? (
-        <div className="rounded-xl border border-gray-100 overflow-hidden">
+        <div className="rounded-xl border border-white/5 overflow-hidden">
           {/* Table header */}
-          <div className="flex items-center gap-2 bg-gray-50 border-b border-gray-100 px-3 py-2 text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
+          <div className="flex items-center gap-2 bg-white/5 border-b border-white/5 px-3 py-2 text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
             <span className="flex-1">Emission Source</span>
             <div className="w-[76px] text-center">Scope</div>
             <span className="w-20 text-right">tCO₂e/yr</span>
@@ -299,7 +299,7 @@ function CarbonBreakdownTable({ cr }: { cr: any }) {
             if (!rows.length) return null;
             return (
               <div key={group}>
-                <div className="px-3 py-1.5 bg-gray-50/60 border-b border-gray-50">
+                <div className="px-3 py-1.5 bg-white/5/60 border-b border-gray-50">
                   <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                     {group}
                   </span>
@@ -309,13 +309,13 @@ function CarbonBreakdownTable({ cr }: { cr: any }) {
                   const isEmbodied = row.key === 'embodiedMaterials';
                   return (
                     <div key={row.key}>
-                      <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-50 hover:bg-gray-50/40">
-                        <span className="flex-1 text-xs text-gray-700 flex items-center gap-1">
+                      <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-50 hover:bg-white/5/40">
+                        <span className="flex-1 text-xs text-gray-200 flex items-center gap-1">
                           {isEmbodied && matEntries.length > 0 && (
                             <button
                               type="button"
                               onClick={() => setMatExpanded((p) => !p)}
-                              className="text-gray-400 hover:text-gray-600 text-[10px] mr-0.5"
+                              className="text-gray-400 hover:text-gray-300 text-[10px] mr-0.5"
                             >
                               {matExpanded ? '▼' : '▶'}
                             </button>
@@ -325,10 +325,10 @@ function CarbonBreakdownTable({ cr }: { cr: any }) {
                         <div className="w-[76px] flex justify-center">
                           <ScopePill scope={row.scope} />
                         </div>
-                        <span className="w-20 text-right text-xs font-semibold text-gray-900">
+                        <span className="w-20 text-right text-xs font-semibold text-white">
                           {fmt(v)}
                         </span>
-                        <span className="w-14 text-right text-xs text-gray-500">
+                        <span className="w-14 text-right text-xs text-gray-400">
                           {pct(v, grandTotal)}
                         </span>
                       </div>
@@ -339,14 +339,14 @@ function CarbonBreakdownTable({ cr }: { cr: any }) {
                               key={mat}
                               className="flex items-center gap-2 pl-10 pr-3 py-1.5 border-b border-gray-50"
                             >
-                              <span className="flex-1 text-[11px] text-gray-500">
+                              <span className="flex-1 text-[11px] text-gray-400">
                                 ↳{' '}
                                 {mat
                                   .replace(/([A-Z])/g, ' $1')
                                   .replace(/^./, (c) => c.toUpperCase())
                                   .trim()}
                               </span>
-                              <span className="text-[11px] font-medium text-gray-600 text-right">
+                              <span className="text-[11px] font-medium text-gray-300 text-right">
                                 {fmt(val)} tCO₂e
                               </span>
                             </div>
@@ -361,7 +361,7 @@ function CarbonBreakdownTable({ cr }: { cr: any }) {
           })}
 
           {/* Scope + grand totals */}
-          <div className="border-t border-gray-200 bg-gray-50/30">
+          <div className="border-t border-white/10 bg-white/5/30">
             {(
               [
                 { label: '══ SCOPE 1 TOTAL', val: scope1, cls: 'text-red-700' },
@@ -373,29 +373,29 @@ function CarbonBreakdownTable({ cr }: { cr: any }) {
               .map(({ label, val, cls }) => (
                 <div
                   key={label}
-                  className="flex items-center gap-2 px-3 py-2 border-b border-gray-100"
+                  className="flex items-center gap-2 px-3 py-2 border-b border-white/5"
                 >
                   <span className={`flex-1 text-xs font-bold ${cls}`}>{label}</span>
                   <div className="w-[76px]" />
                   <span className={`w-20 text-right text-xs font-bold ${cls}`}>{fmt(val)}</span>
-                  <span className="w-14 text-right text-xs text-gray-500 font-medium">
+                  <span className="w-14 text-right text-xs text-gray-400 font-medium">
                     {pct(val, grandTotal)}
                   </span>
                 </div>
               ))}
             <div className="flex items-center gap-2 px-3 py-2.5">
-              <span className="flex-1 text-xs font-bold text-gray-900">══ GRAND TOTAL</span>
+              <span className="flex-1 text-xs font-bold text-white">══ GRAND TOTAL</span>
               <div className="w-[76px]" />
-              <span className="w-20 text-right text-sm font-bold text-gray-900">
+              <span className="w-20 text-right text-sm font-bold text-white">
                 {fmt(grandTotal)}
               </span>
-              <span className="w-14 text-right text-xs font-bold text-gray-700">100%</span>
+              <span className="w-14 text-right text-xs font-bold text-gray-200">100%</span>
             </div>
           </div>
         </div>
       ) : (
-        <div className="rounded-xl border border-gray-100 overflow-hidden">
-          <div className="px-4 py-2.5 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50">
+        <div className="rounded-xl border border-white/5 overflow-hidden">
+          <div className="px-4 py-2.5 border-b border-white/5 text-xs font-semibold text-gray-400 uppercase tracking-wide bg-white/5">
             By scope (detailed breakdown not available)
           </div>
           {(
@@ -423,7 +423,7 @@ function CarbonBreakdownTable({ cr }: { cr: any }) {
                 key={label}
                 className="flex items-center justify-between px-4 py-2.5 border-b border-gray-50 last:border-0"
               >
-                <span className="text-xs text-gray-600">{label}</span>
+                <span className="text-xs text-gray-300">{label}</span>
                 <span className={`text-sm font-semibold ${cls}`}>{fmt(val)} tCO₂e/yr</span>
               </div>
             ))}
@@ -453,7 +453,7 @@ function CarbonImpactView({
       <div className="space-y-4">
         <div className="flex flex-col items-center justify-center h-48 gap-3 text-center">
           <BarChart2 size={28} className="text-gray-200" />
-          <p className="text-sm font-medium text-gray-600">Carbon results not yet calculated</p>
+          <p className="text-sm font-medium text-gray-300">Carbon results not yet calculated</p>
           <p className="text-xs text-gray-400 max-w-xs">
             Approve this submission to trigger calculation.
           </p>
@@ -787,27 +787,27 @@ export const DataReviewPanel = ({
       className="fixed inset-0 z-50 flex items-stretch justify-end bg-black/30"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="w-full max-w-4xl bg-white shadow-2xl flex flex-col h-full overflow-hidden animate-in slide-in-from-right duration-200">
+      <div className="w-full max-w-4xl bg-black/40 backdrop-blur-md shadow-2xl flex flex-col h-full overflow-hidden animate-in slide-in-from-right duration-200">
         {/* ── HEADER ──────────────────────────────────────────────────────────── */}
-        <div className="flex items-start justify-between px-5 pt-5 pb-4 border-b border-gray-100 flex-shrink-0">
+        <div className="flex items-start justify-between px-5 pt-5 pb-4 border-b border-white/5 flex-shrink-0">
           <div>
-            <h2 className="text-base font-semibold text-gray-900">{buildingName}</h2>
+            <h2 className="text-base font-semibold text-white">{buildingName}</h2>
             <p className="text-xs text-gray-400 mt-0.5">Full data review — all sections</p>
           </div>
           <div className="flex items-center gap-2 flex-shrink-0">
             {showCarbonToggle && (
-              <div className="flex rounded-lg border border-gray-200 overflow-hidden text-xs">
+              <div className="flex rounded-lg border border-white/10 overflow-hidden text-xs">
                 <button
                   type="button"
                   onClick={() => setActiveView('data')}
-                  className={`px-3 py-1.5 font-medium transition-colors ${activeView === 'data' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:text-gray-700'}`}
+                  className={`px-3 py-1.5 font-medium transition-colors ${activeView === 'data' ? 'bg-gray-900 text-white' : 'text-gray-400 hover:text-gray-200'}`}
                 >
                   Data
                 </button>
                 <button
                   type="button"
                   onClick={() => setActiveView('carbon')}
-                  className={`px-3 py-1.5 font-medium flex items-center gap-1 transition-colors ${activeView === 'carbon' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:text-gray-700'}`}
+                  className={`px-3 py-1.5 font-medium flex items-center gap-1 transition-colors ${activeView === 'carbon' ? 'bg-gray-900 text-white' : 'text-gray-400 hover:text-gray-200'}`}
                 >
                   <BarChart2 size={11} /> Carbon
                 </button>
@@ -816,7 +816,7 @@ export const DataReviewPanel = ({
             <button
               type="button"
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+              className="text-gray-400 hover:text-gray-300 transition-colors p-1"
             >
               <X size={18} />
             </button>
@@ -824,11 +824,11 @@ export const DataReviewPanel = ({
         </div>
 
         {/* ── SECTION TABS ─────────────────────────────────────────────────────── */}
-        <div className="flex-shrink-0 border-b border-gray-100 bg-white px-5">
+        <div className="flex-shrink-0 border-b border-white/5 bg-black/40 backdrop-blur-md px-5">
           {summaryLoading ? (
             <div className="flex gap-2 py-3">
               {ALL_SECTIONS.map((s) => (
-                <div key={s} className="h-8 w-24 bg-gray-100 rounded-lg animate-pulse" />
+                <div key={s} className="h-8 w-24 bg-white/10 rounded-lg animate-pulse" />
               ))}
             </div>
           ) : (
@@ -845,7 +845,7 @@ export const DataReviewPanel = ({
                     className={`flex items-center gap-2 px-3 py-2.5 text-sm font-medium border-b-2 transition-colors -mb-px rounded-t-md ${
                       isActive
                         ? 'border-blue-500 text-blue-700 bg-blue-50/50'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                        : 'border-transparent text-gray-400 hover:text-gray-200 hover:bg-white/5'
                     }`}
                   >
                     {SECTION_LABELS[s]}
@@ -862,17 +862,17 @@ export const DataReviewPanel = ({
 
         {/* ── SECTION META BAR ──────────────────────────────────────────────────── */}
         {!summaryLoading && activeMeta && (
-          <div className="flex-shrink-0 px-5 py-2 bg-gray-50/60 border-b border-gray-100 flex items-center gap-4 text-xs text-gray-500 flex-wrap">
+          <div className="flex-shrink-0 px-5 py-2 bg-white/5/60 border-b border-white/5 flex items-center gap-4 text-xs text-gray-400 flex-wrap">
             {activeMeta.submittedBy?.name && (
               <span>
                 Submitted by{' '}
-                <strong className="text-gray-700">{activeMeta.submittedBy.name}</strong>
+                <strong className="text-gray-200">{activeMeta.submittedBy.name}</strong>
               </span>
             )}
             {activeMeta.updatedAt && (
               <span>
                 Last updated{' '}
-                <strong className="text-gray-700">
+                <strong className="text-gray-200">
                   {new Date(activeMeta.updatedAt).toLocaleDateString('en-IN', {
                     day: 'numeric',
                     month: 'short',
@@ -884,7 +884,7 @@ export const DataReviewPanel = ({
             {activeSubmission?.completionScore != null && (
               <span>
                 Completeness{' '}
-                <strong className="text-gray-700">{activeSubmission.completionScore}%</strong>
+                <strong className="text-gray-200">{activeSubmission.completionScore}%</strong>
               </span>
             )}
             {(activeSubmission?.estimatedFields?.length ?? 0) > 0 && (
@@ -902,7 +902,7 @@ export const DataReviewPanel = ({
         <div className="flex flex-1 overflow-hidden">
           {/* Left sub-section nav */}
           {showSubNav && (
-            <div className="w-52 flex-shrink-0 border-r border-gray-100 overflow-y-auto bg-gray-50/40 py-3">
+            <div className="w-52 flex-shrink-0 border-r border-white/5 overflow-y-auto bg-white/5/40 py-3">
               {navItems.map((nav) => (
                 <button
                   key={nav.id}
@@ -911,7 +911,7 @@ export const DataReviewPanel = ({
                   className={`w-full text-left px-4 py-2.5 text-sm transition-colors flex items-center gap-2 ${
                     activeSubSection === nav.id
                       ? 'bg-blue-50 text-blue-700 font-medium border-r-2 border-blue-500'
-                      : 'text-gray-600 hover:bg-gray-100'
+                      : 'text-gray-300 hover:bg-white/10'
                   }`}
                 >
                   <ChevronRight
@@ -942,14 +942,14 @@ export const DataReviewPanel = ({
 
         {/* ── CARBON SUMMARY FOOTER (only when data is present) ──────────────────── */}
         {activeCR && activeView === 'data' && (
-          <div className="flex-shrink-0 border-t border-gray-100 px-5 py-3 bg-gray-50/50">
+          <div className="flex-shrink-0 border-t border-white/5 px-5 py-3 bg-white/5/50">
             <div className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-2">
               Calculated carbon impact
             </div>
             <div className="flex items-center gap-4 flex-wrap">
               {(activeCR.breakdown?.byScope?.scope1 ?? 0) > 0 && (
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs text-gray-500">Scope 1</span>
+                  <span className="text-xs text-gray-400">Scope 1</span>
                   <span className="text-sm font-semibold text-red-600">
                     {activeCR.breakdown.byScope.scope1.toFixed(1)} tCO₂e/yr
                   </span>
@@ -957,7 +957,7 @@ export const DataReviewPanel = ({
               )}
               {(activeCR.breakdown?.byScope?.scope2 ?? 0) > 0 && (
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs text-gray-500">Scope 2</span>
+                  <span className="text-xs text-gray-400">Scope 2</span>
                   <span className="text-sm font-semibold text-blue-600">
                     {activeCR.breakdown.byScope.scope2.toFixed(1)} tCO₂e/yr
                   </span>
@@ -965,8 +965,8 @@ export const DataReviewPanel = ({
               )}
               {(activeCR.operationalCarbonPerYear ?? 0) > 0 && (
                 <div className="flex items-center gap-1.5 ml-auto">
-                  <span className="text-xs text-gray-500">Total</span>
-                  <span className="text-sm font-bold text-gray-900">
+                  <span className="text-xs text-gray-400">Total</span>
+                  <span className="text-sm font-bold text-white">
                     {activeCR.operationalCarbonPerYear.toFixed(1)} tCO₂e/yr
                   </span>
                 </div>
@@ -977,7 +977,7 @@ export const DataReviewPanel = ({
 
         {/* ── REVIEW ACTIONS (only for submitted sections) ───────────────────────── */}
         {showReviewActions && (
-          <div className="flex-shrink-0 border-t border-gray-100 p-5">
+          <div className="flex-shrink-0 border-t border-white/5 p-5">
             <div className="text-xs font-medium text-amber-700 bg-amber-50 px-3 py-2 rounded-lg mb-3 border border-amber-100">
               Reviewing <strong>{SECTION_LABELS[activeSection]}</strong> section — submitted and
               awaiting decision
@@ -994,7 +994,7 @@ export const DataReviewPanel = ({
               className={`w-full border rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 mb-3 transition-colors ${
                 reviewMode === 'reject'
                   ? 'border-red-200 focus:ring-red-200 bg-red-50'
-                  : 'border-gray-200 focus:ring-blue-200'
+                  : 'border-white/10 focus:ring-blue-200'
               }`}
             />
             {reviewMode === 'reject' && (
@@ -1018,7 +1018,7 @@ export const DataReviewPanel = ({
                     className={`text-xs px-2.5 py-1 rounded-full border transition-colors ${
                       revisionTags.includes(tag)
                         ? 'bg-red-100 border-red-300 text-red-700'
-                        : 'bg-white border-gray-200 text-gray-500 hover:border-gray-300'
+                        : 'bg-black/40 backdrop-blur-md border-white/10 text-gray-400 hover:border-white/20'
                     }`}
                   >
                     {tag}
@@ -1050,7 +1050,7 @@ export const DataReviewPanel = ({
                   <button
                     type="button"
                     onClick={() => setReviewMode('idle')}
-                    className="px-4 py-2.5 text-sm text-gray-500"
+                    className="px-4 py-2.5 text-sm text-gray-400"
                   >
                     Cancel
                   </button>
@@ -1069,7 +1069,7 @@ export const DataReviewPanel = ({
                   <button
                     type="button"
                     onClick={() => setReviewMode('idle')}
-                    className="px-4 py-2.5 text-sm text-gray-500"
+                    className="px-4 py-2.5 text-sm text-gray-400"
                   >
                     Cancel
                   </button>

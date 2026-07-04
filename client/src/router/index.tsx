@@ -35,6 +35,9 @@ const Buildings = lazy(() => import('@/pages/Buildings'));
 // Building carbon summary page
 const BuildingCarbonPage = lazy(() => import('@/pages/BuildingCarbonPage'));
 
+// Interactive campus map page
+const MapPage = lazy(() => import('@/pages/MapPage'));
+
 const Loading = () => (
   <div className="flex items-center justify-center min-h-screen">
     <div className="w-8 h-8 border-4 border-iitbhu border-t-transparent rounded-full animate-spin" />
@@ -53,27 +56,48 @@ export const router = createBrowserRouter([
   { path: '/forgot-password', element: <ForgotPassword /> },
   { path: '/verify-email/:token', element: <EmailVerification /> },
   { path: '/reset-password/:token', element: <ResetPassword /> },
-  { path: '/dashboard', element: <Dashboard /> },
-
-  // ── CAMPUS ROUTES (new multi-campus structure) ───────────────────────────
-
-  // Campus list — public
   {
-    path: '/campus',
+    path: '/dashboard',
     element: (
-      <SW>
-        <CampusList />
-      </SW>
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/map',
+    element: (
+      <ProtectedRoute>
+        <SW>
+          <MapPage />
+        </SW>
+      </ProtectedRoute>
     ),
   },
 
-  // Campus hub — public (overview + infrastructure + buildings)
+  // ── CAMPUS ROUTES (new multi-campus structure) ───────────────────────────
+
+  // Campus list
+  {
+    path: '/campus',
+    element: (
+      <ProtectedRoute>
+        <SW>
+          <CampusList />
+        </SW>
+      </ProtectedRoute>
+    ),
+  },
+
+  // Campus hub (overview + infrastructure + buildings)
   {
     path: '/campus/:campusSlug',
     element: (
-      <SW>
-        <CampusHub />
-      </SW>
+      <ProtectedRoute>
+        <SW>
+          <CampusHub />
+        </SW>
+      </ProtectedRoute>
     ),
   },
 
@@ -101,13 +125,15 @@ export const router = createBrowserRouter([
     ),
   },
 
-  // Buildings list scoped to campus — public
+  // Buildings list scoped to campus
   {
     path: '/campus/:campusSlug/buildings',
     element: (
-      <SW>
-        <CampusBuildings />
-      </SW>
+      <ProtectedRoute>
+        <SW>
+          <CampusBuildings />
+        </SW>
+      </ProtectedRoute>
     ),
   },
 

@@ -183,8 +183,8 @@ export default function Results() {
       <PageWrapper title="Results">
         <div className="max-w-4xl mx-auto px-4 py-16 text-center">
           <AlertCircle className="w-12 h-12 mx-auto text-amber-400 mb-4" />
-          <p className="text-lg font-semibold text-gray-700 mb-2">No submission found</p>
-          <p className="text-sm text-gray-500 mb-6">
+          <p className="text-lg font-semibold text-gray-200 mb-2">No submission found</p>
+          <p className="text-sm text-gray-400 mb-6">
             No submissions have been approved yet for this building.
           </p>
           <button
@@ -223,8 +223,8 @@ export default function Results() {
       <PageWrapper title="Results">
         <div className="max-w-4xl mx-auto px-4 py-16 text-center">
           <AlertCircle className="w-12 h-12 mx-auto text-red-400 mb-4" />
-          <p className="text-lg font-semibold text-gray-700 mb-2">Could not load results</p>
-          <p className="text-sm text-gray-500 mb-6">The submission may still be processing.</p>
+          <p className="text-lg font-semibold text-gray-200 mb-2">Could not load results</p>
+          <p className="text-sm text-gray-400 mb-6">The submission may still be processing.</p>
           <button className="text-iitbhu underline text-sm" onClick={() => navigate(-1)}>
             Go back
           </button>
@@ -288,16 +288,16 @@ export default function Results() {
 
   const barData = carbonResults
     ? [
-        { name: 'Embodied', value: parseFloat(carbonResults.embodiedCarbon.toFixed(1)) },
+        { name: 'Embodied', value: parseFloat((carbonResults.embodiedCarbon ?? 0).toFixed(1)) },
         {
           name: 'Annual Op.',
-          value: parseFloat(carbonResults.operationalCarbonPerYear.toFixed(1)),
+          value: parseFloat((carbonResults.operationalCarbonPerYear ?? 0).toFixed(1)),
         },
         {
           name: '50-yr Op.',
-          value: parseFloat((carbonResults.operationalCarbonPerYear * 50).toFixed(1)),
+          value: parseFloat(((carbonResults.operationalCarbonPerYear ?? 0) * 50).toFixed(1)),
         },
-        { name: 'Total', value: parseFloat(carbonResults.totalLifecycle.toFixed(1)) },
+        { name: 'Total', value: parseFloat((carbonResults.totalLifecycle ?? 0).toFixed(1)) },
       ]
     : [];
 
@@ -378,7 +378,7 @@ export default function Results() {
         {/* Breadcrumb */}
         <button
           onClick={() => navigate(`/buildings/${id}`)}
-          className="flex items-center gap-1 text-sm text-gray-500 hover:text-iitbhu mb-6 transition-colors"
+          className="flex items-center gap-1 text-sm text-gray-400 hover:text-iitbhu mb-6 transition-colors"
         >
           <ArrowLeft size={16} />
           Back to Building
@@ -413,7 +413,7 @@ export default function Results() {
                 <div className="flex gap-8 flex-shrink-0 flex-wrap">
                   <div className="text-center">
                     <p className="text-4xl font-bold text-white">
-                      {carbonResults.embodiedCarbon.toFixed(1)}
+                      {(carbonResults.embodiedCarbon ?? 0).toFixed(1)}
                     </p>
                     <p className="text-sm text-forest-50 mt-1">tCO₂e</p>
                     <p className="text-xs text-forest-50 opacity-70 mt-0.5">
@@ -422,7 +422,7 @@ export default function Results() {
                   </div>
                   <div className="text-center">
                     <p className="text-4xl font-bold text-white">
-                      {carbonResults.operationalCarbonPerYear.toFixed(1)}
+                      {(carbonResults.operationalCarbonPerYear ?? 0).toFixed(1)}
                     </p>
                     <p className="text-sm text-forest-50 mt-1">tCO₂e/yr</p>
                     <p className="text-xs text-forest-50 opacity-70 mt-0.5">
@@ -441,9 +441,9 @@ export default function Results() {
             </div>
 
             {/* ── Confidence score bar ───────────────────────────────────────── */}
-            <div className="bg-white border border-gray-200 rounded-xl p-4 mb-6">
+            <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-4 mb-6">
               <div className="flex flex-wrap items-center gap-4">
-                <span className="text-sm font-medium text-gray-700 flex-shrink-0">
+                <span className="text-sm font-medium text-gray-200 flex-shrink-0">
                   Data confidence:
                 </span>
                 <div className="flex-1 min-w-32">
@@ -456,7 +456,7 @@ export default function Results() {
               {estimatedFields.length > 0 && (
                 <div className="mt-3">
                   <button
-                    className="flex items-center gap-1 text-xs text-gray-500 hover:text-gray-700 transition-colors"
+                    className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-200 transition-colors"
                     onClick={() => setShowEstimated((v) => !v)}
                   >
                     {estimatedFields.length} field{estimatedFields.length > 1 ? 's' : ''}{' '}
@@ -509,12 +509,12 @@ export default function Results() {
                 ).map(({ key, label, sub, color, bg, def }) => (
                   <div key={key} className={`rounded-xl p-4 ${bg}`}>
                     <p className={`text-xs font-bold uppercase tracking-wide ${color}`}>{label}</p>
-                    <p className="text-xs text-gray-500 mt-0.5">{sub}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{sub}</p>
                     <p className={`text-2xl font-bold mt-2 ${color}`}>
                       {(byScope[key] ?? 0).toFixed(1)}
                     </p>
                     <p className="text-xs text-gray-400">tCO₂e</p>
-                    <p className="text-xs text-gray-500 mt-2 leading-relaxed">{def}</p>
+                    <p className="text-xs text-gray-400 mt-2 leading-relaxed">{def}</p>
                   </div>
                 ))}
               </div>
@@ -536,11 +536,11 @@ export default function Results() {
             {(carbonResults?.transportCarbonPerYear ?? 0) > 0 && (
               <div className="flex items-center justify-between p-3 bg-red-50 border border-red-200 rounded-xl mb-3">
                 <div>
-                  <span className="font-medium text-gray-900 text-sm">Vehicle fleet</span>
+                  <span className="font-medium text-white text-sm">Vehicle fleet</span>
                   <span className="ml-2 text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">
                     Scope 1
                   </span>
-                  <p className="text-xs text-gray-500 mt-0.5">
+                  <p className="text-xs text-gray-400 mt-0.5">
                     Diesel {(byCategory?.vehicleDiesel ?? 0).toFixed(2)} tCO₂e
                     {(byCategory?.vehicleKerosene ?? 0) > 0 &&
                       ` · Kerosene ${(byCategory.vehicleKerosene ?? 0).toFixed(2)} tCO₂e`}
@@ -556,7 +556,7 @@ export default function Results() {
             {(byCategory?.evCharging ?? 0) > 0 && (
               <div className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-xl mb-3">
                 <div>
-                  <span className="font-medium text-gray-900 text-sm">EV charging</span>
+                  <span className="font-medium text-white text-sm">EV charging</span>
                   <span className="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
                     Scope 2
                   </span>
@@ -569,10 +569,10 @@ export default function Results() {
 
             {/* ── Phase 6: Grid EF data source info ──────────────────────────── */}
             {carbonResults?.dataSourceInfo && (
-              <div className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 mb-4 text-xs space-y-1">
-                <p className="font-medium text-gray-700 mb-1">Data sources used in calculation</p>
+              <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 mb-4 text-xs space-y-1">
+                <p className="font-medium text-gray-200 mb-1">Data sources used in calculation</p>
                 <div className="flex items-center gap-2">
-                  <span className="text-gray-500">Grid emission factor:</span>
+                  <span className="text-gray-400">Grid emission factor:</span>
                   <span
                     className={
                       carbonResults.dataSourceInfo.gridEmissionFactorSource?.includes(
@@ -595,7 +595,7 @@ export default function Results() {
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-gray-500">Transport emissions:</span>
+                  <span className="text-gray-400">Transport emissions:</span>
                   <span
                     className={
                       carbonResults.dataSourceInfo.transportDataSource === 'measured'
@@ -621,25 +621,25 @@ export default function Results() {
                 return (
                   <div className="mb-6 space-y-3">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="bg-white border border-gray-200 rounded-xl p-4">
-                        <p className="text-xs font-semibold text-gray-700 mb-1">
+                      <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-4">
+                        <p className="text-xs font-semibold text-gray-200 mb-1">
                           Solid waste carbon
                         </p>
-                        <p className="text-2xl font-bold text-gray-900">
+                        <p className="text-2xl font-bold text-white">
                           {(byCategory?.solidWaste ?? 0).toFixed(2)}
-                          <span className="text-sm font-normal text-gray-500 ml-1">tCO₂e/yr</span>
+                          <span className="text-sm font-normal text-gray-400 ml-1">tCO₂e/yr</span>
                         </p>
                         <p className="text-xs text-gray-400 mt-2">
                           From landfill decomposition (CH₄) and burning — Scope 3 Cat. 5
                         </p>
                       </div>
-                      <div className="bg-white border border-gray-200 rounded-xl p-4">
-                        <p className="text-xs font-semibold text-gray-700 mb-1">
+                      <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-4">
+                        <p className="text-xs font-semibold text-gray-200 mb-1">
                           Liquid waste (wastewater) carbon
                         </p>
-                        <p className="text-2xl font-bold text-gray-900">
+                        <p className="text-2xl font-bold text-white">
                           {(byCategory?.liquidWaste ?? 0).toFixed(2)}
-                          <span className="text-sm font-normal text-gray-500 ml-1">tCO₂e/yr</span>
+                          <span className="text-sm font-normal text-gray-400 ml-1">tCO₂e/yr</span>
                         </p>
                         <p className="text-xs text-gray-400 mt-2">
                           {wwResults
@@ -654,7 +654,7 @@ export default function Results() {
                       <div className="space-y-2">
                         <div className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
                           <div>
-                            <span className="font-medium text-gray-900">Wastewater — CH₄</span>
+                            <span className="font-medium text-white">Wastewater — CH₄</span>
                             <span className="ml-2 text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">
                               Scope 1
                             </span>
@@ -666,7 +666,7 @@ export default function Results() {
                         </div>
                         <div className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
                           <div>
-                            <span className="font-medium text-gray-900">Wastewater — N₂O</span>
+                            <span className="font-medium text-white">Wastewater — N₂O</span>
                             <span className="ml-2 text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">
                               Scope 1
                             </span>
@@ -678,7 +678,7 @@ export default function Results() {
                         {wwResults.stpScope2Tco2ePerYear > 0 && (
                           <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                             <div>
-                              <span className="font-medium text-gray-900">STP electricity</span>
+                              <span className="font-medium text-white">STP electricity</span>
                               <span className="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
                                 Scope 2
                               </span>
@@ -688,7 +688,7 @@ export default function Results() {
                             </span>
                           </div>
                         )}
-                        <div className="p-3 bg-gray-50 rounded-lg text-xs text-gray-500">
+                        <div className="p-3 bg-white/5 rounded-lg text-xs text-gray-400">
                           <span className="font-medium">Method:</span>{' '}
                           {wwResults.calculationMethod === 'ipcc_tier1_bod_flow'
                             ? 'IPCC 2006 Vol. 5 Tier 1 (BOD × flow)'
@@ -709,7 +709,7 @@ export default function Results() {
               <div className="mb-6 space-y-3">
                 <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                   <div>
-                    <span className="font-medium text-gray-900">Water treatment</span>
+                    <span className="font-medium text-white">Water treatment</span>
                     <span className="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
                       Scope 2
                     </span>
@@ -726,9 +726,9 @@ export default function Results() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
               {/* Pie — Carbon by Category */}
               <Card padding="md" shadow="sm">
-                <p className="text-sm font-semibold text-gray-900 mb-1">Carbon by Category</p>
+                <p className="text-sm font-semibold text-white mb-1">Carbon by Category</p>
                 <p className="text-xs text-gray-400 mb-3">
-                  Total lifecycle: {carbonResults.totalLifecycle.toFixed(1)} tCO₂e
+                  Total lifecycle: {(carbonResults.totalLifecycle ?? 0).toFixed(1)} tCO₂e
                 </p>
                 <ResponsiveContainer width="100%" height={220}>
                   <PieChart>
@@ -753,7 +753,7 @@ export default function Results() {
 
               {/* Bar — Lifecycle Carbon Profile */}
               <Card padding="md" shadow="sm">
-                <p className="text-sm font-semibold text-gray-900 mb-4">Lifecycle Carbon Profile</p>
+                <p className="text-sm font-semibold text-white mb-4">Lifecycle Carbon Profile</p>
                 <ResponsiveContainer width="100%" height={220}>
                   <BarChart data={barData} barSize={36}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
@@ -778,14 +778,14 @@ export default function Results() {
 
             {/* ── Recommendations ────────────────────────────────────────────── */}
             <div className="bg-green-50 border border-green-200 rounded-2xl p-6 mb-6">
-              <p className="text-sm font-semibold text-gray-900 mb-4">
+              <p className="text-sm font-semibold text-white mb-4">
                 Top 3 Carbon Reduction Opportunities
               </p>
               <ul className="space-y-4">
                 {recs.slice(0, 3).map((rec, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <Lightbulb size={18} className="text-green-600 flex-shrink-0 mt-0.5" />
-                    <p className="text-sm text-gray-700">{rec}</p>
+                    <p className="text-sm text-gray-200">{rec}</p>
                   </li>
                 ))}
               </ul>
@@ -831,18 +831,18 @@ export default function Results() {
 
               return (
                 <div className="mt-6 mb-6">
-                  <h3 className="text-base font-semibold text-gray-900 mb-3">
+                  <h3 className="text-base font-semibold text-white mb-3">
                     Renewable energy potential
                   </h3>
                   <div className="bg-green-50 border border-green-200 rounded-xl p-5">
-                    <p className="text-sm text-gray-600 mb-4">
+                    <p className="text-sm text-gray-300 mb-4">
                       Based on the feasibility assessment, the following renewable sources could be
                       installed:
                     </p>
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm">
                         <thead>
-                          <tr className="text-xs text-gray-500 border-b border-green-200">
+                          <tr className="text-xs text-gray-400 border-b border-green-200">
                             <th className="text-left py-2">Technology</th>
                             <th className="text-right py-2">Capacity (kW)</th>
                             <th className="text-right py-2">Annual (MWh)</th>
@@ -854,13 +854,13 @@ export default function Results() {
                         <tbody>
                           {assessments.map((a) => (
                             <tr key={a.id} className="border-b border-green-100 last:border-0">
-                              <td className="py-2 font-medium text-gray-800">
+                              <td className="py-2 font-medium text-gray-100">
                                 {sourceLabel[a.energySource] ?? a.energySource}
                               </td>
-                              <td className="text-right py-2 text-gray-700">
+                              <td className="text-right py-2 text-gray-200">
                                 {a.estimatedInstallationCapacityKw?.toLocaleString() ?? '—'}
                               </td>
-                              <td className="text-right py-2 text-gray-700">
+                              <td className="text-right py-2 text-gray-200">
                                 {a.approxAnnualGenerationPotentialMwh?.toLocaleString() ?? '—'}
                               </td>
                               <td className="text-right py-2 text-green-700 font-medium">
@@ -870,10 +870,10 @@ export default function Results() {
                                   1000
                                 ).toFixed(1)}
                               </td>
-                              <td className="text-right py-2 text-gray-700">
+                              <td className="text-right py-2 text-gray-200">
                                 {a.estimatedCapexLakhs ?? '—'}
                               </td>
-                              <td className="text-right py-2 text-gray-700">
+                              <td className="text-right py-2 text-gray-200">
                                 {a.expectedPaybackYears ?? '—'}
                               </td>
                             </tr>
@@ -914,10 +914,10 @@ export default function Results() {
                     ['Field', 'Value', 'Unit'],
                     ['Building', buildingName, ''],
                     ['Submission Date', submissionDate, ''],
-                    ['Embodied Carbon', carbonResults.embodiedCarbon.toFixed(3), 'tCO2e'],
+                    ['Embodied Carbon', (carbonResults.embodiedCarbon ?? 0).toFixed(3), 'tCO2e'],
                     [
                       'Annual Operational Carbon',
-                      carbonResults.operationalCarbonPerYear.toFixed(3),
+                      (carbonResults.operationalCarbonPerYear ?? 0).toFixed(3),
                       'tCO2e/yr',
                     ],
                     [
@@ -927,11 +927,11 @@ export default function Results() {
                     ],
                     ['Solid Waste Carbon', (byCategory?.solidWaste ?? 0).toFixed(3), 'tCO2e/yr'],
                     ['Liquid Waste Carbon', (byCategory?.liquidWaste ?? 0).toFixed(3), 'tCO2e/yr'],
-                    ['Total Lifecycle (50yr)', carbonResults.totalLifecycle.toFixed(3), 'tCO2e'],
+                    ['Total Lifecycle (50yr)', (carbonResults.totalLifecycle ?? 0).toFixed(3), 'tCO2e'],
                     ['Scope 1', (byScope?.scope1 ?? 0).toFixed(3), 'tCO2e'],
                     ['Scope 2', (byScope?.scope2 ?? 0).toFixed(3), 'tCO2e'],
                     ['Scope 3', (byScope?.scope3 ?? 0).toFixed(3), 'tCO2e'],
-                    ['Confidence Score', carbonResults.confidenceScore.toString(), '%'],
+                    ['Confidence Score', (carbonResults.confidenceScore ?? 0).toString(), '%'],
                   ];
                   const csv = rows.map((r) => r.join(',')).join('\n');
                   const blob = new Blob([csv], { type: 'text/csv' });
@@ -980,10 +980,10 @@ export default function Results() {
           </>
         ) : (
           /* ── Pending review state ──────────────────────────────────────────── */
-          <div className="bg-white border border-gray-200 rounded-2xl p-16 text-center">
+          <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-16 text-center">
             <AlertCircle className="w-12 h-12 mx-auto text-amber-400 mb-4" />
-            <p className="text-lg font-semibold text-gray-700 mb-2">Results pending review</p>
-            <p className="text-sm text-gray-500 max-w-sm mx-auto">
+            <p className="text-lg font-semibold text-gray-200 mb-2">Results pending review</p>
+            <p className="text-sm text-gray-400 max-w-sm mx-auto">
               Your submission is under review. Carbon results will appear here once the reviewer has
               verified your data.
             </p>
@@ -991,13 +991,28 @@ export default function Results() {
         )}
       </div>
 
+      {/* ── Raw Data ──────────────────────────────────────────────────────────── */}
+      {submission?.data && (
+        <div className="max-w-5xl mx-auto px-4 pb-8">
+          <Card padding="md" shadow="sm">
+            <div className="flex items-center gap-2 mb-4">
+              <Database size={16} className="text-gray-400" />
+              <p className="text-sm font-semibold text-white">Submitted Data</p>
+            </div>
+            <div className="bg-white/5 rounded-lg p-4 overflow-x-auto text-xs font-mono text-gray-200 max-h-96">
+              <pre>{JSON.stringify(submission.data, null, 2)}</pre>
+            </div>
+          </Card>
+        </div>
+      )}
+
       {/* ── Data sources card ──────────────────────────────────────────────────── */}
       {sectionSummary && (
         <div className="max-w-5xl mx-auto px-4 pb-8">
           <Card padding="md" shadow="sm">
             <div className="flex items-center gap-2 mb-4">
-              <Database size={16} className="text-gray-500" />
-              <p className="text-sm font-semibold text-gray-900">Data Sources</p>
+              <Database size={16} className="text-gray-400" />
+              <p className="text-sm font-semibold text-white">Data Sources</p>
             </div>
             <div className="space-y-3">
               {(['civil', 'electrical', 'waste'] as const).map((section) => {
@@ -1015,13 +1030,13 @@ export default function Results() {
                 return (
                   <div
                     key={section}
-                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-3 border-b border-gray-100 last:border-0"
+                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-3 border-b border-white/5 last:border-0"
                   >
                     <div className="flex items-center gap-3">
                       <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-50 text-indigo-700 capitalize">
                         {sectionLabel}
                       </span>
-                      <span className="text-sm text-gray-700">
+                      <span className="text-sm text-gray-200">
                         Version {info.version ?? 1}
                         {verifiedDate ? (
                           <>
@@ -1062,24 +1077,24 @@ export default function Results() {
       {/* ── Revision modal ──────────────────────────────────────────────────────── */}
       {showRevisionModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+          <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-xl w-full max-w-md p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-base font-semibold text-gray-900">Request Revision</h3>
+              <h3 className="text-base font-semibold text-white">Request Revision</h3>
               <button
                 onClick={() => {
                   setShowRevisionModal(false);
                   setRevisionNotes('');
                 }}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-gray-400 hover:text-gray-300 transition-colors"
               >
                 <X size={18} />
               </button>
             </div>
-            <p className="text-sm text-gray-500 mb-3">
+            <p className="text-sm text-gray-400 mb-3">
               Describe the changes needed for this submission.
             </p>
             <textarea
-              className="w-full border border-gray-300 rounded-lg p-3 text-sm text-gray-900 resize-none focus:outline-none focus:ring-2 focus:ring-iitbhu focus:border-iitbhu"
+              className="w-full border border-white/20 rounded-lg p-3 text-sm text-white resize-none focus:outline-none focus:ring-2 focus:ring-iitbhu focus:border-iitbhu"
               rows={4}
               placeholder="Enter review notes…"
               value={revisionNotes}
@@ -1087,7 +1102,7 @@ export default function Results() {
             />
             <div className="flex gap-2 mt-4">
               <button
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                className="flex-1 px-4 py-2 border border-white/20 rounded-lg text-sm font-medium text-gray-200 hover:bg-white/5 transition-colors"
                 onClick={() => {
                   setShowRevisionModal(false);
                   setRevisionNotes('');
@@ -1111,12 +1126,12 @@ export default function Results() {
       {/* ── Version history modal ───────────────────────────────────────────────── */}
       {historySection && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[80vh] flex flex-col">
+          <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-xl w-full max-w-lg max-h-[80vh] flex flex-col">
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-100">
+            <div className="flex items-center justify-between p-6 border-b border-white/5">
               <div className="flex items-center gap-2">
                 <History size={18} className="text-indigo-600" />
-                <h3 className="text-base font-semibold text-gray-900 capitalize">
+                <h3 className="text-base font-semibold text-white capitalize">
                   {historySection} — Version History
                 </h3>
               </div>
@@ -1125,7 +1140,7 @@ export default function Results() {
                   setHistorySection(null);
                   setHistoryData([]);
                 }}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-gray-400 hover:text-gray-300 transition-colors"
               >
                 <X size={18} />
               </button>
@@ -1139,9 +1154,9 @@ export default function Results() {
                   ))}
                 </div>
               ) : historyData.length === 0 ? (
-                <p className="text-sm text-gray-500 text-center py-8">No history available.</p>
+                <p className="text-sm text-gray-400 text-center py-8">No history available.</p>
               ) : (
-                <ol className="relative border-l border-gray-200 space-y-6 pl-4">
+                <ol className="relative border-l border-white/10 space-y-6 pl-4">
                   {historyData.map((entry, i) => {
                     const isLatest = i === 0;
                     const statusColor =
@@ -1171,11 +1186,11 @@ export default function Results() {
                           className={`absolute -left-[21px] top-1.5 w-3 h-3 rounded-full border-2 border-white ${statusColor}`}
                         />
                         <div
-                          className={`rounded-xl p-4 border ${isLatest ? 'border-indigo-200 bg-indigo-50' : 'border-gray-100 bg-gray-50'}`}
+                          className={`rounded-xl p-4 border ${isLatest ? 'border-indigo-200 bg-indigo-50' : 'border-white/5 bg-white/5'}`}
                         >
                           <div className="flex items-center justify-between mb-2">
                             <span
-                              className={`text-sm font-semibold ${isLatest ? 'text-indigo-800' : 'text-gray-800'}`}
+                              className={`text-sm font-semibold ${isLatest ? 'text-indigo-800' : 'text-gray-100'}`}
                             >
                               Version {entry.version}
                             </span>
@@ -1187,23 +1202,23 @@ export default function Results() {
                                     ? 'bg-blue-100 text-blue-700'
                                     : entry.status === 'revision_requested'
                                       ? 'bg-amber-100 text-amber-700'
-                                      : 'bg-gray-100 text-gray-600'
+                                      : 'bg-white/10 text-gray-300'
                               }`}
                             >
                               {entry.status.replace('_', ' ')}
                             </span>
                           </div>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-gray-400">
                             Submitted by{' '}
-                            <span className="font-medium text-gray-700">
+                            <span className="font-medium text-gray-200">
                               {entry.submittedBy?.name ?? 'Unknown'}
                             </span>{' '}
                             on {createdDate}
                           </p>
                           {entry.reviewedBy && reviewedDate && (
-                            <p className="text-xs text-gray-500 mt-1">
+                            <p className="text-xs text-gray-400 mt-1">
                               Reviewed by{' '}
-                              <span className="font-medium text-gray-700">
+                              <span className="font-medium text-gray-200">
                                 {entry.reviewedBy.name}
                               </span>{' '}
                               on {reviewedDate}

@@ -47,10 +47,10 @@ function IntensityTooltip({
   if (!active || !payload?.length) return null;
   const total = payload.reduce((s, p) => s + (p.value ?? 0), 0);
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-md p-3 text-sm min-w-[180px]">
-      <p className="font-semibold text-gray-900 mb-2 capitalize">{label}</p>
+    <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-lg shadow-md p-3 text-sm min-w-[180px]">
+      <p className="font-semibold text-white mb-2 capitalize">{label}</p>
       {payload.map((p) => (
-        <div key={p.name} className="flex justify-between gap-4 text-gray-600">
+        <div key={p.name} className="flex justify-between gap-4 text-gray-300">
           <span className="flex items-center gap-1.5">
             <span className="inline-block h-2 w-2 rounded-full" style={{ background: p.color }} />
             {p.name === 'energyCO2ePerSqm' ? 'Energy' : 'Waste'}
@@ -58,7 +58,7 @@ function IntensityTooltip({
           <span>{p.value.toFixed(4)} tCO₂e/m²</span>
         </div>
       ))}
-      <div className="border-t border-gray-100 mt-2 pt-2 flex justify-between font-medium text-gray-900">
+      <div className="border-t border-white/5 mt-2 pt-2 flex justify-between font-medium text-white">
         <span>Total intensity</span>
         <span>{total.toFixed(4)} tCO₂e/m²</span>
       </div>
@@ -107,7 +107,7 @@ export default function BuildingTypeIntensity({ data, campusAvgIntensity }: Prop
           <Tooltip content={<IntensityTooltip />} />
           <Legend
             formatter={(value) => (
-              <span className="text-xs text-gray-600">
+              <span className="text-xs text-gray-300">
                 {value === 'energyCO2ePerSqm' ? 'Energy intensity' : 'Waste intensity'}
               </span>
             )}
@@ -151,7 +151,7 @@ export default function BuildingTypeIntensity({ data, campusAvgIntensity }: Prop
         </BarChart>
       </ResponsiveContainer>
       {insight && (
-        <p className="text-xs text-gray-500 italic border-l-2 border-violet-400 pl-3">{insight}</p>
+        <p className="text-xs text-gray-400 italic border-l-2 border-violet-400 pl-3">{insight}</p>
       )}
     </div>
   );

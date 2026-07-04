@@ -95,9 +95,9 @@ const SURFACE_OPTIONS: Array<{
     value: 'mixed',
     label: 'Mixed',
     impact: 'Varies',
-    color: 'bg-gray-100 border-gray-400 text-gray-700',
+    color: 'bg-white/10 border-gray-400 text-gray-200',
   },
-  { value: 'other', label: 'Other', impact: '', color: 'bg-gray-50 border-gray-300 text-gray-600' },
+  { value: 'other', label: 'Other', impact: '', color: 'bg-white/5 border-white/20 text-gray-300' },
 ];
 
 const LIGHT_TYPE_DEFAULTS: Record<string, number> = {
@@ -121,13 +121,13 @@ function SectionCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-100">
+    <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden">
+      <div className="px-6 py-4 border-b border-white/5">
         <div className="flex items-center gap-2">
           <Icon size={18} className="text-iitbhu" />
-          <h2 className="text-base font-semibold text-gray-800">{title}</h2>
+          <h2 className="text-base font-semibold text-gray-100">{title}</h2>
         </div>
-        {subtitle && <p className="text-sm text-gray-500 mt-1">{subtitle}</p>}
+        {subtitle && <p className="text-sm text-gray-400 mt-1">{subtitle}</p>}
       </div>
       <div className="p-6">{children}</div>
     </div>
@@ -150,7 +150,7 @@ function RoadSegmentCard({
   const annualCo2 = laneKm * ROAD_LANE_KM_EF;
 
   return (
-    <div className="border border-gray-200 rounded-xl p-4 space-y-3 bg-gray-50">
+    <div className="border border-white/10 rounded-xl p-4 space-y-3 bg-white/5">
       {/* Header row */}
       <div className="flex items-start gap-2">
         <input
@@ -159,7 +159,7 @@ function RoadSegmentCard({
           onChange={(e) => onChange({ roadName: e.target.value })}
           placeholder="e.g. Main avenue, Service lane, Footpath to library"
           maxLength={100}
-          className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-iitbhu"
+          className="flex-1 px-3 py-2 border border-white/10 rounded-lg text-sm bg-black/40 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-iitbhu"
         />
         <button
           onClick={onRemove}
@@ -173,29 +173,29 @@ function RoadSegmentCard({
       {/* Dimensions */}
       <div className="grid grid-cols-4 gap-3">
         <div>
-          <label className="text-xs text-gray-500 block mb-1">Length (m)</label>
+          <label className="text-xs text-gray-400 block mb-1">Length (m)</label>
           <input
             type="number"
             min={0}
             step={1}
             value={segment.lengthM || ''}
             onChange={(e) => onChange({ lengthM: parseFloat(e.target.value) || 0 })}
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-iitbhu"
+            className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm bg-black/40 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-iitbhu"
           />
         </div>
         <div>
-          <label className="text-xs text-gray-500 block mb-1">Width (m)</label>
+          <label className="text-xs text-gray-400 block mb-1">Width (m)</label>
           <input
             type="number"
             min={0}
             step={0.1}
             value={segment.widthM || ''}
             onChange={(e) => onChange({ widthM: parseFloat(e.target.value) || 0 })}
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-iitbhu"
+            className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm bg-black/40 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-iitbhu"
           />
         </div>
         <div>
-          <label className="text-xs text-gray-500 block mb-1">Lanes</label>
+          <label className="text-xs text-gray-400 block mb-1">Lanes</label>
           <input
             type="number"
             min={1}
@@ -203,16 +203,16 @@ function RoadSegmentCard({
             step={1}
             value={segment.lanes ?? 2}
             onChange={(e) => onChange({ lanes: parseInt(e.target.value) || 2 })}
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-iitbhu"
+            className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm bg-black/40 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-iitbhu"
           />
         </div>
         <div>
-          <label className="text-xs text-gray-500 block mb-1">Area (m²)</label>
+          <label className="text-xs text-gray-400 block mb-1">Area (m²)</label>
           <input
             type="number"
             readOnly
             value={area > 0 ? area.toFixed(0) : ''}
-            className="w-full px-3 py-2 border border-gray-100 rounded-lg text-sm bg-gray-100 text-gray-500"
+            className="w-full px-3 py-2 border border-white/5 rounded-lg text-sm bg-white/10 text-gray-400"
           />
         </div>
       </div>
@@ -225,7 +225,7 @@ function RoadSegmentCard({
 
       {/* Surface type chips */}
       <div>
-        <label className="text-xs text-gray-500 block mb-2">Surface type</label>
+        <label className="text-xs text-gray-400 block mb-2">Surface type</label>
         <div className="flex flex-wrap gap-2">
           {SURFACE_OPTIONS.map((opt) => (
             <button
@@ -235,7 +235,7 @@ function RoadSegmentCard({
               className={`px-2.5 py-1 rounded-full border text-xs font-medium transition-all ${
                 segment.surfaceType === opt.value
                   ? opt.color + ' ring-2 ring-offset-1 ring-current'
-                  : 'bg-white border-gray-200 text-gray-500 hover:border-gray-400'
+                  : 'bg-black/40 backdrop-blur-md border-white/10 text-gray-400 hover:border-gray-400'
               }`}
             >
               {opt.label}
@@ -249,19 +249,19 @@ function RoadSegmentCard({
             value={segment.surfaceTypeOther ?? ''}
             onChange={(e) => onChange({ surfaceTypeOther: e.target.value })}
             placeholder="Describe surface type"
-            className="mt-2 w-full px-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+            className="mt-2 w-full px-3 py-1.5 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
           />
         )}
       </div>
 
       {/* Remarks */}
       <div>
-        <label className="text-xs text-gray-500 block mb-1">Remarks (optional)</label>
+        <label className="text-xs text-gray-400 block mb-1">Remarks (optional)</label>
         <input
           type="text"
           value={segment.remarks ?? ''}
           onChange={(e) => onChange({ remarks: e.target.value })}
-          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-iitbhu"
+          className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm bg-black/40 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-iitbhu"
         />
       </div>
     </div>
@@ -299,15 +299,15 @@ function VegetationCard({
   };
 
   return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden">
+    <div className="border border-white/10 rounded-xl overflow-hidden">
       <button
         type="button"
         onClick={setOpen}
-        className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
+        className="w-full flex items-center justify-between px-4 py-3 bg-white/5 hover:bg-white/10 transition-colors text-left"
       >
         <div className="flex items-center gap-2">
           <Leaf size={14} className="text-green-600" />
-          <span className="text-sm font-medium text-gray-800">
+          <span className="text-sm font-medium text-gray-100">
             {CATEGORY_LABELS[category.categoryType] ?? 'Custom'}
           </span>
           {category.definitionScope && (
@@ -338,13 +338,13 @@ function VegetationCard({
               value={category.customCategoryLabel ?? ''}
               onChange={(e) => onChange({ customCategoryLabel: e.target.value })}
               placeholder="Category name (e.g. Bamboo grove)"
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+              className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
             />
           )}
           <div className="grid grid-cols-2 gap-3">
             {!isShrubs && (
               <div>
-                <label className="text-xs text-gray-500 block mb-1">No. of trees</label>
+                <label className="text-xs text-gray-400 block mb-1">No. of trees</label>
                 <input
                   type="number"
                   min={0}
@@ -352,7 +352,7 @@ function VegetationCard({
                   onChange={(e) =>
                     onChange({ numberOfTrees: parseInt(e.target.value) || undefined })
                   }
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+                  className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
                 />
               </div>
             )}
@@ -362,14 +362,14 @@ function VegetationCard({
               </p>
             )}
             <div className={isShrubs ? 'col-span-2' : ''}>
-              <label className="text-xs text-gray-500 block mb-1">Area covered (acres)</label>
+              <label className="text-xs text-gray-400 block mb-1">Area covered (acres)</label>
               <input
                 type="number"
                 min={0}
                 step={0.01}
                 value={category.areaAcres ?? ''}
                 onChange={(e) => onChange({ areaAcres: parseFloat(e.target.value) || undefined })}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+                className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
               />
             </div>
           </div>
@@ -378,7 +378,7 @@ function VegetationCard({
             value={category.remarks ?? ''}
             onChange={(e) => onChange({ remarks: e.target.value })}
             placeholder="Remarks (optional)"
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+            className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
           />
           {seqKg > 0 && (
             <p className="text-xs text-green-700 bg-green-50 rounded-lg px-3 py-2">
@@ -405,7 +405,7 @@ function WaterBodyCard({
   const isLinear = waterBody.category === 'canal' || waterBody.category === 'river';
 
   return (
-    <div className="border border-gray-200 rounded-xl p-4 space-y-3 bg-gray-50">
+    <div className="border border-white/10 rounded-xl p-4 space-y-3 bg-white/5">
       <div className="flex gap-2">
         <input
           type="text"
@@ -415,7 +415,7 @@ function WaterBodyCard({
             waterBody.category === 'canal' ? 'e.g. North campus canal' : 'e.g. Main lake'
           }
           required
-          className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-iitbhu"
+          className="flex-1 px-3 py-2 border border-white/10 rounded-lg text-sm bg-black/40 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-iitbhu"
         />
         <button
           onClick={onRemove}
@@ -427,29 +427,29 @@ function WaterBodyCard({
       {isLinear ? (
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="text-xs text-gray-500 block mb-1">Length (m)</label>
+            <label className="text-xs text-gray-400 block mb-1">Length (m)</label>
             <input
               type="number"
               min={0}
               value={waterBody.lengthM ?? ''}
               onChange={(e) => onChange({ lengthM: parseFloat(e.target.value) || undefined })}
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-iitbhu"
+              className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm bg-black/40 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-iitbhu"
             />
           </div>
           <div>
-            <label className="text-xs text-gray-500 block mb-1">Width (m)</label>
+            <label className="text-xs text-gray-400 block mb-1">Width (m)</label>
             <input
               type="number"
               min={0}
               value={waterBody.widthM ?? ''}
               onChange={(e) => onChange({ widthM: parseFloat(e.target.value) || undefined })}
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-iitbhu"
+              className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm bg-black/40 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-iitbhu"
             />
           </div>
         </div>
       ) : (
         <div>
-          <label className="text-xs text-gray-500 block mb-1">Surface area (acres)</label>
+          <label className="text-xs text-gray-400 block mb-1">Surface area (acres)</label>
           <input
             type="number"
             min={0}
@@ -458,7 +458,7 @@ function WaterBodyCard({
             onChange={(e) =>
               onChange({ surfaceAreaAcres: parseFloat(e.target.value) || undefined })
             }
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-iitbhu"
+            className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm bg-black/40 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-iitbhu"
           />
           <p className="text-xs text-gray-400 mt-1">
             Length and width not applicable — enter surface area
@@ -470,7 +470,7 @@ function WaterBodyCard({
         value={waterBody.remarks ?? ''}
         onChange={(e) => onChange({ remarks: e.target.value })}
         placeholder="Remarks (optional)"
-        className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-iitbhu"
+        className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm bg-black/40 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-iitbhu"
       />
     </div>
   );
@@ -497,7 +497,7 @@ function NumField({
 }) {
   return (
     <div>
-      <label className="text-xs text-gray-500 block mb-1">{label}</label>
+      <label className="text-xs text-gray-400 block mb-1">{label}</label>
       {hint && <p className="text-xs text-gray-400 mb-1">{hint}</p>}
       <div className="flex items-center gap-1">
         <input
@@ -506,7 +506,7 @@ function NumField({
           step={step}
           value={value ?? ''}
           onChange={(e) => onChange(parseFloat(e.target.value) || undefined)}
-          className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-iitbhu"
+          className="flex-1 px-3 py-2 border border-white/10 rounded-lg text-sm bg-black/40 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-iitbhu"
         />
         {unit && <span className="text-xs text-gray-400 flex-shrink-0">{unit}</span>}
       </div>
@@ -525,7 +525,7 @@ export default function CampusEntry() {
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Load existing draft on mount
-  useQuery({
+  const { data: campusDraft } = useQuery({
     queryKey: ['campus', slug, 'infrastructure-draft'],
     queryFn: async () => {
       const res = await campusApi.getInfrastructureDraft(slug);
@@ -619,6 +619,7 @@ export default function CampusEntry() {
         airTravel: Object.keys(s.airTravelData).length > 0 ? s.airTravelData : undefined,
         purchasedGoods:
           Object.keys(s.purchasedGoodsData).length > 0 ? s.purchasedGoodsData : undefined,
+        totalAreaAcres: s.totalCampusAreaAcres,
       }),
     onSuccess: () => dispatch({ type: 'SET_LAST_SAVED', date: new Date() }),
     onError: () => dispatch({ type: 'SET_SAVING', value: false }),
@@ -750,12 +751,12 @@ export default function CampusEntry() {
           {/* ── MAIN CONTENT ───────────────────────────────────────────────── */}
           <div className="flex-1 min-w-0 space-y-6">
             {/* Total campus area */}
-            <div className="bg-white border border-gray-200 rounded-xl p-5">
-              <label className="text-sm font-medium text-gray-700 block mb-1">
+            <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-5">
+              <label className="text-sm font-medium text-gray-200 block mb-1">
                 Total campus area (acres)
               </label>
               <p className="text-xs text-gray-400 mb-2">
-                Total land area of IIT BHU campus in acres
+                Total land area of {campusDraft?.name ?? slug} campus in acres
               </p>
               <input
                 type="number"
@@ -768,7 +769,7 @@ export default function CampusEntry() {
                     value: parseFloat(e.target.value) || undefined,
                   })
                 }
-                className="w-full max-w-xs px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+                className="w-full max-w-xs px-3 py-2 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
               />
             </div>
 
@@ -806,29 +807,29 @@ export default function CampusEntry() {
                       },
                     })
                   }
-                  className="w-full py-2.5 border-2 border-dashed border-gray-200 rounded-xl text-sm text-gray-500 hover:border-iitbhu hover:text-iitbhu transition-colors flex items-center justify-center gap-1.5"
+                  className="w-full py-2.5 border-2 border-dashed border-white/10 rounded-xl text-sm text-gray-400 hover:border-iitbhu hover:text-iitbhu transition-colors flex items-center justify-center gap-1.5"
                 >
                   <Plus size={14} /> Add road segment
                 </button>
 
                 {/* Road summary */}
                 {state.roadsData.segments.length > 0 && (
-                  <div className="bg-gray-50 rounded-xl p-4 space-y-1">
-                    <p className="text-xs font-medium text-gray-600 mb-2">Running totals</p>
+                  <div className="bg-white/5 rounded-xl p-4 space-y-1">
+                    <p className="text-xs font-medium text-gray-300 mb-2">Running totals</p>
                     <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm">
-                      <span className="text-gray-500">Total road length</span>
+                      <span className="text-gray-400">Total road length</span>
                       <span className="font-medium">
                         {liveEstimates.totalRoadLength.toFixed(0)} m
                       </span>
-                      <span className="text-gray-500">Total road area</span>
+                      <span className="text-gray-400">Total road area</span>
                       <span className="font-medium">
                         {liveEstimates.totalRoadArea.toFixed(0)} m²
                       </span>
-                      <span className="text-gray-500">Paved area</span>
+                      <span className="text-gray-400">Paved area</span>
                       <span className="font-medium">
                         {liveEstimates.totalPavedAreaM2.toFixed(0)} m²
                       </span>
-                      <span className="text-gray-500">Estimated road embodied carbon</span>
+                      <span className="text-gray-400">Estimated road embodied carbon</span>
                       <span className="font-semibold text-red-700">
                         {liveEstimates.roadsEmbodiedTco2e} tCO₂e
                       </span>
@@ -857,12 +858,12 @@ export default function CampusEntry() {
                     }`}
                   >
                     <span
-                      className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${
+                      className={`absolute top-1 w-4 h-4 bg-black/40 backdrop-blur-md rounded-full shadow transition-transform ${
                         state.roadsData.hasStreetLighting ? 'translate-x-5' : 'translate-x-1'
                       }`}
                     />
                   </div>
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-sm font-medium text-gray-200">
                     Does this campus have street lighting?
                   </span>
                 </label>
@@ -871,7 +872,7 @@ export default function CampusEntry() {
                   <div className="space-y-4 pt-2">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="text-xs text-gray-500 block mb-1">
+                        <label className="text-xs text-gray-400 block mb-1">
                           Number of street lights
                         </label>
                         <input
@@ -885,11 +886,11 @@ export default function CampusEntry() {
                               patch: { streetLightCount: parseInt(e.target.value) || undefined },
                             })
                           }
-                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+                          className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
                         />
                       </div>
                       <div>
-                        <label className="text-xs text-gray-500 block mb-1">Light type</label>
+                        <label className="text-xs text-gray-400 block mb-1">Light type</label>
                         <select
                           value={state.roadsData.streetLightType ?? ''}
                           onChange={(e) => {
@@ -903,7 +904,7 @@ export default function CampusEntry() {
                               },
                             });
                           }}
-                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+                          className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
                         >
                           <option value="">Select type…</option>
                           <option value="sodium_vapour">Sodium vapour (traditional orange)</option>
@@ -915,7 +916,7 @@ export default function CampusEntry() {
                         </select>
                       </div>
                       <div>
-                        <label className="text-xs text-gray-500 block mb-1">
+                        <label className="text-xs text-gray-400 block mb-1">
                           Power per light (W)
                         </label>
                         <p className="text-xs text-gray-400 mb-1">
@@ -935,11 +936,11 @@ export default function CampusEntry() {
                               },
                             })
                           }
-                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+                          className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
                         />
                       </div>
                       <div>
-                        <label className="text-xs text-gray-500 block mb-1">
+                        <label className="text-xs text-gray-400 block mb-1">
                           Hours per day: {state.roadsData.streetLightHoursPerDay ?? 10}h
                         </label>
                         <input
@@ -987,7 +988,7 @@ export default function CampusEntry() {
                     )}
 
                     <div>
-                      <label className="text-xs text-gray-500 block mb-1">Remarks (optional)</label>
+                      <label className="text-xs text-gray-400 block mb-1">Remarks (optional)</label>
                       <input
                         type="text"
                         value={state.roadsData.streetLightingRemarks ?? ''}
@@ -998,7 +999,7 @@ export default function CampusEntry() {
                             patch: { streetLightingRemarks: e.target.value },
                           })
                         }
-                        className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+                        className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
                       />
                     </div>
                   </div>
@@ -1043,7 +1044,7 @@ export default function CampusEntry() {
                 </button>
 
                 {/* Heritage trees toggle */}
-                <div className="pt-2 border-t border-gray-100 space-y-3">
+                <div className="pt-2 border-t border-white/5 space-y-3">
                   <label className="flex items-center gap-3 cursor-pointer">
                     <div
                       role="switch"
@@ -1059,19 +1060,19 @@ export default function CampusEntry() {
                       }`}
                     >
                       <span
-                        className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${
+                        className={`absolute top-1 w-4 h-4 bg-black/40 backdrop-blur-md rounded-full shadow transition-transform ${
                           state.vegetationData.hasHeritageTrees ? 'translate-x-5' : 'translate-x-1'
                         }`}
                       />
                     </div>
-                    <span className="text-sm font-medium text-gray-700">
+                    <span className="text-sm font-medium text-gray-200">
                       Does the campus have heritage trees?
                     </span>
                   </label>
                   {state.vegetationData.hasHeritageTrees && (
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs text-gray-500 block mb-1">
+                        <label className="text-xs text-gray-400 block mb-1">
                           Number of heritage trees
                         </label>
                         <input
@@ -1084,11 +1085,11 @@ export default function CampusEntry() {
                               patch: { heritageTreeCount: parseInt(e.target.value) || undefined },
                             })
                           }
-                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+                          className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
                         />
                       </div>
                       <div>
-                        <label className="text-xs text-gray-500 block mb-1">Remarks</label>
+                        <label className="text-xs text-gray-400 block mb-1">Remarks</label>
                         <input
                           type="text"
                           value={state.vegetationData.heritageTreeRemarks ?? ''}
@@ -1098,7 +1099,7 @@ export default function CampusEntry() {
                               patch: { heritageTreeRemarks: e.target.value },
                             })
                           }
-                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+                          className="w-full px-3 py-2 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
                         />
                       </div>
                     </div>
@@ -1137,7 +1138,7 @@ export default function CampusEntry() {
               <div className="space-y-5">
                 {/* Canals */}
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">Canals</h3>
+                  <h3 className="text-sm font-semibold text-gray-200 mb-3">Canals</h3>
                   <div className="space-y-3">
                     {state.waterBodiesData.waterBodies
                       .filter((w) => w.category === 'canal')
@@ -1168,7 +1169,7 @@ export default function CampusEntry() {
 
                 {/* Lakes / Ponds */}
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">Lakes and ponds</h3>
+                  <h3 className="text-sm font-semibold text-gray-200 mb-3">Lakes and ponds</h3>
                   <div className="space-y-3">
                     {state.waterBodiesData.waterBodies
                       .filter((w) => w.category === 'lake_pond')
@@ -1199,7 +1200,7 @@ export default function CampusEntry() {
 
                 {/* Other water bodies */}
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">Other water bodies</h3>
+                  <h3 className="text-sm font-semibold text-gray-200 mb-3">Other water bodies</h3>
                   <div className="space-y-3">
                     {state.waterBodiesData.waterBodies
                       .filter((w) => w.category !== 'canal' && w.category !== 'lake_pond')
@@ -1226,7 +1227,7 @@ export default function CampusEntry() {
                           },
                         })
                       }
-                      className="w-full py-2 border-2 border-dashed border-gray-200 rounded-xl text-sm text-gray-500 hover:border-gray-400 transition-colors flex items-center justify-center gap-1.5"
+                      className="w-full py-2 border-2 border-dashed border-white/10 rounded-xl text-sm text-gray-400 hover:border-gray-400 transition-colors flex items-center justify-center gap-1.5"
                     >
                       <Plus size={14} /> Add other water body type
                     </button>
@@ -1435,15 +1436,15 @@ export default function CampusEntry() {
             </SectionCard>
 
             {/* ── CAMPUS CARBON PREVIEW ───────────────────────────────────── */}
-            <div className="bg-gray-50 border border-gray-200 rounded-xl p-5">
-              <h2 className="text-sm font-semibold text-gray-700 mb-4">Campus carbon estimate</h2>
+            <div className="bg-white/5 border border-white/10 rounded-xl p-5">
+              <h2 className="text-sm font-semibold text-gray-200 mb-4">Campus carbon estimate</h2>
               <div className="space-y-0">
                 {[
                   {
                     label: 'Road infrastructure (annual)',
                     value: `+${liveEstimates.roadsAnnualTco2e}`,
                     unit: 'tCO₂e/yr',
-                    color: 'text-gray-700',
+                    color: 'text-gray-200',
                     scope: '1',
                   },
                   {
@@ -1484,11 +1485,11 @@ export default function CampusEntry() {
                 ].map(({ label, value, unit, color, scope }) => (
                   <div
                     key={label}
-                    className="flex justify-between items-center text-sm py-1.5 border-b border-gray-100 last:border-0"
+                    className="flex justify-between items-center text-sm py-1.5 border-b border-white/5 last:border-0"
                   >
-                    <span className="text-gray-500 flex items-center gap-1.5">
+                    <span className="text-gray-400 flex items-center gap-1.5">
                       {scope && (
-                        <span className="text-xs bg-gray-200 text-gray-600 px-1.5 py-0.5 rounded font-mono">
+                        <span className="text-xs bg-gray-200 text-gray-300 px-1.5 py-0.5 rounded font-mono">
                           S{scope}
                         </span>
                       )}
@@ -1499,8 +1500,8 @@ export default function CampusEntry() {
                     </span>
                   </div>
                 ))}
-                <div className="flex justify-between items-center text-sm pt-3 mt-1 border-t-2 border-gray-300">
-                  <span className="font-semibold text-gray-700">Net campus carbon (annual)</span>
+                <div className="flex justify-between items-center text-sm pt-3 mt-1 border-t-2 border-white/20">
+                  <span className="font-semibold text-gray-200">Net campus carbon (annual)</span>
                   <span
                     className={`font-bold text-base ${netIsNegative ? 'text-green-700' : 'text-amber-700'}`}
                   >
@@ -1536,17 +1537,17 @@ export default function CampusEntry() {
           <div className="w-72 flex-shrink-0 hidden lg:block">
             <div className="sticky top-20 space-y-4">
               {/* Campus identity */}
-              <div className="bg-white border border-gray-200 rounded-xl p-4">
-                <p className="text-sm font-bold text-gray-800">IIT BHU Campus</p>
+              <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-4">
+                <p className="text-sm font-bold text-gray-100">{campusDraft?.name ?? slug}</p>
                 <span className="inline-block mt-1 text-xs bg-iitbhu/10 text-iitbhu px-2 py-0.5 rounded-full">
                   campus data
                 </span>
               </div>
 
               {/* Save status */}
-              <div className="bg-white border border-gray-200 rounded-xl p-4">
+              <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs text-gray-500">Save status</span>
+                  <span className="text-xs text-gray-400">Save status</span>
                   {state.isDirty && !state.isSaving && (
                     <span className="text-xs text-amber-600">Unsaved changes</span>
                   )}
@@ -1573,11 +1574,11 @@ export default function CampusEntry() {
                   );
                   return (
                     <div className="my-3">
-                      <div className="flex justify-between text-xs text-gray-500 mb-1">
+                      <div className="flex justify-between text-xs text-gray-400 mb-1">
                         <span>Completeness</span>
                         <span>{score}%</span>
                       </div>
-                      <div className="w-full bg-gray-100 rounded-full h-2">
+                      <div className="w-full bg-white/10 rounded-full h-2">
                         <div
                           className="bg-iitbhu h-2 rounded-full transition-all"
                           style={{ width: `${score}%` }}
@@ -1613,7 +1614,7 @@ export default function CampusEntry() {
                     },
                   ].map(({ label, count }) => (
                     <div key={label} className="flex justify-between text-xs py-1">
-                      <span className="text-gray-600">{label}</span>
+                      <span className="text-gray-300">{label}</span>
                       <span className={count > 0 ? 'text-green-600 font-medium' : 'text-gray-400'}>
                         {count > 0 ? '✓' : '—'}
                       </span>
@@ -1626,7 +1627,7 @@ export default function CampusEntry() {
               <button
                 onClick={triggerSave}
                 disabled={!state.isDirty || state.isSaving}
-                className="w-full flex items-center justify-center gap-1.5 text-sm font-medium border border-gray-200 text-gray-700 py-2.5 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-40"
+                className="w-full flex items-center justify-center gap-1.5 text-sm font-medium border border-white/10 text-gray-200 py-2.5 rounded-xl hover:bg-white/5 transition-colors disabled:opacity-40"
               >
                 <Save size={14} />
                 {state.isSaving ? 'Saving…' : 'Save draft'}
@@ -1634,14 +1635,20 @@ export default function CampusEntry() {
 
               <button
                 onClick={() => triggerSave()}
-                className="w-full flex items-center justify-center gap-1.5 text-sm font-medium border border-gray-200 text-gray-700 py-2.5 rounded-xl hover:bg-gray-50 transition-colors"
+                className="w-full flex items-center justify-center gap-1.5 text-sm font-medium border border-white/10 text-gray-200 py-2.5 rounded-xl hover:bg-white/5 transition-colors"
               >
                 Save now
               </button>
 
               <button
-                onClick={() => submitMutation.mutate()}
-                disabled={submitMutation.isPending}
+                onClick={async () => {
+                  if (state.isDirty) {
+                    dispatch({ type: 'SET_SAVING', value: true });
+                    await saveMutation.mutateAsync(state);
+                  }
+                  submitMutation.mutate();
+                }}
+                disabled={submitMutation.isPending || state.isSaving}
                 className="w-full flex items-center justify-center gap-1.5 text-sm font-semibold bg-iitbhu text-white py-2.5 rounded-xl hover:bg-iitbhu-dark transition-colors disabled:opacity-50"
               >
                 <Send size={14} />

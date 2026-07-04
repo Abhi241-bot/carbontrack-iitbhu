@@ -95,7 +95,7 @@ function NewCampusModal({ onClose }: NewCampusModalProps) {
     opts?: { required?: boolean; type?: string; placeholder?: string }
   ) => (
     <div>
-      <label className="block text-xs font-medium text-gray-600 mb-1">
+      <label className="block text-xs font-medium text-gray-300 mb-1">
         {label}
         {opts?.required && <span className="text-red-500 ml-0.5">*</span>}
       </label>
@@ -105,29 +105,29 @@ function NewCampusModal({ onClose }: NewCampusModalProps) {
         placeholder={opts?.placeholder}
         value={form[key]}
         onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
-        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+        className="w-full border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
       />
     </div>
   );
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-5 border-b border-gray-100">
-          <h2 className="font-semibold text-gray-900">New campus</h2>
-          <button onClick={onClose} className="p-1 rounded-lg hover:bg-gray-100">
+      <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between p-5 border-b border-white/5">
+          <h2 className="font-semibold text-white">New campus</h2>
+          <button onClick={onClose} className="p-1 rounded-lg hover:bg-white/10">
             <X size={16} />
           </button>
         </div>
         <form onSubmit={handleSubmit} className="p-5 space-y-4">
-          {field('name', 'Campus name', { required: true, placeholder: 'e.g. IIT BHU Campus' })}
+          {field('name', 'Campus name', { required: true, placeholder: 'e.g. Main Campus' })}
           {field('institution', 'Institution', {
             required: true,
-            placeholder: 'e.g. Indian Institute of Technology (BHU) Varanasi',
+            placeholder: 'e.g. Indian Institute of Technology',
           })}
-          {field('shortName', 'Short name', { placeholder: 'e.g. IIT BHU' })}
+          {field('shortName', 'Short name', { placeholder: 'e.g. IIT' })}
           <div className="grid grid-cols-2 gap-3">
-            {field('city', 'City', { required: true, placeholder: 'Varanasi' })}
+            {field('city', 'City', { required: true, placeholder: 'City' })}
             {field('state', 'State', { required: true, placeholder: 'Uttar Pradesh' })}
           </div>
           {field('country', 'Country', { required: true })}
@@ -138,19 +138,19 @@ function NewCampusModal({ onClose }: NewCampusModalProps) {
           {field('website', 'Website', { type: 'url', placeholder: 'https://' })}
           {field('contactEmail', 'Contact email', { type: 'email' })}
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Description</label>
+            <label className="block text-xs font-medium text-gray-300 mb-1">Description</label>
             <textarea
               value={form.description}
               onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
               rows={3}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-iitbhu"
+              className="w-full border border-white/10 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-iitbhu"
             />
           </div>
           <div className="flex gap-3 pt-2">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 border border-gray-200 text-gray-600 py-2 rounded-lg text-sm hover:bg-gray-50"
+              className="flex-1 border border-white/10 text-gray-300 py-2 rounded-lg text-sm hover:bg-white/5"
             >
               Cancel
             </button>
@@ -184,56 +184,60 @@ function CampusCard({ campus }: { campus: CampusSummary }) {
   return (
     <div
       onClick={() => navigate(`/campus/${campus.slug}`)}
-      className="bg-white border border-gray-200 rounded-xl p-5 cursor-pointer hover:shadow-md hover:border-iitbhu/30 transition-all"
+      className="relative overflow-hidden bg-[#121212]/70 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] ring-1 ring-inset ring-white/5 rounded-xl p-5 cursor-pointer hover:shadow-lg hover:border-iitbhu/50 transition-all group"
     >
-      <div className="flex items-start justify-between gap-3 mb-3">
+      <div 
+        className="absolute -bottom-16 -right-16 w-40 h-40 rounded-full blur-[50px] opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none bg-iitbhu" 
+      />
+      
+      <div className="relative z-10 flex items-start justify-between gap-3 mb-3">
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-gray-900 truncate">{campus.name}</h3>
-          <p className="text-sm text-gray-500 truncate">{campus.institution}</p>
+          <h3 className="font-semibold text-white truncate">{campus.name}</h3>
+          <p className="text-sm text-gray-400 truncate">{campus.institution}</p>
         </div>
-        <div className="flex items-center gap-1 flex-shrink-0 text-xs text-gray-500">
+        <div className="flex items-center gap-1 flex-shrink-0 text-xs text-gray-400">
           <MapPin size={12} />
           <span>{campus.city}</span>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-1.5 mb-3">
+      <div className="relative z-10 flex flex-wrap gap-1.5 mb-3">
         {campus.totalAreaAcres && (
-          <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
+          <span className="text-xs bg-white/10 text-gray-300 px-2 py-0.5 rounded-full border border-white/5 shadow-inner">
             {campus.totalAreaAcres.toLocaleString()} acres
           </span>
         )}
         {campus.establishedYear && (
-          <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
+          <span className="text-xs bg-white/10 text-gray-300 px-2 py-0.5 rounded-full border border-white/5 shadow-inner">
             Est. {campus.establishedYear}
           </span>
         )}
       </div>
 
-      <div className="flex items-center gap-2 mb-3">
+      <div className="relative z-10 flex items-center gap-2 mb-3">
         <Building2 size={13} className="text-gray-400" />
-        <span className="text-sm text-gray-600">{buildingCount} buildings</span>
+        <span className="text-sm text-gray-300">{buildingCount} buildings</span>
         {verifiedCount > 0 && (
           <span className="text-xs text-green-600">· {verifiedCount} fully verified</span>
         )}
       </div>
 
       {buildingCount > 0 && (
-        <div className="mb-3">
-          <div className="flex justify-between text-xs text-gray-500 mb-1">
+        <div className="relative z-10 mb-3">
+          <div className="flex justify-between text-xs text-gray-400 mb-1">
             <span>Data coverage</span>
             <span>{coveragePct}%</span>
           </div>
-          <div className="w-full bg-gray-100 rounded-full h-1.5">
+          <div className="w-full bg-white/10 rounded-full h-1.5 shadow-inner">
             <div
-              className="bg-iitbhu h-1.5 rounded-full transition-all"
+              className="bg-iitbhu h-1.5 rounded-full transition-all shadow-[0_0_8px_rgba(235,51,73,0.6)]"
               style={{ width: `${coveragePct}%` }}
             />
           </div>
         </div>
       )}
 
-      <div className="flex flex-wrap gap-1.5 pt-2 border-t border-gray-100">
+      <div className="relative z-10 flex flex-wrap gap-1.5 pt-2 border-t border-white/5 mt-auto">
         <div className="flex items-center gap-1">
           <span className="text-xs text-gray-400">Overview:</span>
           <Badge
@@ -276,8 +280,8 @@ export default function CampusList() {
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">University campuses</h1>
-            <p className="text-sm text-gray-500 mt-0.5">
+            <h1 className="text-2xl font-bold text-white">University campuses</h1>
+            <p className="text-sm text-gray-400 mt-0.5">
               Select a campus to view or enter carbon data
             </p>
           </div>
@@ -300,9 +304,9 @@ export default function CampusList() {
             ))}
           </div>
         ) : isError ? (
-          <div className="text-center py-20 bg-gray-50 rounded-xl border border-gray-200">
+          <div className="text-center py-20 bg-white/5 rounded-xl border border-white/10">
             <MapPin size={32} className="text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-600 font-medium mb-1">Could not load campuses</p>
+            <p className="text-gray-300 font-medium mb-1">Could not load campuses</p>
             <p className="text-sm text-gray-400 mb-4">
               The server may be starting up. Please wait a moment.
             </p>
@@ -314,9 +318,9 @@ export default function CampusList() {
             </button>
           </div>
         ) : campuses.length === 0 ? (
-          <div className="text-center py-20 bg-gray-50 rounded-xl border border-gray-200">
+          <div className="text-center py-20 bg-white/5 rounded-xl border border-white/10">
             <MapPin size={32} className="text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-600 font-medium mb-1">No campuses have been set up yet</p>
+            <p className="text-gray-300 font-medium mb-1">No campuses have been set up yet</p>
             <p className="text-sm text-gray-400 mb-4">Create the first campus to get started.</p>
             {isAdmin && (
               <button

@@ -13,10 +13,10 @@ export default {
           100: '#F9D5D5',
         },
         forest: {
-          DEFAULT: '#1a3c2e',
-          dark: '#0f2a1e',
-          light: '#2a5040',
-          50: '#f0f7f4',
+          DEFAULT: '#000000', // Black background
+          dark: '#000000',
+          light: '#1a1a1a', // Dark gray for borders
+          50: '#a3a3a3', // Lighter gray for text
         },
       },
       fontFamily: {

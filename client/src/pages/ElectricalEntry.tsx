@@ -202,7 +202,7 @@ function calcDgAnnualTco2e(dg: IDGSet): number {
 // ── Small reusable UI bits ────────────────────────────────────────────────────
 function Label({ children, required }: { children: React.ReactNode; required?: boolean }) {
   return (
-    <label className="block text-sm font-medium text-gray-700 mb-1">
+    <label className="block text-sm font-medium text-gray-200 mb-1">
       {children}
       {required && <span className="text-red-500 ml-0.5">*</span>}
     </label>
@@ -210,7 +210,7 @@ function Label({ children, required }: { children: React.ReactNode; required?: b
 }
 
 function Helper({ children }: { children: React.ReactNode }) {
-  return <p className="text-xs text-gray-500 mt-0.5">{children}</p>;
+  return <p className="text-xs text-gray-400 mt-0.5">{children}</p>;
 }
 
 function Field({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -241,7 +241,7 @@ function TextInput({
       required={required}
       maxLength={maxLength}
       className={cn(
-        'w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500',
+        'w-full rounded-lg border border-white/20 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500',
         className
       )}
     />
@@ -278,7 +278,7 @@ function NumberInput({
       max={max}
       step={step ?? 1}
       className={cn(
-        'w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500',
+        'w-full rounded-lg border border-white/20 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500',
         className
       )}
     />
@@ -306,11 +306,11 @@ function Toggle({
     >
       <span
         className={cn(
-          'inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform',
+          'inline-block h-3.5 w-3.5 transform rounded-full bg-black/40 backdrop-blur-md transition-transform',
           checked ? 'translate-x-4.5' : 'translate-x-0.5'
         )}
       />
-      {label && <span className="ml-10 text-sm text-gray-700 whitespace-nowrap">{label}</span>}
+      {label && <span className="ml-10 text-sm text-gray-200 whitespace-nowrap">{label}</span>}
     </button>
   );
 }
@@ -333,17 +333,17 @@ function TransformerCard({
   const showPreview = (transformer.noLoadLossKw ?? 0) > 0 || (transformer.loadLossKw ?? 0) > 0;
 
   return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden bg-white">
+    <div className="border border-white/10 rounded-xl overflow-hidden bg-black/40 backdrop-blur-md">
       {/* Collapsed header */}
       <button
         type="button"
         onClick={onToggle}
-        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-50 transition-colors"
+        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/5 transition-colors"
       >
-        <span className="font-medium text-gray-900 text-sm min-w-[80px]">
+        <span className="font-medium text-white text-sm min-w-[80px]">
           {transformer.transformerId || 'New transformer'}
         </span>
-        <span className="text-xs text-gray-500 truncate flex-1">
+        <span className="text-xs text-gray-400 truncate flex-1">
           {transformer.location || '—'}{' '}
           {transformer.ratingKva ? `· ${transformer.ratingKva} kVA` : ''}{' '}
           {transformer.voltageRatio ? `· ${transformer.voltageRatio}` : ''}
@@ -372,7 +372,7 @@ function TransformerCard({
 
       {/* Expanded form */}
       {isExpanded && (
-        <div className="px-4 pb-4 border-t border-gray-100 bg-gray-50">
+        <div className="px-4 pb-4 border-t border-white/5 bg-white/5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             {/* Left column */}
             <div className="space-y-3">
@@ -450,7 +450,7 @@ function TransformerCard({
                 <select
                   value={transformer.coolingType ?? ''}
                   onChange={(e) => onUpdate({ coolingType: e.target.value })}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full rounded-lg border border-white/20 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                 >
                   <option value="">Select cooling type</option>
                   {TRANSFORMER_COOLING_TYPES.map((t) => (
@@ -547,16 +547,16 @@ function SwitchgearCard({
   onRemove: () => void;
 }) {
   return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden bg-white">
+    <div className="border border-white/10 rounded-xl overflow-hidden bg-black/40 backdrop-blur-md">
       <button
         type="button"
         onClick={onToggle}
-        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-50 transition-colors"
+        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/5 transition-colors"
       >
-        <span className="font-medium text-gray-900 text-sm min-w-[80px]">
+        <span className="font-medium text-white text-sm min-w-[80px]">
           {panel.panelId || 'New panel'}
         </span>
-        <span className="text-xs text-gray-500 truncate flex-1">
+        <span className="text-xs text-gray-400 truncate flex-1">
           {panel.voltageKv ? `${panel.voltageKv} kV` : ''}{' '}
           {panel.busRatingA ? `· ${panel.busRatingA} A` : ''}{' '}
           {panel.commissionedYear ? `· ${panel.commissionedYear}` : ''}
@@ -578,7 +578,7 @@ function SwitchgearCard({
         )}
       </button>
       {isExpanded && (
-        <div className="px-4 pb-4 border-t border-gray-100 bg-gray-50">
+        <div className="px-4 pb-4 border-t border-white/5 bg-white/5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <div className="space-y-3">
               <Field>
@@ -601,7 +601,7 @@ function SwitchgearCard({
                         'px-2 py-1 rounded text-xs border',
                         panel.voltageKv === v
                           ? 'bg-green-600 text-white border-green-600'
-                          : 'bg-white text-gray-700 border-gray-300 hover:border-green-400'
+                          : 'bg-black/40 backdrop-blur-md text-gray-200 border-white/20 hover:border-green-400'
                       )}
                     >
                       {v} kV
@@ -657,7 +657,7 @@ function SwitchgearCard({
                     checked={panel.scadaReady ?? false}
                     onChange={(v) => onUpdate({ scadaReady: v })}
                   />
-                  <span className="text-sm text-gray-700">{panel.scadaReady ? 'Yes' : 'No'}</span>
+                  <span className="text-sm text-gray-200">{panel.scadaReady ? 'Yes' : 'No'}</span>
                 </div>
               </Field>
               <Field>
@@ -693,16 +693,16 @@ function CapacitorCard({
 }) {
   const lowPf = (bank.averageMeteredPf ?? 1) < 0.9;
   return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden bg-white">
+    <div className="border border-white/10 rounded-xl overflow-hidden bg-black/40 backdrop-blur-md">
       <button
         type="button"
         onClick={onToggle}
-        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-50 transition-colors"
+        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/5 transition-colors"
       >
-        <span className="font-medium text-gray-900 text-sm min-w-[80px] truncate">
+        <span className="font-medium text-white text-sm min-w-[80px] truncate">
           {bank.location || 'New bank'}
         </span>
-        <span className="text-xs text-gray-500 truncate flex-1">
+        <span className="text-xs text-gray-400 truncate flex-1">
           {bank.kvar ? `${bank.kvar} kVAr` : ''} {bank.controlType ? `· ${bank.controlType}` : ''}{' '}
           {bank.setPowerFactor ? `· Set PF: ${bank.setPowerFactor}` : ''}{' '}
           {bank.averageMeteredPf ? `· Avg PF: ${bank.averageMeteredPf}` : ''}
@@ -727,7 +727,7 @@ function CapacitorCard({
         )}
       </button>
       {isExpanded && (
-        <div className="px-4 pb-4 border-t border-gray-100 bg-gray-50">
+        <div className="px-4 pb-4 border-t border-white/5 bg-white/5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <div className="space-y-3">
               <Field>
@@ -767,7 +767,7 @@ function CapacitorCard({
                         'flex-1 py-1.5 rounded-lg text-xs border capitalize',
                         bank.controlType === ct
                           ? 'bg-green-600 text-white border-green-600'
-                          : 'bg-white text-gray-700 border-gray-300 hover:border-green-400'
+                          : 'bg-black/40 backdrop-blur-md text-gray-200 border-white/20 hover:border-green-400'
                       )}
                     >
                       {ct}
@@ -863,16 +863,16 @@ function DGSetCard({
   }
 
   return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden bg-white">
+    <div className="border border-white/10 rounded-xl overflow-hidden bg-black/40 backdrop-blur-md">
       <button
         type="button"
         onClick={onToggle}
-        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-50 transition-colors"
+        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/5 transition-colors"
       >
-        <span className="font-medium text-gray-900 text-sm min-w-[80px]">
+        <span className="font-medium text-white text-sm min-w-[80px]">
           {dg.dgId || 'New DG set'}
         </span>
-        <span className="text-xs text-gray-500 truncate flex-1">
+        <span className="text-xs text-gray-400 truncate flex-1">
           {dg.capacityKva ? `${dg.capacityKva} kVA` : ''} {dg.fuelType ? `· ${dg.fuelType}` : ''}{' '}
           {dg.monthlyFuelConsumptionL ? `· ${dg.monthlyFuelConsumptionL} L/mo` : ''}
         </span>
@@ -899,10 +899,10 @@ function DGSetCard({
       </button>
 
       {isExpanded && (
-        <div className="px-4 pb-4 border-t border-gray-100 bg-gray-50 space-y-5">
+        <div className="px-4 pb-4 border-t border-white/5 bg-white/5 space-y-5">
           {/* GROUP A: Identity */}
           <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mt-4 mb-3">
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mt-4 mb-3">
               Identity
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -928,7 +928,7 @@ function DGSetCard({
                   <select
                     value={dg.purpose ?? ''}
                     onChange={(e) => onUpdate({ purpose: e.target.value as IDGSet['purpose'] })}
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full rounded-lg border border-white/20 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                   >
                     <option value="">Select purpose</option>
                     <option value="emergency">Emergency</option>
@@ -961,7 +961,7 @@ function DGSetCard({
                   <select
                     value={dg.fuelType}
                     onChange={(e) => onUpdate({ fuelType: e.target.value as IDGSet['fuelType'] })}
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full rounded-lg border border-white/20 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                   >
                     {DG_FUEL_TYPES.map((ft) => (
                       <option key={ft.value} value={ft.value}>
@@ -993,7 +993,7 @@ function DGSetCard({
 
           {/* GROUP B: Emission factors */}
           <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
               Emission factors (optional)
             </p>
             <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-800 mb-3">
@@ -1061,7 +1061,7 @@ function DGSetCard({
 
           {/* GROUP C: Operational data */}
           <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
               Operational data
             </p>
             <div className="bg-green-50 border border-green-200 rounded-lg px-3 py-2 text-xs text-green-800 mb-3">
@@ -1139,15 +1139,15 @@ function ApplianceRow({
       : undefined;
 
   return (
-    <div className="border border-gray-100 rounded-lg overflow-hidden bg-white">
+    <div className="border border-white/5 rounded-lg overflow-hidden bg-black/40 backdrop-blur-md">
       <div className="flex items-center gap-3 px-3 py-2">
         <button
           type="button"
           onClick={onToggle}
           className="flex-1 flex items-center gap-2 text-left min-w-0"
         >
-          <span className="text-sm text-gray-800 truncate min-w-[120px]">{label}</span>
-          <span className="text-xs text-gray-500">
+          <span className="text-sm text-gray-100 truncate min-w-[120px]">{label}</span>
+          <span className="text-xs text-gray-400">
             {appliance.count > 0 ? `×${appliance.count}` : '—'}
             {appliance.wattsEach ? ` · ${appliance.wattsEach}W` : ''}
             {appliance.hoursPerDay ? ` · ${appliance.hoursPerDay}h/day` : ''}
@@ -1176,7 +1176,7 @@ function ApplianceRow({
           <button
             type="button"
             onClick={() => onUpdate({ count: Math.max(0, appliance.count - 1) })}
-            className="w-6 h-6 flex items-center justify-center rounded border border-gray-300 text-gray-600 hover:bg-gray-100"
+            className="w-6 h-6 flex items-center justify-center rounded border border-white/20 text-gray-300 hover:bg-white/10"
           >
             −
           </button>
@@ -1185,12 +1185,12 @@ function ApplianceRow({
             value={appliance.count}
             min={0}
             onChange={(e) => onUpdate({ count: parseInt(e.target.value) || 0 })}
-            className="w-12 text-center text-sm border border-gray-300 rounded py-0.5 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-12 text-center text-sm border border-white/20 rounded py-0.5 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
           <button
             type="button"
             onClick={() => onUpdate({ count: appliance.count + 1 })}
-            className="w-6 h-6 flex items-center justify-center rounded border border-gray-300 text-gray-600 hover:bg-gray-100"
+            className="w-6 h-6 flex items-center justify-center rounded border border-white/20 text-gray-300 hover:bg-white/10"
           >
             +
           </button>
@@ -1204,7 +1204,7 @@ function ApplianceRow({
 
       {/* Expanded detail */}
       {isExpanded && (
-        <div className="px-3 pb-3 border-t border-gray-100 bg-gray-50 pt-3 space-y-3">
+        <div className="px-3 pb-3 border-t border-white/5 bg-white/5 pt-3 space-y-3">
           {/* Zone A: Base fields */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {appliance.isCustom && (
@@ -1254,8 +1254,8 @@ function ApplianceRow({
           </div>
 
           {/* Zone B: Efficiency tracking */}
-          <div className="border-t border-gray-200 pt-3">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+          <div className="border-t border-white/10 pt-3">
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
               Efficiency split
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1266,7 +1266,7 @@ function ApplianceRow({
                     checked={appliance.isEnergyEfficientType ?? false}
                     onChange={(v) => onUpdate({ isEnergyEfficientType: v })}
                   />
-                  <span className="text-sm text-gray-700">
+                  <span className="text-sm text-gray-200">
                     {appliance.isEnergyEfficientType ? 'Yes' : 'No'}
                   </span>
                 </div>
@@ -1301,7 +1301,7 @@ function ApplianceRow({
               </Field>
               <Field>
                 <Label>Non-efficient units (auto)</Label>
-                <div className="rounded-lg border border-gray-200 bg-gray-100 px-3 py-2 text-sm text-gray-600">
+                <div className="rounded-lg border border-white/10 bg-white/10 px-3 py-2 text-sm text-gray-300">
                   {appliance.qtyNonEfficientUnits ?? appliance.count} units
                 </div>
               </Field>
@@ -1310,7 +1310,7 @@ function ApplianceRow({
             {/* Progress bar */}
             {appliance.qtyEfficientUnits !== undefined && appliance.count > 0 && (
               <div className="mt-2">
-                <div className="flex justify-between text-xs text-gray-500 mb-1">
+                <div className="flex justify-between text-xs text-gray-400 mb-1">
                   <span>Efficiency: {effPct}%</span>
                   <span>
                     {appliance.qtyEfficientUnits}/{appliance.count} efficient
@@ -1370,9 +1370,9 @@ function AddDGRecordForm({
     setDraft((d) => ({ ...d, [k]: v }));
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-2 items-end border-t border-dashed border-gray-200 pt-3 mt-1">
+    <div className="grid grid-cols-2 md:grid-cols-5 gap-2 items-end border-t border-dashed border-white/10 pt-3 mt-1">
       <div>
-        <label className="block text-xs text-gray-500 mb-0.5">Month (YYYY-MM)</label>
+        <label className="block text-xs text-gray-400 mb-0.5">Month (YYYY-MM)</label>
         <input
           type="month"
           value={draft.month ?? ''}
@@ -1380,39 +1380,39 @@ function AddDGRecordForm({
             const [y, m] = e.target.value.split('-').map(Number);
             setDraft((d) => ({ ...d, month: e.target.value, year: y, monthIndex: m }));
           }}
-          className="w-full rounded border border-gray-300 px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400"
+          className="w-full rounded border border-white/20 px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400"
         />
       </div>
       <div>
-        <label className="block text-xs text-gray-500 mb-0.5">Runtime (h)</label>
+        <label className="block text-xs text-gray-400 mb-0.5">Runtime (h)</label>
         <input
           type="number"
           min={0}
           value={draft.totalRuntimeHours ?? ''}
           onChange={(e) => set('totalRuntimeHours', Number(e.target.value))}
-          className="w-full rounded border border-gray-300 px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400"
+          className="w-full rounded border border-white/20 px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400"
           placeholder="hours"
         />
       </div>
       <div>
-        <label className="block text-xs text-gray-500 mb-0.5">Fuel (L)</label>
+        <label className="block text-xs text-gray-400 mb-0.5">Fuel (L)</label>
         <input
           type="number"
           min={0}
           value={draft.totalFuelConsumptionL ?? ''}
           onChange={(e) => set('totalFuelConsumptionL', Number(e.target.value))}
-          className="w-full rounded border border-gray-300 px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400"
+          className="w-full rounded border border-white/20 px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400"
           placeholder="litres"
         />
       </div>
       <div>
-        <label className="block text-xs text-gray-500 mb-0.5">kWh generated</label>
+        <label className="block text-xs text-gray-400 mb-0.5">kWh generated</label>
         <input
           type="number"
           min={0}
           value={draft.totalKwhGenerated ?? ''}
           onChange={(e) => set('totalKwhGenerated', Number(e.target.value))}
-          className="w-full rounded border border-gray-300 px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400"
+          className="w-full rounded border border-white/20 px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400"
           placeholder="kWh"
         />
       </div>
@@ -2457,8 +2457,8 @@ export default function ElectricalEntry() {
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Electrical data entry</h1>
-            <p className="text-sm text-gray-500 mt-0.5">
+            <h1 className="text-2xl font-bold text-white">Electrical data entry</h1>
+            <p className="text-sm text-gray-400 mt-0.5">
               {building?.name} · {building?.buildingType}
             </p>
           </div>
@@ -2488,7 +2488,7 @@ export default function ElectricalEntry() {
           {/* Sticky sidebar */}
           <aside className="w-56 flex-shrink-0 hidden lg:block">
             <div className="sticky top-6 space-y-1">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
                 Sections
               </p>
               {SIDEBAR_SECTIONS.map((s) => (
@@ -2500,7 +2500,7 @@ export default function ElectricalEntry() {
                     'w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-left transition-colors',
                     state.activeSection === s.id
                       ? 'bg-green-50 text-green-700 font-medium'
-                      : 'text-gray-600 hover:bg-gray-100'
+                      : 'text-gray-300 hover:bg-white/10'
                   )}
                 >
                   {s.icon}
@@ -2509,15 +2509,15 @@ export default function ElectricalEntry() {
               ))}
 
               {/* Live estimates */}
-              <div className="mt-6 border-t border-gray-200 pt-4 space-y-1.5">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+              <div className="mt-6 border-t border-white/10 pt-4 space-y-1.5">
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
                   Live estimates
                 </p>
-                <div className="flex justify-between text-xs text-gray-600">
+                <div className="flex justify-between text-xs text-gray-300">
                   <span>Transformer losses</span>
                   <span>{liveEstimates.trLoss.toFixed(2)} t</span>
                 </div>
-                <div className="flex justify-between text-xs text-gray-600">
+                <div className="flex justify-between text-xs text-gray-300">
                   <span className="flex items-center gap-1">
                     Grid electricity
                     <span className="text-gray-400 italic">
@@ -2558,7 +2558,7 @@ export default function ElectricalEntry() {
                   <span>{liveEstimates.dgTotal.toFixed(2)} t</span>
                 </div>
                 {lightingSurveyTotals.annualKwhTotal > 0 && (
-                  <div className="flex items-center justify-between text-xs text-gray-500">
+                  <div className="flex items-center justify-between text-xs text-gray-400">
                     <span className="italic">incl. lighting survey:</span>
                     <span>
                       {((lightingSurveyTotals.annualKwhTotal * EF_GRID) / 1000).toFixed(1)} tCO₂e
@@ -2566,13 +2566,13 @@ export default function ElectricalEntry() {
                   </div>
                 )}
                 {motorsTotals.annualKwhTotal > 0 && (
-                  <div className="flex items-center justify-between text-xs text-gray-500">
+                  <div className="flex items-center justify-between text-xs text-gray-400">
                     <span className="italic">incl. motors/pumps:</span>
                     <span>{((motorsTotals.annualKwhTotal * EF_GRID) / 1000).toFixed(1)} tCO₂e</span>
                   </div>
                 )}
                 {motorsTotals.vfdSavingsKwh > 0 && (
-                  <div className="flex items-center justify-between text-xs text-green-600 border-t border-gray-100 pt-1 mt-1">
+                  <div className="flex items-center justify-between text-xs text-green-600 border-t border-white/5 pt-1 mt-1">
                     <span>VFD saving potential:</span>
                     <span className="font-medium">
                       −{((motorsTotals.vfdSavingsKwh * EF_GRID) / 1000).toFixed(1)} tCO₂e/yr
@@ -2580,8 +2580,8 @@ export default function ElectricalEntry() {
                   </div>
                 )}
                 {state.tariffSchedules[0]?.energyChargePerKwh && liveEstimates.gridTco2e > 0 && (
-                  <div className="mt-2 pt-2 border-t border-gray-100">
-                    <div className="flex items-center justify-between text-xs text-gray-500">
+                  <div className="mt-2 pt-2 border-t border-white/5">
+                    <div className="flex items-center justify-between text-xs text-gray-400">
                       <span>Est. annual electricity cost:</span>
                       <span>
                         ₹
@@ -2608,7 +2608,7 @@ export default function ElectricalEntry() {
 
                 {/* Phase 9: EV charging */}
                 {evChargingTotals.tco2e > 0 && (
-                  <div className="flex items-center justify-between text-xs text-amber-700 border-t border-gray-100 pt-1 mt-1">
+                  <div className="flex items-center justify-between text-xs text-amber-700 border-t border-white/5 pt-1 mt-1">
                     <span>EV charging (Scope 2):</span>
                     <span>+{evChargingTotals.tco2e.toFixed(2)} t</span>
                   </div>
@@ -2616,13 +2616,13 @@ export default function ElectricalEntry() {
 
                 {/* Phase 9: Vehicle fleet */}
                 {vehicleFleetTotals.totalTco2e > 0 && (
-                  <div className="flex items-center justify-between text-xs text-red-700 font-medium border-t border-gray-100 pt-1 mt-1">
+                  <div className="flex items-center justify-between text-xs text-red-700 font-medium border-t border-white/5 pt-1 mt-1">
                     <span>Vehicle fleet (Scope 1):</span>
                     <span>+{vehicleFleetTotals.totalTco2e.toFixed(2)} t</span>
                   </div>
                 )}
 
-                <div className="flex justify-between text-sm font-semibold text-gray-800 border-t border-gray-200 pt-1.5 mt-1">
+                <div className="flex justify-between text-sm font-semibold text-gray-100 border-t border-white/10 pt-1.5 mt-1">
                   <span>Total operational</span>
                   <span>
                     {(
@@ -2647,8 +2647,8 @@ export default function ElectricalEntry() {
               id="infrastructure"
             >
               <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">Electrical infrastructure</h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <h2 className="text-xl font-semibold text-white">Electrical infrastructure</h2>
+                <p className="text-sm text-gray-400 mt-1">
                   Record the key electrical plant for this building. This data is used to account
                   for transformer losses and power quality.
                 </p>
@@ -2656,8 +2656,8 @@ export default function ElectricalEntry() {
 
               {/* 1A: Transformers */}
               <div className="mb-6">
-                <h3 className="text-base font-medium text-gray-800 mb-1">Transformers</h3>
-                <p className="text-xs text-gray-500 mb-3">
+                <h3 className="text-base font-medium text-gray-100 mb-1">Transformers</h3>
+                <p className="text-xs text-gray-400 mb-3">
                   Enter one row per transformer unit serving this building.
                 </p>
                 <div className="space-y-3">
@@ -2698,10 +2698,10 @@ export default function ElectricalEntry() {
 
               {/* 1B: Switchgear */}
               <div className="mb-6">
-                <h3 className="text-base font-medium text-gray-800 mb-1">
+                <h3 className="text-base font-medium text-gray-100 mb-1">
                   Switchgear panels (MDB / SDB)
                 </h3>
-                <p className="text-xs text-gray-500 mb-3">
+                <p className="text-xs text-gray-400 mb-3">
                   Main distribution boards and sub-distribution boards serving this building.
                 </p>
                 <div className="space-y-3">
@@ -2739,10 +2739,10 @@ export default function ElectricalEntry() {
 
               {/* 1C: Capacitor Banks */}
               <div>
-                <h3 className="text-base font-medium text-gray-800 mb-1">
+                <h3 className="text-base font-medium text-gray-100 mb-1">
                   Capacitor banks (power factor correction)
                 </h3>
-                <p className="text-xs text-gray-500 mb-3">
+                <p className="text-xs text-gray-400 mb-3">
                   Average metered PF is used to cross-check your stated consumption.
                 </p>
                 <div className="space-y-3">
@@ -2787,8 +2787,8 @@ export default function ElectricalEntry() {
               id="dg-sets"
             >
               <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">DG sets & backup power</h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <h2 className="text-xl font-semibold text-white">DG sets & backup power</h2>
+                <p className="text-sm text-gray-400 mt-1">
                   Diesel generators are a significant source of direct carbon emissions (Scope 1).
                   Enter each DG set separately for accurate calculation.
                 </p>
@@ -2850,8 +2850,8 @@ export default function ElectricalEntry() {
               id="grid-energy"
             >
               <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">Grid energy & solar</h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <h2 className="text-xl font-semibold text-white">Grid energy & solar</h2>
+                <p className="text-sm text-gray-400 mt-1">
                   Monthly grid consumption and renewable generation for this building.
                 </p>
               </div>
@@ -2876,7 +2876,7 @@ export default function ElectricalEntry() {
                         'flex flex-col items-center gap-1 p-3 rounded-xl border-2 text-sm font-medium transition-colors',
                         state.energyData.primarySource === opt.value
                           ? 'border-green-500 bg-green-50 text-green-700'
-                          : 'border-gray-200 text-gray-700 hover:border-green-300'
+                          : 'border-white/10 text-gray-200 hover:border-green-300'
                       )}
                     >
                       {opt.icon}
@@ -2917,7 +2917,7 @@ export default function ElectricalEntry() {
                           dispatch({ type: 'UPDATE_ENERGY', payload: { isEstimated: v } })
                         }
                       />
-                      <span className="text-sm text-gray-600 whitespace-nowrap">
+                      <span className="text-sm text-gray-300 whitespace-nowrap">
                         I don't know (estimate)
                       </span>
                     </div>
@@ -2948,7 +2948,7 @@ export default function ElectricalEntry() {
 
               {/* Custom energy sources */}
               <div>
-                <p className="text-sm font-medium text-gray-700 mb-2">Custom energy sources</p>
+                <p className="text-sm font-medium text-gray-200 mb-2">Custom energy sources</p>
                 {(state.energyData.customEnergySources ?? []).map((src) => (
                   <div key={src.id} className="flex items-center gap-3 mb-2">
                     <TextInput
@@ -3003,8 +3003,8 @@ export default function ElectricalEntry() {
               id="appliances"
             >
               <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">Appliances & equipment</h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <h2 className="text-xl font-semibold text-white">Appliances & equipment</h2>
+                <p className="text-sm text-gray-400 mt-1">
                   Record all electrical appliances by category. Use the efficiency split fields to
                   track the mix of efficient vs non-efficient units.
                 </p>
@@ -3016,11 +3016,11 @@ export default function ElectricalEntry() {
                 return (
                   <div key={cat} className="mb-6">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-gray-500">{icon}</span>
-                      <h3 className="text-base font-medium text-gray-800">{label}</h3>
+                      <span className="text-gray-400">{icon}</span>
+                      <h3 className="text-base font-medium text-gray-100">{label}</h3>
                       {activeCount > 0 && <Badge variant="info">{activeCount} active</Badge>}
                     </div>
-                    <div className="space-y-2 bg-gray-50 rounded-xl p-3">
+                    <div className="space-y-2 bg-white/5 rounded-xl p-3">
                       {items.map((a) => (
                         <ApplianceRow
                           key={a.id}
@@ -3096,7 +3096,7 @@ export default function ElectricalEntry() {
                 </div>
 
                 {state.showLightingAudit && (
-                  <div className="px-4 pb-4 bg-white">
+                  <div className="px-4 pb-4 bg-black/40 backdrop-blur-md">
                     {/* Info box */}
                     <div className="mt-3 mb-4 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-800">
                       <Info size={12} className="inline mr-1" />
@@ -3110,7 +3110,7 @@ export default function ElectricalEntry() {
                       <div className="overflow-x-auto mb-3">
                         <table className="w-full text-xs border-collapse">
                           <thead>
-                            <tr className="bg-gray-50 text-gray-500 uppercase text-[10px] tracking-wide">
+                            <tr className="bg-white/5 text-gray-400 uppercase text-[10px] tracking-wide">
                               <th className="px-2 py-1.5 text-left font-medium">Area / Location</th>
                               <th className="px-2 py-1.5 text-left font-medium">Fixture Type</th>
                               <th className="px-2 py-1.5 text-center font-medium">Qty</th>
@@ -3140,7 +3140,7 @@ export default function ElectricalEntry() {
                                   ? Math.round((1 - annKwhLed / annKwh) * 100)
                                   : null;
                               return (
-                                <tr key={row.id} className="hover:bg-gray-50">
+                                <tr key={row.id} className="hover:bg-white/5">
                                   <td className="px-2 py-1">
                                     <input
                                       type="text"
@@ -3155,7 +3155,7 @@ export default function ElectricalEntry() {
                                         })
                                       }
                                       placeholder="Lab 101"
-                                      className="w-28 rounded border border-gray-200 px-1.5 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-green-500"
+                                      className="w-28 rounded border border-white/10 px-1.5 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-green-500"
                                     />
                                   </td>
                                   <td className="px-2 py-1">
@@ -3172,7 +3172,7 @@ export default function ElectricalEntry() {
                                           },
                                         })
                                       }
-                                      className="w-36 rounded border border-gray-200 px-1.5 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-green-500"
+                                      className="w-36 rounded border border-white/10 px-1.5 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-green-500"
                                     >
                                       {Object.entries(LIGHTING_FIXTURE_LABELS).map(([k, v]) => (
                                         <option key={k} value={k}>
@@ -3195,7 +3195,7 @@ export default function ElectricalEntry() {
                                           },
                                         })
                                       }
-                                      className="w-14 rounded border border-gray-200 px-1.5 py-0.5 text-xs text-center focus:outline-none focus:ring-1 focus:ring-green-500"
+                                      className="w-14 rounded border border-white/10 px-1.5 py-0.5 text-xs text-center focus:outline-none focus:ring-1 focus:ring-green-500"
                                     />
                                   </td>
                                   <td className="px-2 py-1">
@@ -3214,7 +3214,7 @@ export default function ElectricalEntry() {
                                           },
                                         })
                                       }
-                                      className="w-16 rounded border border-gray-200 px-1.5 py-0.5 text-xs text-center focus:outline-none focus:ring-1 focus:ring-green-500"
+                                      className="w-16 rounded border border-white/10 px-1.5 py-0.5 text-xs text-center focus:outline-none focus:ring-1 focus:ring-green-500"
                                     />
                                   </td>
                                   <td className="px-2 py-1">
@@ -3235,7 +3235,7 @@ export default function ElectricalEntry() {
                                           },
                                         })
                                       }
-                                      className="w-16 rounded border border-gray-200 px-1.5 py-0.5 text-xs text-center focus:outline-none focus:ring-1 focus:ring-green-500"
+                                      className="w-16 rounded border border-white/10 px-1.5 py-0.5 text-xs text-center focus:outline-none focus:ring-1 focus:ring-green-500"
                                     />
                                   </td>
                                   <td className="px-2 py-1">
@@ -3256,7 +3256,7 @@ export default function ElectricalEntry() {
                                           },
                                         })
                                       }
-                                      className="w-16 rounded border border-gray-200 px-1.5 py-0.5 text-xs text-center focus:outline-none focus:ring-1 focus:ring-green-500"
+                                      className="w-16 rounded border border-white/10 px-1.5 py-0.5 text-xs text-center focus:outline-none focus:ring-1 focus:ring-green-500"
                                     />
                                   </td>
                                   <td className="px-2 py-1">
@@ -3273,7 +3273,7 @@ export default function ElectricalEntry() {
                                           },
                                         })
                                       }
-                                      className="w-32 rounded border border-gray-200 px-1.5 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-green-500"
+                                      className="w-32 rounded border border-white/10 px-1.5 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-green-500"
                                     >
                                       {Object.entries(LIGHTING_CONTROL_LABELS).map(([k, v]) => (
                                         <option key={k} value={k}>
@@ -3302,10 +3302,10 @@ export default function ElectricalEntry() {
                                         })
                                       }
                                       placeholder="18W LED tube"
-                                      className="w-28 rounded border border-gray-200 px-1.5 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-green-500"
+                                      className="w-28 rounded border border-white/10 px-1.5 py-0.5 text-xs focus:outline-none focus:ring-1 focus:ring-green-500"
                                     />
                                   </td>
-                                  <td className="px-2 py-1 text-center text-gray-500">
+                                  <td className="px-2 py-1 text-center text-gray-400">
                                     {annKwh > 0
                                       ? annKwh.toLocaleString(undefined, {
                                           maximumFractionDigits: 0,
@@ -3415,12 +3415,12 @@ export default function ElectricalEntry() {
               {/* ── MOTORS & PUMPS (Phase 4.2) ── */}
               <div className="mb-6">
                 <div className="flex items-center gap-2 mb-1">
-                  <Settings size={16} className="text-gray-500" />
-                  <h3 className="text-base font-medium text-gray-800">
+                  <Settings size={16} className="text-gray-400" />
+                  <h3 className="text-base font-medium text-gray-100">
                     Motors, pumps & mechanical equipment
                   </h3>
                 </div>
-                <p className="text-xs text-gray-500 mb-3">
+                <p className="text-xs text-gray-400 mb-3">
                   Record significant rotating equipment — water pumps, HVAC fans, air compressors,
                   lifts. IE efficiency class and VFD feasibility are used to estimate energy savings
                   opportunities.
@@ -3444,32 +3444,32 @@ export default function ElectricalEntry() {
                     continuous: 'bg-red-100 text-red-700',
                     primary: 'bg-orange-100 text-orange-700',
                     intermittent: 'bg-amber-100 text-amber-700',
-                    standby: 'bg-gray-100 text-gray-600',
+                    standby: 'bg-white/10 text-gray-300',
                   };
                   const ieCorrPct = Math.round((ieCorr - 1) * 100);
                   return (
                     <div
                       key={motor.id}
-                      className="border border-gray-200 rounded-xl overflow-hidden bg-white mb-3"
+                      className="border border-white/10 rounded-xl overflow-hidden bg-black/40 backdrop-blur-md mb-3"
                     >
                       {/* Collapsed header */}
                       <button
                         type="button"
                         onClick={() => dispatch({ type: 'TOGGLE_CARD_EXPAND', payload: motor.id })}
-                        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/5 transition-colors"
                       >
-                        <span className="font-medium text-gray-900 text-sm min-w-[100px]">
+                        <span className="font-medium text-white text-sm min-w-[100px]">
                           {motor.equipmentId || 'New equipment'}
                         </span>
                         <span
                           className={cn(
                             'text-xs px-2 py-0.5 rounded-full font-medium',
-                            dutyColors[motor.duty] ?? 'bg-gray-100 text-gray-600'
+                            dutyColors[motor.duty] ?? 'bg-white/10 text-gray-300'
                           )}
                         >
                           {MOTOR_DUTY_LABELS[motor.duty]?.split(' ')[0] ?? motor.duty}
                         </span>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-400">
                           {motor.ratedPowerKw} kW · {motor.efficiencyClass}
                         </span>
                         {motor.duty !== 'standby' && annKwh > 0 && (
@@ -3501,10 +3501,10 @@ export default function ElectricalEntry() {
 
                       {/* Expanded form */}
                       {isExpanded && (
-                        <div className="px-4 pb-4 border-t border-gray-100 bg-gray-50 space-y-4 mt-0 pt-4">
+                        <div className="px-4 pb-4 border-t border-white/5 bg-white/5 space-y-4 mt-0 pt-4">
                           {/* Group A — Identity */}
                           <div>
-                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
                               Identity & rating
                             </p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -3568,7 +3568,7 @@ export default function ElectricalEntry() {
                                       },
                                     });
                                   }}
-                                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                                  className="w-full rounded-lg border border-white/20 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                                 >
                                   {Object.entries(MOTOR_DUTY_LABELS).map(([k, v]) => (
                                     <option key={k} value={k}>
@@ -3619,7 +3619,7 @@ export default function ElectricalEntry() {
                                         'px-3 py-1 rounded-full text-xs font-medium border transition-colors',
                                         motor.efficiencyClass === cls
                                           ? 'bg-green-600 text-white border-green-600'
-                                          : 'bg-white text-gray-700 border-gray-300 hover:border-green-400'
+                                          : 'bg-black/40 backdrop-blur-md text-gray-200 border-white/20 hover:border-green-400'
                                       )}
                                     >
                                       {cls}
@@ -3638,7 +3638,7 @@ export default function ElectricalEntry() {
 
                           {/* Group B — Operation */}
                           <div>
-                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
                               Operation
                             </p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -3728,7 +3728,7 @@ export default function ElectricalEntry() {
 
                           {/* Group C — Control & upgrade */}
                           <div>
-                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
                               Control & upgrade
                             </p>
                             <Field className="mb-3">
@@ -3757,7 +3757,7 @@ export default function ElectricalEntry() {
                                       'px-3 py-1 rounded-full text-xs font-medium border transition-colors',
                                       motor.existingControl === k
                                         ? 'bg-blue-600 text-white border-blue-600'
-                                        : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400'
+                                        : 'bg-black/40 backdrop-blur-md text-gray-200 border-white/20 hover:border-blue-400'
                                     )}
                                   >
                                     {v}
@@ -3834,7 +3834,7 @@ export default function ElectricalEntry() {
 
                           {/* Live energy estimate */}
                           {motor.duty !== 'standby' && annKwh > 0 && (
-                            <div className="bg-gray-100 rounded-lg p-3 text-xs text-gray-700 space-y-0.5">
+                            <div className="bg-white/10 rounded-lg p-3 text-xs text-gray-200 space-y-0.5">
                               <p className="font-medium">Estimated annual consumption</p>
                               <p>
                                 {annKwh.toLocaleString(undefined, { maximumFractionDigits: 0 })}{' '}
@@ -3882,12 +3882,12 @@ export default function ElectricalEntry() {
 
                 {/* Motors summary */}
                 {state.motorsPumps.filter((m) => m.duty !== 'standby').length > 0 && (
-                  <div className="mt-4 bg-gray-50 rounded-xl p-4 text-sm">
-                    <p className="font-medium text-gray-800 mb-2">Equipment summary</p>
+                  <div className="mt-4 bg-white/5 rounded-xl p-4 text-sm">
+                    <p className="font-medium text-gray-100 mb-2">Equipment summary</p>
                     <div className="overflow-x-auto">
                       <table className="w-full text-xs">
                         <thead>
-                          <tr className="text-gray-500 text-[10px] uppercase">
+                          <tr className="text-gray-400 text-[10px] uppercase">
                             <th className="text-left py-1">Equipment</th>
                             <th className="text-left py-1">Duty</th>
                             <th className="text-right py-1">kW</th>
@@ -3909,8 +3909,8 @@ export default function ElectricalEntry() {
                                 : 0;
                             return (
                               <tr key={m.id}>
-                                <td className="py-1 text-gray-800">{m.equipmentId || '—'}</td>
-                                <td className="py-1 text-gray-500">{m.duty}</td>
+                                <td className="py-1 text-gray-100">{m.equipmentId || '—'}</td>
+                                <td className="py-1 text-gray-400">{m.duty}</td>
                                 <td className="py-1 text-right">{m.ratedPowerKw}</td>
                                 <td className="py-1 text-center">{m.efficiencyClass}</td>
                                 <td className="py-1 text-right">
@@ -3927,7 +3927,7 @@ export default function ElectricalEntry() {
                           })}
                         </tbody>
                         <tfoot>
-                          <tr className="font-medium text-gray-700 border-t border-gray-200">
+                          <tr className="font-medium text-gray-200 border-t border-white/10">
                             <td className="pt-1.5" colSpan={2}>
                               Totals
                             </td>
@@ -4003,18 +4003,18 @@ export default function ElectricalEntry() {
               id="projections"
             >
               <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-white">
                   Demand projections & planning
                 </h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-gray-400 mt-1">
                   This planning data is not used in the current carbon calculation but is essential
                   for campus energy planning and future scenario modelling. Fill what is known.
                 </p>
               </div>
 
               {/* Sticky column headers */}
-              <div className="sticky top-0 z-10 bg-white border-b border-gray-200 mb-3">
-                <div className="grid grid-cols-[minmax(180px,1fr)_repeat(5,80px)] gap-1 py-2 px-2 text-xs font-semibold text-gray-500">
+              <div className="sticky top-0 z-10 bg-black/40 backdrop-blur-md border-b border-white/10 mb-3">
+                <div className="grid grid-cols-[minmax(180px,1fr)_repeat(5,80px)] gap-1 py-2 px-2 text-xs font-semibold text-gray-400">
                   <span>Question</span>
                   {PROJECTION_HORIZONS.map((h) => (
                     <span key={h.key} className="text-center">
@@ -4027,7 +4027,7 @@ export default function ElectricalEntry() {
               {PROJECTION_GROUPS.map((group, gi) => {
                 const isGroupOpen = expandedProjectionGroups.has(gi);
                 return (
-                  <div key={gi} className="mb-4 border border-gray-200 rounded-xl overflow-hidden">
+                  <div key={gi} className="mb-4 border border-white/10 rounded-xl overflow-hidden">
                     <button
                       type="button"
                       onClick={() =>
@@ -4038,7 +4038,7 @@ export default function ElectricalEntry() {
                           return next;
                         })
                       }
-                      className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 text-sm font-medium text-gray-800"
+                      className="w-full flex items-center justify-between px-4 py-3 bg-white/5 hover:bg-white/10 text-sm font-medium text-gray-100"
                     >
                       {group.title}
                       {isGroupOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
@@ -4054,7 +4054,7 @@ export default function ElectricalEntry() {
                               key={q.key as string}
                               className="grid grid-cols-[minmax(180px,1fr)_repeat(5,80px)] gap-1 px-2 py-2 items-center"
                             >
-                              <span className="text-xs text-gray-700 pr-2">
+                              <span className="text-xs text-gray-200 pr-2">
                                 {q.label}
                                 {q.unit && <span className="ml-1 text-gray-400">({q.unit})</span>}
                               </span>
@@ -4079,7 +4079,7 @@ export default function ElectricalEntry() {
                                           'text-xs px-1.5 py-1 rounded border w-full text-center',
                                           cell.data === 'Yes'
                                             ? 'bg-green-100 text-green-700 border-green-300'
-                                            : 'bg-gray-100 text-gray-500 border-gray-200'
+                                            : 'bg-white/10 text-gray-400 border-white/10'
                                         )}
                                       >
                                         {cell.data ?? '—'}
@@ -4105,7 +4105,7 @@ export default function ElectricalEntry() {
                                             },
                                           })
                                         }
-                                        className="w-full text-xs border border-gray-200 rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-green-400"
+                                        className="w-full text-xs border border-white/10 rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                                         placeholder="—"
                                       />
                                     )}
@@ -4123,7 +4123,7 @@ export default function ElectricalEntry() {
 
               {/* Q23 Other details */}
               <div className="mt-4">
-                <h3 className="text-sm font-medium text-gray-800 mb-2">Additional information</h3>
+                <h3 className="text-sm font-medium text-gray-100 mb-2">Additional information</h3>
                 <textarea
                   value={state.projectionsData.q23OtherDetails ?? ''}
                   onChange={(e) =>
@@ -4132,7 +4132,7 @@ export default function ElectricalEntry() {
                   rows={4}
                   maxLength={1000}
                   placeholder="Any other details that can help in minimising consumption and carbon emissions..."
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 resize-y"
+                  className="w-full rounded-lg border border-white/20 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 resize-y"
                 />
               </div>
             </section>
@@ -4145,8 +4145,8 @@ export default function ElectricalEntry() {
               id="operational"
             >
               <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">Operational data</h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <h2 className="text-xl font-semibold text-white">Operational data</h2>
+                <p className="text-sm text-gray-400 mt-1">
                   Actual metered data improves carbon accuracy significantly. Utility bills override
                   manual estimates; load profile and DG generation records are used for detailed
                   analysis.
@@ -4154,12 +4154,12 @@ export default function ElectricalEntry() {
               </div>
 
               {/* 6A: Utility Bills */}
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6">
-                <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
+              <div className="bg-black/40 backdrop-blur-md rounded-xl border border-white/10 shadow-sm mb-6">
+                <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3">
                   <FileText size={18} className="text-blue-600" />
                   <div>
-                    <h3 className="font-semibold text-gray-800">Utility bills</h3>
-                    <p className="text-xs text-gray-500">
+                    <h3 className="font-semibold text-gray-100">Utility bills</h3>
+                    <p className="text-xs text-gray-400">
                       Monthly electricity bills from the utility provider
                     </p>
                   </div>
@@ -4172,7 +4172,7 @@ export default function ElectricalEntry() {
                   {/* Bill entry form */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1">
+                      <label className="block text-xs font-medium text-gray-300 mb-1">
                         Consumer number
                       </label>
                       <input
@@ -4181,12 +4181,12 @@ export default function ElectricalEntry() {
                         onChange={(e) =>
                           setNewBillDraft((d) => ({ ...d, consumerNumber: e.target.value }))
                         }
-                        className="w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full rounded border border-white/20 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="e.g. IIT-MAIN-001"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1">
+                      <label className="block text-xs font-medium text-gray-300 mb-1">
                         Month (YYYY-MM)
                       </label>
                       <input
@@ -4197,11 +4197,11 @@ export default function ElectricalEntry() {
                           const [y, m] = val.split('-').map(Number);
                           setNewBillDraft((d) => ({ ...d, month: val, year: y, monthIndex: m }));
                         }}
-                        className="w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full rounded border border-white/20 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1">
+                      <label className="block text-xs font-medium text-gray-300 mb-1">
                         Units consumed (kWh)
                       </label>
                       <input
@@ -4214,12 +4214,12 @@ export default function ElectricalEntry() {
                             unitConsumedKwhr: Number(e.target.value),
                           }))
                         }
-                        className="w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full rounded border border-white/20 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="kWh"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1">
+                      <label className="block text-xs font-medium text-gray-300 mb-1">
                         Solar generated (kWh)
                       </label>
                       <input
@@ -4232,12 +4232,12 @@ export default function ElectricalEntry() {
                             solarUnitGeneratedKwhr: Number(e.target.value),
                           }))
                         }
-                        className="w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full rounded border border-white/20 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="kWh (optional)"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1">
+                      <label className="block text-xs font-medium text-gray-300 mb-1">
                         Max demand (kW)
                       </label>
                       <input
@@ -4247,12 +4247,12 @@ export default function ElectricalEntry() {
                         onChange={(e) =>
                           setNewBillDraft((d) => ({ ...d, maxDemandKw: Number(e.target.value) }))
                         }
-                        className="w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full rounded border border-white/20 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="kW (optional)"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1">
+                      <label className="block text-xs font-medium text-gray-300 mb-1">
                         Power factor
                       </label>
                       <input
@@ -4264,12 +4264,12 @@ export default function ElectricalEntry() {
                         onChange={(e) =>
                           setNewBillDraft((d) => ({ ...d, powerFactor: Number(e.target.value) }))
                         }
-                        className="w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full rounded border border-white/20 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="0.00–1.00 (optional)"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1">
+                      <label className="block text-xs font-medium text-gray-300 mb-1">
                         Total bill (₹)
                       </label>
                       <input
@@ -4282,7 +4282,7 @@ export default function ElectricalEntry() {
                             totalEnergyChargesRs: Number(e.target.value),
                           }))
                         }
-                        className="w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full rounded border border-white/20 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="₹ (optional)"
                       />
                     </div>
@@ -4314,58 +4314,58 @@ export default function ElectricalEntry() {
                     <div className="overflow-x-auto">
                       <table className="w-full text-xs border-collapse">
                         <thead>
-                          <tr className="bg-gray-50">
-                            <th className="text-left px-2 py-1.5 border border-gray-200 font-semibold text-gray-600">
+                          <tr className="bg-white/5">
+                            <th className="text-left px-2 py-1.5 border border-white/10 font-semibold text-gray-300">
                               Consumer #
                             </th>
-                            <th className="text-left px-2 py-1.5 border border-gray-200 font-semibold text-gray-600">
+                            <th className="text-left px-2 py-1.5 border border-white/10 font-semibold text-gray-300">
                               Month
                             </th>
-                            <th className="text-right px-2 py-1.5 border border-gray-200 font-semibold text-gray-600">
+                            <th className="text-right px-2 py-1.5 border border-white/10 font-semibold text-gray-300">
                               kWh
                             </th>
-                            <th className="text-right px-2 py-1.5 border border-gray-200 font-semibold text-gray-600">
+                            <th className="text-right px-2 py-1.5 border border-white/10 font-semibold text-gray-300">
                               Solar kWh
                             </th>
-                            <th className="text-right px-2 py-1.5 border border-gray-200 font-semibold text-gray-600">
+                            <th className="text-right px-2 py-1.5 border border-white/10 font-semibold text-gray-300">
                               Max kW
                             </th>
-                            <th className="text-right px-2 py-1.5 border border-gray-200 font-semibold text-gray-600">
+                            <th className="text-right px-2 py-1.5 border border-white/10 font-semibold text-gray-300">
                               PF
                             </th>
-                            <th className="text-right px-2 py-1.5 border border-gray-200 font-semibold text-gray-600">
+                            <th className="text-right px-2 py-1.5 border border-white/10 font-semibold text-gray-300">
                               Bill ₹
                             </th>
-                            <th className="px-2 py-1.5 border border-gray-200"></th>
+                            <th className="px-2 py-1.5 border border-white/10"></th>
                           </tr>
                         </thead>
                         <tbody>
                           {[...state.operationalData.utilityBills]
                             .sort((a, b) => a.month.localeCompare(b.month))
                             .map((bill) => (
-                              <tr key={bill.id} className="hover:bg-gray-50">
-                                <td className="px-2 py-1 border border-gray-200 text-gray-700">
+                              <tr key={bill.id} className="hover:bg-white/5">
+                                <td className="px-2 py-1 border border-white/10 text-gray-200">
                                   {bill.consumerNumber}
                                 </td>
-                                <td className="px-2 py-1 border border-gray-200 text-gray-700">
+                                <td className="px-2 py-1 border border-white/10 text-gray-200">
                                   {bill.month}
                                 </td>
-                                <td className="px-2 py-1 border border-gray-200 text-right text-gray-700">
+                                <td className="px-2 py-1 border border-white/10 text-right text-gray-200">
                                   {bill.unitConsumedKwhr?.toLocaleString() ?? '—'}
                                 </td>
-                                <td className="px-2 py-1 border border-gray-200 text-right text-green-700">
+                                <td className="px-2 py-1 border border-white/10 text-right text-green-700">
                                   {bill.solarUnitGeneratedKwhr?.toLocaleString() ?? '—'}
                                 </td>
-                                <td className="px-2 py-1 border border-gray-200 text-right text-gray-700">
+                                <td className="px-2 py-1 border border-white/10 text-right text-gray-200">
                                   {bill.maxDemandKw ?? '—'}
                                 </td>
-                                <td className="px-2 py-1 border border-gray-200 text-right text-gray-700">
+                                <td className="px-2 py-1 border border-white/10 text-right text-gray-200">
                                   {bill.powerFactor ?? '—'}
                                 </td>
-                                <td className="px-2 py-1 border border-gray-200 text-right text-gray-700">
+                                <td className="px-2 py-1 border border-white/10 text-right text-gray-200">
                                   {bill.totalEnergyChargesRs?.toLocaleString() ?? '—'}
                                 </td>
-                                <td className="px-2 py-1 border border-gray-200 text-center">
+                                <td className="px-2 py-1 border border-white/10 text-center">
                                   <button
                                     type="button"
                                     onClick={() =>
@@ -4383,23 +4383,23 @@ export default function ElectricalEntry() {
                           <tr className="bg-blue-50 font-semibold">
                             <td
                               colSpan={2}
-                              className="px-2 py-1.5 border border-gray-200 text-gray-700 text-xs"
+                              className="px-2 py-1.5 border border-white/10 text-gray-200 text-xs"
                             >
                               Total ({state.operationalData.utilityBills.length} bills)
                             </td>
-                            <td className="px-2 py-1.5 border border-gray-200 text-right text-gray-700 text-xs">
+                            <td className="px-2 py-1.5 border border-white/10 text-right text-gray-200 text-xs">
                               {state.operationalData.utilityBills
                                 .reduce((s, b) => s + (b.unitConsumedKwhr ?? 0), 0)
                                 .toLocaleString()}
                             </td>
-                            <td className="px-2 py-1.5 border border-gray-200 text-right text-green-700 text-xs">
+                            <td className="px-2 py-1.5 border border-white/10 text-right text-green-700 text-xs">
                               {state.operationalData.utilityBills
                                 .reduce((s, b) => s + (b.solarUnitGeneratedKwhr ?? 0), 0)
                                 .toLocaleString()}
                             </td>
                             <td
                               colSpan={4}
-                              className="px-2 py-1.5 border border-gray-200 text-xs text-gray-500"
+                              className="px-2 py-1.5 border border-white/10 text-xs text-gray-400"
                             >
                               ≈{' '}
                               {(
@@ -4423,12 +4423,12 @@ export default function ElectricalEntry() {
               </div>
 
               {/* 6B: Load Profile Upload */}
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6">
-                <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
+              <div className="bg-black/40 backdrop-blur-md rounded-xl border border-white/10 shadow-sm mb-6">
+                <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3">
                   <Activity size={18} className="text-purple-600" />
                   <div>
-                    <h3 className="font-semibold text-gray-800">Load profile</h3>
-                    <p className="text-xs text-gray-500">
+                    <h3 className="font-semibold text-gray-100">Load profile</h3>
+                    <p className="text-xs text-gray-400">
                       15-min or 30-min interval demand data (XLS/XLSX/CSV). Raw data is not stored —
                       only statistics are extracted.
                     </p>
@@ -4442,14 +4442,14 @@ export default function ElectricalEntry() {
                 <div className="p-5 space-y-4">
                   {/* Upload zone */}
                   <label
-                    className={`flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-8 cursor-pointer transition-colors ${uploadingLoadProfile ? 'border-purple-300 bg-purple-50' : 'border-gray-300 hover:border-purple-400 hover:bg-purple-50'}`}
+                    className={`flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-8 cursor-pointer transition-colors ${uploadingLoadProfile ? 'border-purple-300 bg-purple-50' : 'border-white/20 hover:border-purple-400 hover:bg-purple-50'}`}
                   >
                     {uploadingLoadProfile ? (
                       <RefreshCw size={24} className="text-purple-500 animate-spin mb-2" />
                     ) : (
                       <Upload size={24} className="text-gray-400 mb-2" />
                     )}
-                    <span className="text-sm text-gray-600 font-medium">
+                    <span className="text-sm text-gray-300 font-medium">
                       {uploadingLoadProfile ? 'Processing file…' : 'Click to upload load profile'}
                     </span>
                     <span className="text-xs text-gray-400 mt-1">XLS, XLSX, CSV · max 25 MB</span>
@@ -4532,9 +4532,9 @@ export default function ElectricalEntry() {
                           value: state.operationalData.loadProfileStats.uploadedFileName ?? '—',
                         },
                       ].map(({ label, value }) => (
-                        <div key={label} className="bg-gray-50 rounded-lg px-3 py-2">
-                          <p className="text-xs text-gray-500">{label}</p>
-                          <p className="text-sm font-semibold text-gray-800 truncate">{value}</p>
+                        <div key={label} className="bg-white/5 rounded-lg px-3 py-2">
+                          <p className="text-xs text-gray-400">{label}</p>
+                          <p className="text-sm font-semibold text-gray-100 truncate">{value}</p>
                         </div>
                       ))}
                     </div>
@@ -4542,7 +4542,7 @@ export default function ElectricalEntry() {
 
                   {/* Data quality note */}
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">
+                    <label className="block text-xs font-medium text-gray-300 mb-1">
                       Data quality note (optional)
                     </label>
                     <input
@@ -4551,7 +4551,7 @@ export default function ElectricalEntry() {
                       onChange={(e) =>
                         dispatch({ type: 'UPDATE_LOAD_PROFILE_NOTE', payload: e.target.value })
                       }
-                      className="w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="w-full rounded border border-white/20 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                       placeholder="e.g. Data missing for March due to meter replacement"
                     />
                   </div>
@@ -4559,12 +4559,12 @@ export default function ElectricalEntry() {
               </div>
 
               {/* 6C: Sub-load profiles */}
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6">
-                <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
+              <div className="bg-black/40 backdrop-blur-md rounded-xl border border-white/10 shadow-sm mb-6">
+                <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3">
                   <Layers size={18} className="text-indigo-600" />
                   <div>
-                    <h3 className="font-semibold text-gray-800">Sub-load profiles</h3>
-                    <p className="text-xs text-gray-500">
+                    <h3 className="font-semibold text-gray-100">Sub-load profiles</h3>
+                    <p className="text-xs text-gray-400">
                       Per sub-circuit or feeder load data (XLS/XLSX/CSV). Statistics only — raw data
                       is discarded.
                     </p>
@@ -4577,14 +4577,14 @@ export default function ElectricalEntry() {
                 </div>
                 <div className="p-5 space-y-4">
                   <label
-                    className={`flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-8 cursor-pointer transition-colors ${uploadingSubLoad ? 'border-indigo-300 bg-indigo-50' : 'border-gray-300 hover:border-indigo-400 hover:bg-indigo-50'}`}
+                    className={`flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-8 cursor-pointer transition-colors ${uploadingSubLoad ? 'border-indigo-300 bg-indigo-50' : 'border-white/20 hover:border-indigo-400 hover:bg-indigo-50'}`}
                   >
                     {uploadingSubLoad ? (
                       <RefreshCw size={24} className="text-indigo-500 animate-spin mb-2" />
                     ) : (
                       <Upload size={24} className="text-gray-400 mb-2" />
                     )}
-                    <span className="text-sm text-gray-600 font-medium">
+                    <span className="text-sm text-gray-300 font-medium">
                       {uploadingSubLoad ? 'Processing file…' : 'Click to upload sub-load profile'}
                     </span>
                     <span className="text-xs text-gray-400 mt-1">XLS, XLSX, CSV · max 25 MB</span>
@@ -4629,46 +4629,46 @@ export default function ElectricalEntry() {
                       <div className="overflow-x-auto">
                         <table className="w-full text-xs border-collapse">
                           <thead>
-                            <tr className="bg-gray-50">
-                              <th className="text-left px-2 py-1.5 border border-gray-200 font-semibold text-gray-600">
+                            <tr className="bg-white/5">
+                              <th className="text-left px-2 py-1.5 border border-white/10 font-semibold text-gray-300">
                                 Sub-load name
                               </th>
-                              <th className="text-right px-2 py-1.5 border border-gray-200 font-semibold text-gray-600">
+                              <th className="text-right px-2 py-1.5 border border-white/10 font-semibold text-gray-300">
                                 Peak kW
                               </th>
-                              <th className="text-right px-2 py-1.5 border border-gray-200 font-semibold text-gray-600">
+                              <th className="text-right px-2 py-1.5 border border-white/10 font-semibold text-gray-300">
                                 Avg kW
                               </th>
-                              <th className="text-right px-2 py-1.5 border border-gray-200 font-semibold text-gray-600">
+                              <th className="text-right px-2 py-1.5 border border-white/10 font-semibold text-gray-300">
                                 Load factor
                               </th>
-                              <th className="text-right px-2 py-1.5 border border-gray-200 font-semibold text-gray-600">
+                              <th className="text-right px-2 py-1.5 border border-white/10 font-semibold text-gray-300">
                                 % of total
                               </th>
-                              <th className="text-right px-2 py-1.5 border border-gray-200 font-semibold text-gray-600">
+                              <th className="text-right px-2 py-1.5 border border-white/10 font-semibold text-gray-300">
                                 Est. kWh/yr
                               </th>
                             </tr>
                           </thead>
                           <tbody>
                             {state.operationalData.subLoadProfileStats.subLoads.map((sl) => (
-                              <tr key={sl.id} className="hover:bg-gray-50">
-                                <td className="px-2 py-1 border border-gray-200 text-gray-700">
+                              <tr key={sl.id} className="hover:bg-white/5">
+                                <td className="px-2 py-1 border border-white/10 text-gray-200">
                                   {sl.subLoadName}
                                 </td>
-                                <td className="px-2 py-1 border border-gray-200 text-right text-gray-700">
+                                <td className="px-2 py-1 border border-white/10 text-right text-gray-200">
                                   {sl.peakDemandKw?.toFixed(1) ?? '—'}
                                 </td>
-                                <td className="px-2 py-1 border border-gray-200 text-right text-gray-700">
+                                <td className="px-2 py-1 border border-white/10 text-right text-gray-200">
                                   {sl.averageDemandKw?.toFixed(1) ?? '—'}
                                 </td>
-                                <td className="px-2 py-1 border border-gray-200 text-right text-gray-700">
+                                <td className="px-2 py-1 border border-white/10 text-right text-gray-200">
                                   {sl.loadFactor ? `${(sl.loadFactor * 100).toFixed(1)}%` : '—'}
                                 </td>
-                                <td className="px-2 py-1 border border-gray-200 text-right text-blue-700 font-medium">
+                                <td className="px-2 py-1 border border-white/10 text-right text-blue-700 font-medium">
                                   {sl.percentOfTotalLoad?.toFixed(1) ?? '—'}%
                                 </td>
-                                <td className="px-2 py-1 border border-gray-200 text-right text-gray-700">
+                                <td className="px-2 py-1 border border-white/10 text-right text-gray-200">
                                   {sl.estimatedAnnualKwh?.toLocaleString() ?? '—'}
                                 </td>
                               </tr>
@@ -4676,12 +4676,12 @@ export default function ElectricalEntry() {
                           </tbody>
                           <tfoot>
                             <tr className="bg-indigo-50 font-semibold text-xs">
-                              <td className="px-2 py-1.5 border border-gray-200 text-gray-700">
+                              <td className="px-2 py-1.5 border border-white/10 text-gray-200">
                                 Coverage
                               </td>
                               <td
                                 colSpan={5}
-                                className="px-2 py-1.5 border border-gray-200 text-gray-700"
+                                className="px-2 py-1.5 border border-white/10 text-gray-200"
                               >
                                 {state.operationalData.subLoadProfileStats.coveragePercent?.toFixed(
                                   1
@@ -4695,7 +4695,7 @@ export default function ElectricalEntry() {
                     )}
 
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">
+                    <label className="block text-xs font-medium text-gray-300 mb-1">
                       Data quality note (optional)
                     </label>
                     <input
@@ -4704,7 +4704,7 @@ export default function ElectricalEntry() {
                       onChange={(e) =>
                         dispatch({ type: 'UPDATE_SUBLOAD_PROFILE_NOTE', payload: e.target.value })
                       }
-                      className="w-full rounded border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="w-full rounded border border-white/20 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                       placeholder="e.g. HVAC sub-circuit data not available for this period"
                     />
                   </div>
@@ -4713,12 +4713,12 @@ export default function ElectricalEntry() {
 
               {/* 6D: DG Generation Records */}
               {state.dgSets.length > 0 && (
-                <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6">
-                  <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
+                <div className="bg-black/40 backdrop-blur-md rounded-xl border border-white/10 shadow-sm mb-6">
+                  <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3">
                     <Flame size={18} className="text-orange-600" />
                     <div>
-                      <h3 className="font-semibold text-gray-800">DG generation records</h3>
-                      <p className="text-xs text-gray-500">
+                      <h3 className="font-semibold text-gray-100">DG generation records</h3>
+                      <p className="text-xs text-gray-400">
                         Monthly fuel and generation logs for each DG set
                       </p>
                     </div>
@@ -4726,14 +4726,14 @@ export default function ElectricalEntry() {
                       <button
                         type="button"
                         onClick={() => setDgEntryMode('manual')}
-                        className={`text-xs px-2.5 py-1 rounded-full font-medium transition-colors ${dgEntryMode === 'manual' ? 'bg-orange-100 text-orange-700' : 'text-gray-500 hover:bg-gray-100'}`}
+                        className={`text-xs px-2.5 py-1 rounded-full font-medium transition-colors ${dgEntryMode === 'manual' ? 'bg-orange-100 text-orange-700' : 'text-gray-400 hover:bg-white/10'}`}
                       >
                         Manual entry
                       </button>
                       <button
                         type="button"
                         onClick={() => setDgEntryMode('upload')}
-                        className={`text-xs px-2.5 py-1 rounded-full font-medium transition-colors ${dgEntryMode === 'upload' ? 'bg-orange-100 text-orange-700' : 'text-gray-500 hover:bg-gray-100'}`}
+                        className={`text-xs px-2.5 py-1 rounded-full font-medium transition-colors ${dgEntryMode === 'upload' ? 'bg-orange-100 text-orange-700' : 'text-gray-400 hover:bg-white/10'}`}
                       >
                         File upload
                       </button>
@@ -4742,7 +4742,7 @@ export default function ElectricalEntry() {
                   <div className="p-5 space-y-5">
                     {dgEntryMode === 'upload' ? (
                       <div className="space-y-3">
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-400">
                           Upload a file with columns:{' '}
                           <strong>
                             DG ID, Month (YYYY-MM), Runtime hours, Fuel consumed (L), Energy
@@ -4752,14 +4752,14 @@ export default function ElectricalEntry() {
                           preserved.
                         </p>
                         <label
-                          className={`flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-8 cursor-pointer transition-colors ${uploadingDGGen ? 'border-orange-300 bg-orange-50' : 'border-gray-300 hover:border-orange-400 hover:bg-orange-50'}`}
+                          className={`flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-8 cursor-pointer transition-colors ${uploadingDGGen ? 'border-orange-300 bg-orange-50' : 'border-white/20 hover:border-orange-400 hover:bg-orange-50'}`}
                         >
                           {uploadingDGGen ? (
                             <RefreshCw size={24} className="text-orange-500 animate-spin mb-2" />
                           ) : (
                             <Upload size={24} className="text-gray-400 mb-2" />
                           )}
-                          <span className="text-sm text-gray-600 font-medium">
+                          <span className="text-sm text-gray-300 font-medium">
                             {uploadingDGGen
                               ? 'Processing file…'
                               : 'Click to upload DG generation log'}
@@ -4812,7 +4812,7 @@ export default function ElectricalEntry() {
                           return (
                             <div
                               key={dg.id}
-                              className="border border-gray-200 rounded-lg overflow-hidden"
+                              className="border border-white/10 rounded-lg overflow-hidden"
                             >
                               <div className="bg-orange-50 px-4 py-2 flex items-center justify-between">
                                 <span className="text-sm font-semibold text-orange-800">
@@ -4826,40 +4826,40 @@ export default function ElectricalEntry() {
                                 {recs.length > 0 && (
                                   <table className="w-full text-xs border-collapse">
                                     <thead>
-                                      <tr className="bg-gray-50">
-                                        <th className="text-left px-2 py-1 border border-gray-200 font-semibold text-gray-600">
+                                      <tr className="bg-white/5">
+                                        <th className="text-left px-2 py-1 border border-white/10 font-semibold text-gray-300">
                                           Month
                                         </th>
-                                        <th className="text-right px-2 py-1 border border-gray-200 font-semibold text-gray-600">
+                                        <th className="text-right px-2 py-1 border border-white/10 font-semibold text-gray-300">
                                           Runtime h
                                         </th>
-                                        <th className="text-right px-2 py-1 border border-gray-200 font-semibold text-gray-600">
+                                        <th className="text-right px-2 py-1 border border-white/10 font-semibold text-gray-300">
                                           Fuel L
                                         </th>
-                                        <th className="text-right px-2 py-1 border border-gray-200 font-semibold text-gray-600">
+                                        <th className="text-right px-2 py-1 border border-white/10 font-semibold text-gray-300">
                                           kWh gen
                                         </th>
-                                        <th className="px-2 py-1 border border-gray-200"></th>
+                                        <th className="px-2 py-1 border border-white/10"></th>
                                       </tr>
                                     </thead>
                                     <tbody>
                                       {[...recs]
                                         .sort((a, b) => a.month.localeCompare(b.month))
                                         .map((rec) => (
-                                          <tr key={rec.id} className="hover:bg-gray-50">
-                                            <td className="px-2 py-1 border border-gray-200 text-gray-700">
+                                          <tr key={rec.id} className="hover:bg-white/5">
+                                            <td className="px-2 py-1 border border-white/10 text-gray-200">
                                               {rec.month}
                                             </td>
-                                            <td className="px-2 py-1 border border-gray-200 text-right text-gray-700">
+                                            <td className="px-2 py-1 border border-white/10 text-right text-gray-200">
                                               {rec.totalRuntimeHours ?? '—'}
                                             </td>
-                                            <td className="px-2 py-1 border border-gray-200 text-right text-gray-700">
+                                            <td className="px-2 py-1 border border-white/10 text-right text-gray-200">
                                               {rec.totalFuelConsumptionL ?? '—'}
                                             </td>
-                                            <td className="px-2 py-1 border border-gray-200 text-right text-gray-700">
+                                            <td className="px-2 py-1 border border-white/10 text-right text-gray-200">
                                               {rec.totalKwhGenerated ?? '—'}
                                             </td>
-                                            <td className="px-2 py-1 border border-gray-200 text-center">
+                                            <td className="px-2 py-1 border border-white/10 text-center">
                                               <button
                                                 type="button"
                                                 onClick={() =>
@@ -4878,28 +4878,28 @@ export default function ElectricalEntry() {
                                     </tbody>
                                     <tfoot>
                                       <tr className="bg-orange-50 text-xs font-semibold">
-                                        <td className="px-2 py-1 border border-gray-200 text-gray-700">
+                                        <td className="px-2 py-1 border border-white/10 text-gray-200">
                                           Total / Avg
                                         </td>
-                                        <td className="px-2 py-1 border border-gray-200 text-right text-gray-700">
+                                        <td className="px-2 py-1 border border-white/10 text-right text-gray-200">
                                           {recs
                                             .reduce((s, r) => s + (r.totalRuntimeHours ?? 0), 0)
                                             .toFixed(0)}{' '}
                                           h
                                         </td>
-                                        <td className="px-2 py-1 border border-gray-200 text-right text-gray-700">
+                                        <td className="px-2 py-1 border border-white/10 text-right text-gray-200">
                                           {recs
                                             .reduce((s, r) => s + (r.totalFuelConsumptionL ?? 0), 0)
                                             .toFixed(0)}{' '}
                                           L
                                         </td>
-                                        <td className="px-2 py-1 border border-gray-200 text-right text-gray-700">
+                                        <td className="px-2 py-1 border border-white/10 text-right text-gray-200">
                                           {recs
                                             .reduce((s, r) => s + (r.totalKwhGenerated ?? 0), 0)
                                             .toFixed(0)}{' '}
                                           kWh
                                         </td>
-                                        <td className="border border-gray-200" />
+                                        <td className="border border-white/10" />
                                       </tr>
                                     </tfoot>
                                   </table>
@@ -4930,8 +4930,8 @@ export default function ElectricalEntry() {
               id="renewable"
             >
               <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">Renewable energy systems</h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <h2 className="text-xl font-semibold text-white">Renewable energy systems</h2>
+                <p className="text-sm text-gray-400 mt-1">
                   Record current plant generation, solar and wind resource data, PV siting, battery
                   storage planning, and renewable feasibility assessments.
                 </p>
@@ -4993,12 +4993,12 @@ export default function ElectricalEntry() {
               })()}
 
               {/* 7A: Plant generation log */}
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6">
-                <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
+              <div className="bg-black/40 backdrop-blur-md rounded-xl border border-white/10 shadow-sm mb-6">
+                <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3">
                   <Sun size={18} className="text-yellow-500" />
                   <div>
-                    <h3 className="font-semibold text-gray-800">Renewable plant generation log</h3>
-                    <p className="text-xs text-gray-500">
+                    <h3 className="font-semibold text-gray-100">Renewable plant generation log</h3>
+                    <p className="text-xs text-gray-400">
                       Register each plant and enter monthly generation data. Actual measured
                       generation is the PRIMARY carbon offset source.
                     </p>
@@ -5015,7 +5015,7 @@ export default function ElectricalEntry() {
                     <p className="text-xs font-semibold text-yellow-800 mb-3">Register a plant</p>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       <div>
-                        <label className="block text-xs text-gray-500 mb-1">Plant ID</label>
+                        <label className="block text-xs text-gray-400 mb-1">Plant ID</label>
                         <input
                           type="text"
                           placeholder="e.g. PV-ROOF-01"
@@ -5023,17 +5023,17 @@ export default function ElectricalEntry() {
                           onChange={(e) =>
                             setNewPlantDraft((d) => ({ ...d, plantId: e.target.value }))
                           }
-                          className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-yellow-400"
+                          className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-yellow-400"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-gray-500 mb-1">Technology</label>
+                        <label className="block text-xs text-gray-400 mb-1">Technology</label>
                         <select
                           value={newPlantDraft.technology}
                           onChange={(e) =>
                             setNewPlantDraft((d) => ({ ...d, technology: e.target.value }))
                           }
-                          className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-yellow-400 bg-white"
+                          className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-yellow-400 bg-black/40 backdrop-blur-md"
                         >
                           <option value="solar_pv_rooftop">Solar PV Rooftop</option>
                           <option value="solar_pv_ground">Solar PV Ground</option>
@@ -5044,7 +5044,7 @@ export default function ElectricalEntry() {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-xs text-gray-500 mb-1">Capacity (kWp)</label>
+                        <label className="block text-xs text-gray-400 mb-1">Capacity (kWp)</label>
                         <input
                           type="number"
                           min="0"
@@ -5054,7 +5054,7 @@ export default function ElectricalEntry() {
                           onChange={(e) =>
                             setNewPlantDraft((d) => ({ ...d, capacityKwp: e.target.value }))
                           }
-                          className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-yellow-400"
+                          className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-yellow-400"
                         />
                       </div>
                       <div className="flex items-end">
@@ -5119,7 +5119,7 @@ export default function ElectricalEntry() {
                             : null;
                           const prColor =
                             avgPR === null
-                              ? 'text-gray-500'
+                              ? 'text-gray-400'
                               : avgPR >= 80
                                 ? 'text-green-700'
                                 : avgPR >= 70
@@ -5136,7 +5136,7 @@ export default function ElectricalEntry() {
                           return (
                             <div
                               key={plantId}
-                              className="border border-gray-200 rounded-lg overflow-hidden"
+                              className="border border-white/10 rounded-lg overflow-hidden"
                             >
                               {/* Plant header */}
                               <div className="bg-yellow-50 px-4 py-2 flex items-center justify-between">
@@ -5173,41 +5173,41 @@ export default function ElectricalEntry() {
                                 <div className="overflow-x-auto">
                                   <table className="w-full text-xs border-collapse">
                                     <thead>
-                                      <tr className="bg-gray-50 text-gray-600">
-                                        <th className="text-left px-3 py-1.5 border-b border-gray-200">
+                                      <tr className="bg-white/5 text-gray-300">
+                                        <th className="text-left px-3 py-1.5 border-b border-white/10">
                                           Month
                                         </th>
-                                        <th className="text-right px-3 py-1.5 border-b border-gray-200">
+                                        <th className="text-right px-3 py-1.5 border-b border-white/10">
                                           kWh Generated
                                         </th>
-                                        <th className="text-right px-3 py-1.5 border-b border-gray-200">
+                                        <th className="text-right px-3 py-1.5 border-b border-white/10">
                                           Perf. Ratio (%)
                                         </th>
-                                        <th className="text-right px-3 py-1.5 border-b border-gray-200">
+                                        <th className="text-right px-3 py-1.5 border-b border-white/10">
                                           Outages
                                         </th>
-                                        <th className="px-3 py-1.5 border-b border-gray-200"></th>
+                                        <th className="px-3 py-1.5 border-b border-white/10"></th>
                                       </tr>
                                     </thead>
                                     <tbody>
                                       {recs.map((r) => (
                                         <tr
                                           key={`${r.plantId}-${r.month}`}
-                                          className="hover:bg-gray-50"
+                                          className="hover:bg-white/5"
                                         >
-                                          <td className="px-3 py-1.5 border-b border-gray-100 text-gray-700">
+                                          <td className="px-3 py-1.5 border-b border-white/5 text-gray-200">
                                             {r.month}
                                           </td>
-                                          <td className="px-3 py-1.5 border-b border-gray-100 text-right font-medium text-gray-800">
+                                          <td className="px-3 py-1.5 border-b border-white/5 text-right font-medium text-gray-100">
                                             {r.totalKwhGenerated?.toLocaleString() ?? '—'}
                                           </td>
-                                          <td className="px-3 py-1.5 border-b border-gray-100 text-right text-gray-700">
+                                          <td className="px-3 py-1.5 border-b border-white/5 text-right text-gray-200">
                                             {r.avgPerformanceRatio ?? '—'}
                                           </td>
-                                          <td className="px-3 py-1.5 border-b border-gray-100 text-right text-gray-700">
+                                          <td className="px-3 py-1.5 border-b border-white/5 text-right text-gray-200">
                                             {r.outageCount ?? '—'}
                                           </td>
-                                          <td className="px-3 py-1.5 border-b border-gray-100 text-center">
+                                          <td className="px-3 py-1.5 border-b border-white/5 text-center">
                                             <button
                                               type="button"
                                               onClick={() =>
@@ -5251,8 +5251,8 @@ export default function ElectricalEntry() {
                               )}
 
                               {/* Add monthly record inline form */}
-                              <div className="px-4 py-3 bg-gray-50 border-t border-gray-100">
-                                <p className="text-xs text-gray-500 mb-2 font-medium">
+                              <div className="px-4 py-3 bg-white/5 border-t border-white/5">
+                                <p className="text-xs text-gray-400 mb-2 font-medium">
                                   Add monthly record
                                 </p>
                                 <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
@@ -5269,7 +5269,7 @@ export default function ElectricalEntry() {
                                           [plantId]: { ...d[plantId], month: e.target.value },
                                         }))
                                       }
-                                      className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-yellow-400"
+                                      className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-yellow-400"
                                     />
                                   </div>
                                   <div>
@@ -5291,7 +5291,7 @@ export default function ElectricalEntry() {
                                           },
                                         }))
                                       }
-                                      className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-yellow-400"
+                                      className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-yellow-400"
                                     />
                                   </div>
                                   <div>
@@ -5311,7 +5311,7 @@ export default function ElectricalEntry() {
                                           [plantId]: { ...d[plantId], perfRatio: e.target.value },
                                         }))
                                       }
-                                      className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-yellow-400"
+                                      className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-yellow-400"
                                     />
                                   </div>
                                   <div>
@@ -5330,7 +5330,7 @@ export default function ElectricalEntry() {
                                           [plantId]: { ...d[plantId], outageCount: e.target.value },
                                         }))
                                       }
-                                      className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-yellow-400"
+                                      className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-yellow-400"
                                     />
                                   </div>
                                   <div className="flex items-end">
@@ -5405,12 +5405,12 @@ export default function ElectricalEntry() {
               </div>
 
               {/* 7B: Solar resource data */}
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6">
-                <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
+              <div className="bg-black/40 backdrop-blur-md rounded-xl border border-white/10 shadow-sm mb-6">
+                <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3">
                   <Sun size={18} className="text-orange-500" />
                   <div>
-                    <h3 className="font-semibold text-gray-800">Solar resource measurements</h3>
-                    <p className="text-xs text-gray-500">
+                    <h3 className="font-semibold text-gray-100">Solar resource measurements</h3>
+                    <p className="text-xs text-gray-400">
                       Monthly irradiance averages from pyranometer or weather station. Used for
                       GHI-derived solar offset when no plant log is available.
                     </p>
@@ -5425,18 +5425,18 @@ export default function ElectricalEntry() {
                   {/* Inline add-month form */}
                   <div className="grid grid-cols-2 md:grid-cols-5 gap-3 items-end bg-orange-50 border border-orange-200 rounded-lg p-3">
                     <div>
-                      <label className="block text-xs text-gray-500 mb-1">Month</label>
+                      <label className="block text-xs text-gray-400 mb-1">Month</label>
                       <input
                         type="month"
                         value={newSolarMonthDraft.month}
                         onChange={(e) =>
                           setNewSolarMonthDraft((d) => ({ ...d, month: e.target.value }))
                         }
-                        className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-orange-400 bg-white"
+                        className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-orange-400 bg-black/40 backdrop-blur-md"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs text-gray-500 mb-1">Avg GHI (W/m²)</label>
+                      <label className="block text-xs text-gray-400 mb-1">Avg GHI (W/m²)</label>
                       <input
                         type="number"
                         min="0"
@@ -5446,11 +5446,11 @@ export default function ElectricalEntry() {
                         onChange={(e) =>
                           setNewSolarMonthDraft((d) => ({ ...d, avgGhiWm2: e.target.value }))
                         }
-                        className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-orange-400"
+                        className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-orange-400"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs text-gray-500 mb-1">
+                      <label className="block text-xs text-gray-400 mb-1">
                         Peak Sun Hrs <span className="text-gray-400">(opt)</span>
                       </label>
                       <input
@@ -5462,11 +5462,11 @@ export default function ElectricalEntry() {
                         onChange={(e) =>
                           setNewSolarMonthDraft((d) => ({ ...d, peakSunHours: e.target.value }))
                         }
-                        className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-orange-400"
+                        className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-orange-400"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs text-gray-500 mb-1">
+                      <label className="block text-xs text-gray-400 mb-1">
                         Module Temp °C <span className="text-gray-400">(opt)</span>
                       </label>
                       <input
@@ -5477,7 +5477,7 @@ export default function ElectricalEntry() {
                         onChange={(e) =>
                           setNewSolarMonthDraft((d) => ({ ...d, avgModuleTempC: e.target.value }))
                         }
-                        className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-orange-400"
+                        className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-orange-400"
                       />
                     </div>
                     <div>
@@ -5533,36 +5533,36 @@ export default function ElectricalEntry() {
                       <div className="overflow-x-auto">
                         <table className="w-full text-xs border-collapse">
                           <thead>
-                            <tr className="bg-orange-50 text-gray-600">
-                              <th className="text-left px-3 py-1.5 border-b border-gray-200">
+                            <tr className="bg-orange-50 text-gray-300">
+                              <th className="text-left px-3 py-1.5 border-b border-white/10">
                                 Month
                               </th>
-                              <th className="text-right px-3 py-1.5 border-b border-gray-200">
+                              <th className="text-right px-3 py-1.5 border-b border-white/10">
                                 Avg GHI (W/m²)
                               </th>
-                              <th className="text-right px-3 py-1.5 border-b border-gray-200">
+                              <th className="text-right px-3 py-1.5 border-b border-white/10">
                                 Peak Sun Hrs (kWh/m²)
                               </th>
-                              <th className="text-right px-3 py-1.5 border-b border-gray-200">
+                              <th className="text-right px-3 py-1.5 border-b border-white/10">
                                 Module Temp (°C)
                               </th>
-                              <th className="px-3 py-1.5 border-b border-gray-200"></th>
+                              <th className="px-3 py-1.5 border-b border-white/10"></th>
                             </tr>
                           </thead>
                           <tbody>
                             {state.solarResourceMonthly.map((m) => (
                               <tr
                                 key={`${m.year}-${m.monthIndex}`}
-                                className="hover:bg-gray-50 border-b border-gray-100"
+                                className="hover:bg-white/5 border-b border-white/5"
                               >
-                                <td className="px-3 py-1.5 text-gray-700">{m.month}</td>
-                                <td className="px-3 py-1.5 text-right text-gray-700">
+                                <td className="px-3 py-1.5 text-gray-200">{m.month}</td>
+                                <td className="px-3 py-1.5 text-right text-gray-200">
                                   {m.avgGhiWm2 ?? '—'}
                                 </td>
-                                <td className="px-3 py-1.5 text-right font-medium text-gray-800">
+                                <td className="px-3 py-1.5 text-right font-medium text-gray-100">
                                   {m.peakSunHours?.toFixed(2) ?? '—'}
                                 </td>
-                                <td className="px-3 py-1.5 text-right text-gray-700">
+                                <td className="px-3 py-1.5 text-right text-gray-200">
                                   {m.avgModuleTempC ?? '—'}
                                 </td>
                                 <td className="px-3 py-1.5 text-center">
@@ -5610,12 +5610,12 @@ export default function ElectricalEntry() {
               </div>
 
               {/* 7C: Wind resource data */}
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6">
-                <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
+              <div className="bg-black/40 backdrop-blur-md rounded-xl border border-white/10 shadow-sm mb-6">
+                <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3">
                   <Wind size={18} className="text-blue-500" />
                   <div>
-                    <h3 className="font-semibold text-gray-800">Wind resource measurements</h3>
-                    <p className="text-xs text-gray-500">
+                    <h3 className="font-semibold text-gray-100">Wind resource measurements</h3>
+                    <p className="text-xs text-gray-400">
                       Monthly wind speed averages from anemometer or met mast. For wind energy
                       potential assessment.
                     </p>
@@ -5630,18 +5630,18 @@ export default function ElectricalEntry() {
                   {/* Inline add-month form */}
                   <div className="grid grid-cols-2 md:grid-cols-6 gap-3 items-end bg-blue-50 border border-blue-200 rounded-lg p-3">
                     <div>
-                      <label className="block text-xs text-gray-500 mb-1">Month</label>
+                      <label className="block text-xs text-gray-400 mb-1">Month</label>
                       <input
                         type="month"
                         value={newWindMonthDraft.month}
                         onChange={(e) =>
                           setNewWindMonthDraft((d) => ({ ...d, month: e.target.value }))
                         }
-                        className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-400 bg-white"
+                        className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-400 bg-black/40 backdrop-blur-md"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs text-gray-500 mb-1">Avg Wind (m/s)</label>
+                      <label className="block text-xs text-gray-400 mb-1">Avg Wind (m/s)</label>
                       <input
                         type="number"
                         min="0"
@@ -5651,11 +5651,11 @@ export default function ElectricalEntry() {
                         onChange={(e) =>
                           setNewWindMonthDraft((d) => ({ ...d, avgWindSpeedMs: e.target.value }))
                         }
-                        className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                        className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-400"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs text-gray-500 mb-1">
+                      <label className="block text-xs text-gray-400 mb-1">
                         Max Wind (m/s) <span className="text-gray-400">(opt)</span>
                       </label>
                       <input
@@ -5667,11 +5667,11 @@ export default function ElectricalEntry() {
                         onChange={(e) =>
                           setNewWindMonthDraft((d) => ({ ...d, maxWindSpeedMs: e.target.value }))
                         }
-                        className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                        className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-400"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs text-gray-500 mb-1">
+                      <label className="block text-xs text-gray-400 mb-1">
                         Direction ° <span className="text-gray-400">(opt)</span>
                       </label>
                       <input
@@ -5684,11 +5684,11 @@ export default function ElectricalEntry() {
                         onChange={(e) =>
                           setNewWindMonthDraft((d) => ({ ...d, avgDirectionDeg: e.target.value }))
                         }
-                        className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                        className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-400"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs text-gray-500 mb-1">
+                      <label className="block text-xs text-gray-400 mb-1">
                         Mast Ht (m) <span className="text-gray-400">(opt)</span>
                       </label>
                       <input
@@ -5700,7 +5700,7 @@ export default function ElectricalEntry() {
                         onChange={(e) =>
                           setNewWindMonthDraft((d) => ({ ...d, mastHeightM: e.target.value }))
                         }
-                        className="w-full text-xs border border-gray-300 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                        className="w-full text-xs border border-white/20 rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-400"
                       />
                     </div>
                     <div>
@@ -5755,23 +5755,23 @@ export default function ElectricalEntry() {
                       <div className="overflow-x-auto">
                         <table className="w-full text-xs border-collapse">
                           <thead>
-                            <tr className="bg-blue-50 text-gray-600">
-                              <th className="text-left px-3 py-1.5 border-b border-gray-200">
+                            <tr className="bg-blue-50 text-gray-300">
+                              <th className="text-left px-3 py-1.5 border-b border-white/10">
                                 Month
                               </th>
-                              <th className="text-right px-3 py-1.5 border-b border-gray-200">
+                              <th className="text-right px-3 py-1.5 border-b border-white/10">
                                 Avg Wind (m/s)
                               </th>
-                              <th className="text-right px-3 py-1.5 border-b border-gray-200">
+                              <th className="text-right px-3 py-1.5 border-b border-white/10">
                                 Max Wind (m/s)
                               </th>
-                              <th className="text-right px-3 py-1.5 border-b border-gray-200">
+                              <th className="text-right px-3 py-1.5 border-b border-white/10">
                                 Direction (°)
                               </th>
-                              <th className="text-right px-3 py-1.5 border-b border-gray-200">
+                              <th className="text-right px-3 py-1.5 border-b border-white/10">
                                 Mast Ht (m)
                               </th>
-                              <th className="px-3 py-1.5 border-b border-gray-200"></th>
+                              <th className="px-3 py-1.5 border-b border-white/10"></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -5779,7 +5779,7 @@ export default function ElectricalEntry() {
                               const avgSpeed = m.avgWindSpeedMs ?? 0;
                               const classColor =
                                 avgSpeed < 4
-                                  ? 'text-gray-500'
+                                  ? 'text-gray-400'
                                   : avgSpeed < 5.5
                                     ? 'text-blue-600'
                                     : avgSpeed < 7.5
@@ -5788,21 +5788,21 @@ export default function ElectricalEntry() {
                               return (
                                 <tr
                                   key={`${m.year}-${m.monthIndex}`}
-                                  className="hover:bg-gray-50 border-b border-gray-100"
+                                  className="hover:bg-white/5 border-b border-white/5"
                                 >
-                                  <td className="px-3 py-1.5 text-gray-700">{m.month}</td>
+                                  <td className="px-3 py-1.5 text-gray-200">{m.month}</td>
                                   <td
                                     className={`px-3 py-1.5 text-right font-medium ${classColor}`}
                                   >
                                     {m.avgWindSpeedMs ?? '—'}
                                   </td>
-                                  <td className="px-3 py-1.5 text-right text-gray-700">
+                                  <td className="px-3 py-1.5 text-right text-gray-200">
                                     {m.maxWindSpeedMs ?? '—'}
                                   </td>
-                                  <td className="px-3 py-1.5 text-right text-gray-700">
+                                  <td className="px-3 py-1.5 text-right text-gray-200">
                                     {m.dominantDirectionDeg?.toFixed(0) ?? '—'}
                                   </td>
-                                  <td className="px-3 py-1.5 text-right text-gray-700">
+                                  <td className="px-3 py-1.5 text-right text-gray-200">
                                     {m.mastHeightM ?? '—'}
                                   </td>
                                   <td className="px-3 py-1.5 text-center">
@@ -5841,7 +5841,7 @@ export default function ElectricalEntry() {
                                 : 'Excellent resource — strong wind energy potential';
                         const color =
                           avg < 4
-                            ? 'text-gray-600 bg-gray-50'
+                            ? 'text-gray-300 bg-white/5'
                             : avg < 5.5
                               ? 'text-blue-700 bg-blue-50'
                               : avg < 7.5
@@ -5859,12 +5859,12 @@ export default function ElectricalEntry() {
               </div>
 
               {/* 7D: PV Siting Survey */}
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6">
-                <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
+              <div className="bg-black/40 backdrop-blur-md rounded-xl border border-white/10 shadow-sm mb-6">
+                <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3">
                   <Sun size={18} className="text-amber-500" />
                   <div>
-                    <h3 className="font-semibold text-gray-800">PV siting survey</h3>
-                    <p className="text-xs text-gray-500">
+                    <h3 className="font-semibold text-gray-100">PV siting survey</h3>
+                    <p className="text-xs text-gray-400">
                       Record each potential installation area assessed for solar panel placement.
                     </p>
                   </div>
@@ -5887,10 +5887,10 @@ export default function ElectricalEntry() {
                           }
                           className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-amber-50 transition-colors"
                         >
-                          <span className="font-medium text-gray-900 text-sm min-w-[120px]">
+                          <span className="font-medium text-white text-sm min-w-[120px]">
                             {rec.parcelRoofId || 'New siting record'}
                           </span>
-                          <span className="text-xs text-gray-500 flex-1">
+                          <span className="text-xs text-gray-400 flex-1">
                             {rec.availableAreaM2 ? `${rec.availableAreaM2} m²` : ''}{' '}
                             {rec.tiltDeg !== undefined ? `· Tilt ${rec.tiltDeg}°` : ''}{' '}
                             {rec.shadingPercent !== undefined
@@ -5919,7 +5919,7 @@ export default function ElectricalEntry() {
                           )}
                         </button>
                         {isExpanded && (
-                          <div className="px-4 pb-4 border-t border-amber-100 bg-white">
+                          <div className="px-4 pb-4 border-t border-amber-100 bg-black/40 backdrop-blur-md">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                               <div className="space-y-3">
                                 <Field>
@@ -5976,7 +5976,7 @@ export default function ElectricalEntry() {
                                         },
                                       })
                                     }
-                                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    className="w-full rounded-lg border border-white/20 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                                   >
                                     <option value="">— select —</option>
                                     <option value="flat_rcc">Flat RCC</option>
@@ -6184,12 +6184,12 @@ export default function ElectricalEntry() {
               </div>
 
               {/* 7E: Battery Storage Planning */}
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6">
-                <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
+              <div className="bg-black/40 backdrop-blur-md rounded-xl border border-white/10 shadow-sm mb-6">
+                <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3">
                   <Zap size={18} className="text-purple-600" />
                   <div>
-                    <h3 className="font-semibold text-gray-800">Battery storage systems (BESS)</h3>
-                    <p className="text-xs text-gray-500">
+                    <h3 className="font-semibold text-gray-100">Battery storage systems (BESS)</h3>
+                    <p className="text-xs text-gray-400">
                       Record planned or existing battery energy storage systems.
                     </p>
                   </div>
@@ -6209,10 +6209,10 @@ export default function ElectricalEntry() {
                           }
                           className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-purple-50 transition-colors"
                         >
-                          <span className="font-medium text-gray-900 text-sm min-w-[100px]">
+                          <span className="font-medium text-white text-sm min-w-[100px]">
                             {rec.batteryId || 'New BESS record'}
                           </span>
-                          <span className="text-xs text-gray-500 flex-1">
+                          <span className="text-xs text-gray-400 flex-1">
                             {rec.application?.replace(/_/g, ' ') ?? ''}{' '}
                             {rec.targetAutonomyH !== undefined
                               ? `· ${rec.targetAutonomyH}h autonomy`
@@ -6236,7 +6236,7 @@ export default function ElectricalEntry() {
                           )}
                         </button>
                         {isExpanded && (
-                          <div className="px-4 pb-4 border-t border-purple-100 bg-white">
+                          <div className="px-4 pb-4 border-t border-purple-100 bg-black/40 backdrop-blur-md">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                               <div className="space-y-3">
                                 <Field>
@@ -6268,7 +6268,7 @@ export default function ElectricalEntry() {
                                         },
                                       })
                                     }
-                                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    className="w-full rounded-lg border border-white/20 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                                   >
                                     <option value="">— select —</option>
                                     <option value="solar_storage">Solar storage</option>
@@ -6434,14 +6434,14 @@ export default function ElectricalEntry() {
               </div>
 
               {/* 7F: Renewable Feasibility Assessment */}
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-6">
-                <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-3">
+              <div className="bg-black/40 backdrop-blur-md rounded-xl border border-white/10 shadow-sm mb-6">
+                <div className="px-5 py-4 border-b border-white/5 flex items-center gap-3">
                   <BarChart3 size={18} className="text-green-600" />
                   <div>
-                    <h3 className="font-semibold text-gray-800">
+                    <h3 className="font-semibold text-gray-100">
                       Renewable energy feasibility assessment
                     </h3>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-gray-400">
                       Feasibility analysis per technology. Informs campus energy planning and future
                       investment.
                     </p>
@@ -6457,7 +6457,7 @@ export default function ElectricalEntry() {
                   </div>
                 </div>
                 <div className="p-5 space-y-3">
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-400">
                     Enter technologies assessed for this building. Assessment data informs planning
                     but is not used in current carbon calculation (unless no generation data is
                     available for solar).
@@ -6472,7 +6472,7 @@ export default function ElectricalEntry() {
                       geothermal: 'border-teal-300 bg-teal-50/30',
                       biomass: 'border-green-300 bg-green-50/30',
                     };
-                    const accent = accentMap[rec.energySource] ?? 'border-gray-300 bg-gray-50/30';
+                    const accent = accentMap[rec.energySource] ?? 'border-white/20 bg-white/5/30';
                     const co2Offset =
                       ((rec.approxAnnualGenerationPotentialMwh ?? 0) * 1000 * 0.716) / 1000;
                     const sourceLabel: Record<string, string> = {
@@ -6491,12 +6491,12 @@ export default function ElectricalEntry() {
                           onClick={() =>
                             dispatch({ type: 'TOGGLE_CARD_EXPAND', payload: `assess-${rec.id}` })
                           }
-                          className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/50 transition-colors"
+                          className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-black/40 backdrop-blur-md/50 transition-colors"
                         >
-                          <span className="font-medium text-gray-900 text-sm min-w-[150px]">
+                          <span className="font-medium text-white text-sm min-w-[150px]">
                             {sourceLabel[rec.energySource] ?? rec.energySource}
                           </span>
-                          <span className="text-xs text-gray-500 flex-1">
+                          <span className="text-xs text-gray-400 flex-1">
                             {rec.estimatedInstallationCapacityKw
                               ? `${rec.estimatedInstallationCapacityKw} kW`
                               : ''}{' '}
@@ -6528,11 +6528,11 @@ export default function ElectricalEntry() {
                         </button>
 
                         {isExpanded && (
-                          <div className="px-4 pb-4 border-t border-gray-100 bg-white">
+                          <div className="px-4 pb-4 border-t border-white/5 bg-black/40 backdrop-blur-md">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                               {/* Group A: Site characteristics */}
                               <div className="space-y-3">
-                                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                                <p className="text-xs font-semibold text-gray-300 uppercase tracking-wide">
                                   Site characteristics
                                 </p>
                                 <Field>
@@ -6550,7 +6550,7 @@ export default function ElectricalEntry() {
                                         },
                                       })
                                     }
-                                    className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    className="w-full rounded-lg border border-white/20 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                                   >
                                     <option value="solar_pv_rooftop">Solar PV (Rooftop)</option>
                                     <option value="solar_pv_ground">Solar PV (Ground)</option>
@@ -6639,7 +6639,7 @@ export default function ElectricalEntry() {
 
                               {/* Group B: Resource & feasibility */}
                               <div className="space-y-3">
-                                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                                <p className="text-xs font-semibold text-gray-300 uppercase tracking-wide">
                                   Resource & feasibility
                                 </p>
                                 <Field>
@@ -6815,7 +6815,7 @@ export default function ElectricalEntry() {
                           </h4>
                           <table className="w-full text-sm mb-3">
                             <thead>
-                              <tr className="text-xs text-gray-500 border-b border-green-200">
+                              <tr className="text-xs text-gray-400 border-b border-green-200">
                                 <th className="text-left py-1.5">Technology</th>
                                 <th className="text-right py-1.5">Capacity (kW)</th>
                                 <th className="text-right py-1.5">Annual (MWh)</th>
@@ -6826,16 +6826,16 @@ export default function ElectricalEntry() {
                             <tbody>
                               {assessed.map((a) => (
                                 <tr key={a.id} className="border-b border-green-100 last:border-0">
-                                  <td className="py-1.5 text-gray-800 font-medium">
+                                  <td className="py-1.5 text-gray-100 font-medium">
                                     {sourceLabel[a.energySource] ?? a.energySource}
                                   </td>
-                                  <td className="py-1.5 text-right text-gray-700">
+                                  <td className="py-1.5 text-right text-gray-200">
                                     {a.estimatedInstallationCapacityKw?.toLocaleString() ?? '—'}
                                   </td>
-                                  <td className="py-1.5 text-right text-gray-700">
+                                  <td className="py-1.5 text-right text-gray-200">
                                     {a.approxAnnualGenerationPotentialMwh?.toLocaleString() ?? '—'}
                                   </td>
-                                  <td className="py-1.5 text-right text-gray-700">
+                                  <td className="py-1.5 text-right text-gray-200">
                                     {a.estimatedCapexLakhs ?? '—'}
                                   </td>
                                   <td className="py-1.5 text-right text-green-700 font-medium">
@@ -6875,15 +6875,15 @@ export default function ElectricalEntry() {
               id="billing-analytics"
             >
               <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-white">
                   Billing analytics & power quality
                 </h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-gray-400 mt-1">
                   These records are for financial analysis and power quality monitoring. They do not
                   affect the carbon calculation but are essential for campus energy management and
                   help cross-check the utility bill data from Section 6.
                 </p>
-                <div className="mt-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-600">
+                <div className="mt-2 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-gray-300">
                   <Info size={12} className="inline mr-1" />
                   Data in this section links to your utility bills (Section 6). Consumer numbers
                   should match what you entered there.
@@ -6892,8 +6892,8 @@ export default function ElectricalEntry() {
 
               {/* ── 8A: Tariff schedule (5.1) ── */}
               <div className="mb-8">
-                <h3 className="text-base font-semibold text-gray-800 mb-1">Tariff schedule</h3>
-                <p className="text-xs text-gray-500 mb-3">
+                <h3 className="text-base font-semibold text-gray-100 mb-1">Tariff schedule</h3>
+                <p className="text-xs text-gray-400 mb-3">
                   Record the utility's billing rate structure. This enables cost analysis alongside
                   the carbon calculation.
                 </p>
@@ -6903,17 +6903,17 @@ export default function ElectricalEntry() {
                   return (
                     <div
                       key={ts.id}
-                      className="border border-gray-200 rounded-xl overflow-hidden bg-white mb-3"
+                      className="border border-white/10 rounded-xl overflow-hidden bg-black/40 backdrop-blur-md mb-3"
                     >
                       <button
                         type="button"
                         onClick={() => dispatch({ type: 'TOGGLE_CARD_EXPAND', payload: ts.id })}
-                        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-gray-50"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/5"
                       >
-                        <span className="font-medium text-gray-900 text-sm min-w-[120px]">
+                        <span className="font-medium text-white text-sm min-w-[120px]">
                           {ts.consumerNumber || 'New tariff'}
                         </span>
-                        <span className="text-xs text-gray-500">{ts.tariffCode || '—'}</span>
+                        <span className="text-xs text-gray-400">{ts.tariffCode || '—'}</span>
                         {ts.energyChargePerKwh && (
                           <span className="text-xs text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full">
                             ₹{ts.energyChargePerKwh}/kWh
@@ -6945,10 +6945,10 @@ export default function ElectricalEntry() {
                       </button>
 
                       {isExpanded && (
-                        <div className="px-4 pb-4 border-t border-gray-100 bg-gray-50 space-y-4 pt-4">
+                        <div className="px-4 pb-4 border-t border-white/5 bg-white/5 space-y-4 pt-4">
                           {/* Group A — Identity */}
                           <div>
-                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
                               Identity
                             </p>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -6996,7 +6996,7 @@ export default function ElectricalEntry() {
 
                           {/* Group B — Energy charges */}
                           <div>
-                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
                               Energy charges
                             </p>
                             <div className="mb-3 flex items-center gap-3">
@@ -7028,7 +7028,7 @@ export default function ElectricalEntry() {
                               </Field>
                             ) : (
                               <div>
-                                <p className="text-xs text-gray-500 mb-2">
+                                <p className="text-xs text-gray-400 mb-2">
                                   Define time-of-day pricing blocks (must cover full 24 hours)
                                 </p>
                                 {ts.todBlocks.map((block, bi) => (
@@ -7046,7 +7046,7 @@ export default function ElectricalEntry() {
                                         });
                                       }}
                                       placeholder="Peak"
-                                      className="w-20 rounded border border-gray-300 px-2 py-1 text-xs"
+                                      className="w-20 rounded border border-white/20 px-2 py-1 text-xs"
                                     />
                                     <input
                                       type="time"
@@ -7060,7 +7060,7 @@ export default function ElectricalEntry() {
                                           payload: { id: ts.id, updates: { todBlocks: blocks } },
                                         });
                                       }}
-                                      className="rounded border border-gray-300 px-2 py-1 text-xs"
+                                      className="rounded border border-white/20 px-2 py-1 text-xs"
                                     />
                                     <span className="text-xs text-gray-400">to</span>
                                     <input
@@ -7075,7 +7075,7 @@ export default function ElectricalEntry() {
                                           payload: { id: ts.id, updates: { todBlocks: blocks } },
                                         });
                                       }}
-                                      className="rounded border border-gray-300 px-2 py-1 text-xs"
+                                      className="rounded border border-white/20 px-2 py-1 text-xs"
                                     />
                                     <input
                                       type="number"
@@ -7093,7 +7093,7 @@ export default function ElectricalEntry() {
                                       }}
                                       placeholder="₹/kWh"
                                       step={0.01}
-                                      className="w-20 rounded border border-gray-300 px-2 py-1 text-xs"
+                                      className="w-20 rounded border border-white/20 px-2 py-1 text-xs"
                                     />
                                     <button
                                       type="button"
@@ -7137,7 +7137,7 @@ export default function ElectricalEntry() {
 
                           {/* Group C — Demand & PF */}
                           <div>
-                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
                               Demand & power factor
                             </p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -7291,10 +7291,10 @@ export default function ElectricalEntry() {
 
               {/* ── 8B: Contracted max demand vs actual (5.2) ── */}
               <div className="mb-8">
-                <h3 className="text-base font-semibold text-gray-800 mb-1">
+                <h3 className="text-base font-semibold text-gray-100 mb-1">
                   Contracted demand vs actual demand
                 </h3>
-                <p className="text-xs text-gray-500 mb-3">
+                <p className="text-xs text-gray-400 mb-3">
                   Track how actual demand compares to your contracted maximum demand (CMD) each
                   month. Over-drawing CMD incurs penalties. Under-utilising CMD wastes contracted
                   capacity charges.
@@ -7304,7 +7304,7 @@ export default function ElectricalEntry() {
                   <div className="overflow-x-auto mb-3">
                     <table className="w-full text-xs border-collapse">
                       <thead>
-                        <tr className="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wide">
+                        <tr className="bg-white/5 text-gray-400 text-[10px] uppercase tracking-wide">
                           <th className="px-2 py-1.5 text-left">Consumer No.</th>
                           <th className="px-2 py-1.5 text-left">Month</th>
                           <th className="px-2 py-1.5 text-center">CMD (kVA)</th>
@@ -7347,7 +7347,7 @@ export default function ElectricalEntry() {
                                             cls: 'bg-red-100 text-red-700',
                                           };
                           return (
-                            <tr key={rec.id} className="hover:bg-gray-50">
+                            <tr key={rec.id} className="hover:bg-white/5">
                               <td className="px-2 py-1">
                                 <input
                                   type="text"
@@ -7361,7 +7361,7 @@ export default function ElectricalEntry() {
                                       },
                                     })
                                   }
-                                  className="w-24 rounded border border-gray-200 px-1.5 py-0.5 text-xs"
+                                  className="w-24 rounded border border-white/10 px-1.5 py-0.5 text-xs"
                                 />
                               </td>
                               <td className="px-2 py-1">
@@ -7374,7 +7374,7 @@ export default function ElectricalEntry() {
                                       payload: { id: rec.id, updates: { month: e.target.value } },
                                     })
                                   }
-                                  className="w-28 rounded border border-gray-200 px-1.5 py-0.5 text-xs"
+                                  className="w-28 rounded border border-white/10 px-1.5 py-0.5 text-xs"
                                 />
                               </td>
                               <td className="px-2 py-1">
@@ -7392,7 +7392,7 @@ export default function ElectricalEntry() {
                                       },
                                     })
                                   }
-                                  className="w-20 rounded border border-gray-200 px-1.5 py-0.5 text-xs text-center"
+                                  className="w-20 rounded border border-white/10 px-1.5 py-0.5 text-xs text-center"
                                 />
                               </td>
                               <td className="px-2 py-1">
@@ -7412,7 +7412,7 @@ export default function ElectricalEntry() {
                                   }
                                   className={cn(
                                     'w-20 rounded border px-1.5 py-0.5 text-xs text-center',
-                                    exceeded ? 'border-red-400' : 'border-gray-200'
+                                    exceeded ? 'border-red-400' : 'border-white/10'
                                   )}
                                 />
                               </td>
@@ -7431,10 +7431,10 @@ export default function ElectricalEntry() {
                                       },
                                     })
                                   }
-                                  className="w-20 rounded border border-gray-200 px-1.5 py-0.5 text-xs text-center"
+                                  className="w-20 rounded border border-white/10 px-1.5 py-0.5 text-xs text-center"
                                 />
                               </td>
-                              <td className="px-2 py-1 text-center text-gray-600">
+                              <td className="px-2 py-1 text-center text-gray-300">
                                 {util !== null ? `${util.toFixed(1)}%` : '—'}
                               </td>
                               <td className="px-2 py-1 text-center">
@@ -7459,7 +7459,7 @@ export default function ElectricalEntry() {
                                       payload: { id: rec.id, updates: { remarks: e.target.value } },
                                     })
                                   }
-                                  className="w-28 rounded border border-gray-200 px-1.5 py-0.5 text-xs"
+                                  className="w-28 rounded border border-white/10 px-1.5 py-0.5 text-xs"
                                 />
                               </td>
                               <td className="px-2 py-1">
@@ -7568,8 +7568,8 @@ export default function ElectricalEntry() {
 
               {/* ── 8C: Power factor trend (5.3) ── */}
               <div className="mb-4">
-                <h3 className="text-base font-semibold text-gray-800 mb-1">Power factor trend</h3>
-                <p className="text-xs text-gray-500 mb-3">
+                <h3 className="text-base font-semibold text-gray-100 mb-1">Power factor trend</h3>
+                <p className="text-xs text-gray-400 mb-3">
                   Monthly PF tracking shows whether power factor correction equipment (capacitor
                   banks) is working effectively. Sustained PF {'>'} 0.95 earns utility incentives.
                 </p>
@@ -7578,7 +7578,7 @@ export default function ElectricalEntry() {
                   <div className="overflow-x-auto mb-3">
                     <table className="w-full text-xs border-collapse">
                       <thead>
-                        <tr className="bg-gray-50 text-gray-500 text-[10px] uppercase tracking-wide">
+                        <tr className="bg-white/5 text-gray-400 text-[10px] uppercase tracking-wide">
                           <th className="px-2 py-1.5 text-left">Consumer No.</th>
                           <th className="px-2 py-1.5 text-left">Month</th>
                           <th className="px-2 py-1.5 text-center">Avg PF</th>
@@ -7602,7 +7602,7 @@ export default function ElectricalEntry() {
                                 ? { label: 'Acceptable', cls: 'bg-amber-100 text-amber-700' }
                                 : { label: 'Poor — penalty zone', cls: 'bg-red-100 text-red-700' };
                           return (
-                            <tr key={rec.id} className="hover:bg-gray-50">
+                            <tr key={rec.id} className="hover:bg-white/5">
                               <td className="px-2 py-1">
                                 <input
                                   type="text"
@@ -7616,7 +7616,7 @@ export default function ElectricalEntry() {
                                       },
                                     })
                                   }
-                                  className="w-24 rounded border border-gray-200 px-1.5 py-0.5 text-xs"
+                                  className="w-24 rounded border border-white/10 px-1.5 py-0.5 text-xs"
                                 />
                               </td>
                               <td className="px-2 py-1">
@@ -7629,7 +7629,7 @@ export default function ElectricalEntry() {
                                       payload: { id: rec.id, updates: { month: e.target.value } },
                                     })
                                   }
-                                  className="w-28 rounded border border-gray-200 px-1.5 py-0.5 text-xs"
+                                  className="w-28 rounded border border-white/10 px-1.5 py-0.5 text-xs"
                                 />
                               </td>
                               <td className="px-2 py-1">
@@ -7648,7 +7648,7 @@ export default function ElectricalEntry() {
                                   min={0.7}
                                   max={1}
                                   step={0.001}
-                                  className="w-20 rounded border border-gray-200 px-1.5 py-0.5 text-xs text-center"
+                                  className="w-20 rounded border border-white/10 px-1.5 py-0.5 text-xs text-center"
                                 />
                               </td>
                               <td className="px-2 py-1">
@@ -7669,7 +7669,7 @@ export default function ElectricalEntry() {
                                   min={0.7}
                                   max={1}
                                   step={0.001}
-                                  className="w-20 rounded border border-gray-200 px-1.5 py-0.5 text-xs text-center"
+                                  className="w-20 rounded border border-white/10 px-1.5 py-0.5 text-xs text-center"
                                 />
                               </td>
                               <td className="px-2 py-1">
@@ -7695,7 +7695,7 @@ export default function ElectricalEntry() {
                                       ? 'text-red-700 border-red-300'
                                       : (rec.penaltyOrIncentiveRs ?? 0) < 0
                                         ? 'text-green-700 border-green-300'
-                                        : 'border-gray-200'
+                                        : 'border-white/10'
                                   )}
                                 />
                               </td>
@@ -7721,7 +7721,7 @@ export default function ElectricalEntry() {
                                       payload: { id: rec.id, updates: { remarks: e.target.value } },
                                     })
                                   }
-                                  className="w-28 rounded border border-gray-200 px-1.5 py-0.5 text-xs"
+                                  className="w-28 rounded border border-white/10 px-1.5 py-0.5 text-xs"
                                 />
                               </td>
                               <td className="px-2 py-1">
@@ -7797,8 +7797,8 @@ export default function ElectricalEntry() {
                 {pfAnalysis && (
                   <div className="mt-4 space-y-3">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                      <div className="bg-gray-50 rounded-lg p-3 text-center">
-                        <p className="text-xs text-gray-500">Avg PF</p>
+                      <div className="bg-white/5 rounded-lg p-3 text-center">
+                        <p className="text-xs text-gray-400">Avg PF</p>
                         <p
                           className={cn(
                             'text-lg font-bold',
@@ -7813,13 +7813,13 @@ export default function ElectricalEntry() {
                         </p>
                       </div>
                       <div className="bg-red-50 rounded-lg p-3 text-center">
-                        <p className="text-xs text-gray-500">Annual PF penalty</p>
+                        <p className="text-xs text-gray-400">Annual PF penalty</p>
                         <p className="text-lg font-bold text-red-700">
                           ₹{pfAnalysis.annualPenalty.toLocaleString()}
                         </p>
                       </div>
                       <div className="bg-green-50 rounded-lg p-3 text-center">
-                        <p className="text-xs text-gray-500">Annual PF incentive</p>
+                        <p className="text-xs text-gray-400">Annual PF incentive</p>
                         <p className="text-lg font-bold text-green-700">
                           ₹{pfAnalysis.annualIncentive.toLocaleString()}
                         </p>
@@ -7830,7 +7830,7 @@ export default function ElectricalEntry() {
                           pfAnalysis.netImpact > 0 ? 'bg-red-50' : 'bg-green-50'
                         )}
                       >
-                        <p className="text-xs text-gray-500">Net PF impact</p>
+                        <p className="text-xs text-gray-400">Net PF impact</p>
                         <p
                           className={cn(
                             'text-lg font-bold',
@@ -7842,7 +7842,7 @@ export default function ElectricalEntry() {
                         </p>
                       </div>
                     </div>
-                    <div className="text-xs text-gray-600 space-y-0.5">
+                    <div className="text-xs text-gray-300 space-y-0.5">
                       <p>
                         Months in penalty zone:{' '}
                         <strong className="text-red-700">{pfAnalysis.monthsInPenalty}</strong> of{' '}
@@ -7903,8 +7903,8 @@ export default function ElectricalEntry() {
               id="grid-emission-factors"
             >
               <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">Grid emission factors</h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <h2 className="text-xl font-semibold text-white">Grid emission factors</h2>
+                <p className="text-sm text-gray-400 mt-1">
                   Enter the actual grid emission factor for your utility supply. This directly
                   determines the accuracy of your Scope 2 carbon calculation. Leaving this empty
                   uses the national CEA average of 0.716 kgCO₂/kWh.
@@ -7920,7 +7920,7 @@ export default function ElectricalEntry() {
                     : 'bg-amber-50 border-amber-200'
                 )}
               >
-                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-1">
                   Current emission factor in use
                 </p>
                 <p
@@ -7935,7 +7935,7 @@ export default function ElectricalEntry() {
                     : ' (CEA 2023 national average — default)'}
                 </p>
                 {effectiveGridEf.tdLoss > 0 && (
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-gray-400 mt-1">
                     T&D loss applied: {effectiveGridEf.tdLoss}% gross-up (net{' '}
                     {effectiveGridEf.ef.toFixed(3)} → gross {effectiveGridEf.gross.toFixed(3)})
                   </p>
@@ -7957,10 +7957,10 @@ export default function ElectricalEntry() {
                     ? Math.abs(((ef.emissionFactorKgCo2PerKwhr - ceaVal) / ceaVal) * 100)
                     : 0;
                   return (
-                    <div key={ef.id} className="border border-gray-200 rounded-xl p-4 bg-white">
+                    <div key={ef.id} className="border border-white/10 rounded-xl p-4 bg-black/40 backdrop-blur-md">
                       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                         <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                          <label className="block text-xs font-medium text-gray-300 mb-1">
                             Consumer number
                           </label>
                           <input
@@ -7972,12 +7972,12 @@ export default function ElectricalEntry() {
                                 payload: { id: ef.id, updates: { consumerNumber: e.target.value } },
                               })
                             }
-                            className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
                             placeholder="e.g. UP123456"
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                          <label className="block text-xs font-medium text-gray-300 mb-1">
                             Year
                           </label>
                           <select
@@ -7988,7 +7988,7 @@ export default function ElectricalEntry() {
                                 payload: { id: ef.id, updates: { year: +e.target.value } },
                               })
                             }
-                            className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-green-500"
                           >
                             {Array.from({ length: 8 }, (_, i) => 2019 + i).map((yr) => (
                               <option key={yr} value={yr}>
@@ -7998,7 +7998,7 @@ export default function ElectricalEntry() {
                           </select>
                         </div>
                         <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                          <label className="block text-xs font-medium text-gray-300 mb-1">
                             Source
                           </label>
                           <select
@@ -8012,7 +8012,7 @@ export default function ElectricalEntry() {
                                 },
                               })
                             }
-                            className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-green-500"
                           >
                             <option value="cea_published">CEA published</option>
                             <option value="state_discom">State DISCOM</option>
@@ -8023,7 +8023,7 @@ export default function ElectricalEntry() {
                           </select>
                         </div>
                         <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                          <label className="block text-xs font-medium text-gray-300 mb-1">
                             Emission factor (kgCO₂/kWh)
                             <span className="ml-1 text-blue-500 font-normal">
                               ← primary carbon input
@@ -8045,7 +8045,7 @@ export default function ElectricalEntry() {
                                   },
                                 })
                               }
-                              className="flex-1 border-l-4 border-l-blue-400 border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-blue-500"
+                              className="flex-1 border-l-4 border-l-blue-400 border border-white/20 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-blue-500"
                               placeholder="e.g. 0.716"
                             />
                             {CEA_EMISSION_FACTORS_BY_YEAR[ef.year] && (
@@ -8078,7 +8078,7 @@ export default function ElectricalEntry() {
                           )}
                         </div>
                         <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                          <label className="block text-xs font-medium text-gray-300 mb-1">
                             T&D loss (%)
                           </label>
                           <div className="flex gap-2">
@@ -8097,7 +8097,7 @@ export default function ElectricalEntry() {
                                   },
                                 })
                               }
-                              className="flex-1 border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-green-500"
+                              className="flex-1 border border-white/20 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-green-500"
                               placeholder="e.g. 20"
                             />
                             <button
@@ -8108,7 +8108,7 @@ export default function ElectricalEntry() {
                                   payload: { id: ef.id, updates: { tdLossPercent: 20 } },
                                 })
                               }
-                              className="text-xs text-gray-500 hover:text-gray-700 border border-gray-200 rounded px-2 whitespace-nowrap"
+                              className="text-xs text-gray-400 hover:text-gray-200 border border-white/10 rounded px-2 whitespace-nowrap"
                             >
                               UP avg (20%)
                             </button>
@@ -8124,10 +8124,10 @@ export default function ElectricalEntry() {
                           )}
                         </div>
                         <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                          <label className="block text-xs font-medium text-gray-300 mb-1">
                             Gross EF (after T&D)
                           </label>
-                          <div className="flex items-center h-9 px-3 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700 font-mono">
+                          <div className="flex items-center h-9 px-3 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-200 font-mono">
                             {gross.toFixed(4)} kgCO₂/kWh
                           </div>
                           <p className="text-xs text-gray-400 mt-1">
@@ -8135,7 +8135,7 @@ export default function ElectricalEntry() {
                           </p>
                         </div>
                         <div className="col-span-2">
-                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                          <label className="block text-xs font-medium text-gray-300 mb-1">
                             Remarks
                           </label>
                           <input
@@ -8148,7 +8148,7 @@ export default function ElectricalEntry() {
                                 payload: { id: ef.id, updates: { remarks: e.target.value } },
                               })
                             }
-                            className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                            className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                             placeholder="Source publication, report number, or notes"
                           />
                         </div>
@@ -8191,14 +8191,14 @@ export default function ElectricalEntry() {
                 <summary className="cursor-pointer text-sm font-medium text-blue-600 hover:text-blue-800">
                   Show CEA reference values
                 </summary>
-                <div className="mt-3 border border-gray-200 rounded-xl overflow-hidden">
+                <div className="mt-3 border border-white/10 rounded-xl overflow-hidden">
                   <table className="w-full text-sm">
-                    <thead className="bg-gray-50">
+                    <thead className="bg-white/5">
                       <tr>
-                        <th className="text-left px-4 py-2 text-xs font-medium text-gray-500">
+                        <th className="text-left px-4 py-2 text-xs font-medium text-gray-400">
                           Year
                         </th>
-                        <th className="text-left px-4 py-2 text-xs font-medium text-gray-500">
+                        <th className="text-left px-4 py-2 text-xs font-medium text-gray-400">
                           EF (kgCO₂/kWh)
                         </th>
                         <th className="px-4 py-2"></th>
@@ -8208,12 +8208,12 @@ export default function ElectricalEntry() {
                       {Object.entries(CEA_EMISSION_FACTORS_BY_YEAR)
                         .sort(([a], [b]) => +b - +a)
                         .map(([yr, val]) => (
-                          <tr key={yr} className="hover:bg-gray-50">
-                            <td className="px-4 py-2 text-gray-800">
+                          <tr key={yr} className="hover:bg-white/5">
+                            <td className="px-4 py-2 text-gray-100">
                               {yr}
                               {yr === '2023' ? ' (current default)' : ''}
                             </td>
-                            <td className="px-4 py-2 font-mono text-gray-700">{val.toFixed(3)}</td>
+                            <td className="px-4 py-2 font-mono text-gray-200">{val.toFixed(3)}</td>
                             <td className="px-4 py-2">
                               <button
                                 type="button"
@@ -8250,10 +8250,10 @@ export default function ElectricalEntry() {
               id="automation-scada"
             >
               <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-white">
                   Automation, SCADA & smart metering
                 </h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-gray-400 mt-1">
                   Record automation systems and smart meter deployment plans. These improve energy
                   visibility but do not directly affect carbon calculations.
                 </p>
@@ -8261,25 +8261,25 @@ export default function ElectricalEntry() {
 
               {/* 7.2 SCADA Systems */}
               <div className="mb-8">
-                <h3 className="text-base font-medium text-gray-800 mb-1">SCADA / BMS systems</h3>
-                <p className="text-xs text-gray-500 mb-3">
+                <h3 className="text-base font-medium text-gray-100 mb-1">SCADA / BMS systems</h3>
+                <p className="text-xs text-gray-400 mb-3">
                   Record automation, SCADA, and Building Management Systems. SCADA/BMS typically
                   achieves 10–20% energy savings.
                 </p>
                 <div className="space-y-3 mb-3">
                   {state.scadaSystems.map((sc) => (
-                    <div key={sc.id} className="border border-gray-200 rounded-xl overflow-hidden">
+                    <div key={sc.id} className="border border-white/10 rounded-xl overflow-hidden">
                       <button
                         type="button"
                         onClick={() =>
                           dispatch({ type: 'TOGGLE_CARD_EXPAND', payload: `scada-${sc.id}` })
                         }
-                        className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 text-sm text-left"
+                        className="w-full flex items-center justify-between px-4 py-3 bg-white/5 hover:bg-white/10 text-sm text-left"
                       >
-                        <span className="font-medium text-gray-800">
+                        <span className="font-medium text-gray-100">
                           {sc.systemName || 'Unnamed system'}
                           {sc.protocol && (
-                            <span className="ml-2 text-xs text-gray-500">
+                            <span className="ml-2 text-xs text-gray-400">
                               {SCADA_PROTOCOL_LABELS[sc.protocol] ?? sc.protocol}
                             </span>
                           )}
@@ -8301,7 +8301,7 @@ export default function ElectricalEntry() {
                       {state.expandedCards.includes(`scada-${sc.id}`) && (
                         <div className="p-4 grid grid-cols-2 gap-3">
                           <div className="col-span-2 sm:col-span-1">
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               System name *
                             </label>
                             <input
@@ -8313,12 +8313,12 @@ export default function ElectricalEntry() {
                                   payload: { id: sc.id, updates: { systemName: e.target.value } },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                              className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                               placeholder="BMS Central, Pump Control SCADA"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Protocol
                             </label>
                             <select
@@ -8334,7 +8334,7 @@ export default function ElectricalEntry() {
                                   },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                              className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                             >
                               <option value="">— select —</option>
                               {Object.entries(SCADA_PROTOCOL_LABELS).map(([v, l]) => (
@@ -8345,7 +8345,7 @@ export default function ElectricalEntry() {
                             </select>
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Data points count
                             </label>
                             <input
@@ -8358,12 +8358,12 @@ export default function ElectricalEntry() {
                                   payload: { id: sc.id, updates: { pointsCount: +e.target.value } },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                              className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                               placeholder="e.g. 250"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Data rate / logging interval
                             </label>
                             <input
@@ -8375,12 +8375,12 @@ export default function ElectricalEntry() {
                                   payload: { id: sc.id, updates: { dataRate: e.target.value } },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                              className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                               placeholder="1 min, 15 min, real-time"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Year installed
                             </label>
                             <input
@@ -8397,11 +8397,11 @@ export default function ElectricalEntry() {
                                   },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                              className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Est. energy savings (%)
                             </label>
                             <input
@@ -8419,12 +8419,12 @@ export default function ElectricalEntry() {
                                   },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                              className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                               placeholder="Typical: 10–20"
                             />
                           </div>
                           <div className="col-span-2">
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Integrations
                             </label>
                             <input
@@ -8437,12 +8437,12 @@ export default function ElectricalEntry() {
                                   payload: { id: sc.id, updates: { integrations: e.target.value } },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                              className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                               placeholder="Utility smart meter, DG control panel, solar inverter, BMS"
                             />
                           </div>
                           <div className="col-span-2">
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Remarks
                             </label>
                             <input
@@ -8455,7 +8455,7 @@ export default function ElectricalEntry() {
                                   payload: { id: sc.id, updates: { remarks: e.target.value } },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                              className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                             />
                           </div>
                           <div className="col-span-2 flex justify-end">
@@ -8506,10 +8506,10 @@ export default function ElectricalEntry() {
 
               {/* 8: Smart meter deployment plan */}
               <div>
-                <h3 className="text-base font-medium text-gray-800 mb-1">
+                <h3 className="text-base font-medium text-gray-100 mb-1">
                   Smart meter deployment plan
                 </h3>
-                <p className="text-xs text-gray-500 mb-2">
+                <p className="text-xs text-gray-400 mb-2">
                   Record planned or existing smart meters. Smart meters enable the 15-min load
                   profile data that the Operational section requires.
                 </p>
@@ -8521,10 +8521,10 @@ export default function ElectricalEntry() {
                   {state.smartMeterPlan.map((mp) => (
                     <div
                       key={mp.id}
-                      className="grid grid-cols-2 gap-2 sm:grid-cols-4 border border-gray-200 rounded-xl p-3 bg-white text-sm"
+                      className="grid grid-cols-2 gap-2 sm:grid-cols-4 border border-white/10 rounded-xl p-3 bg-black/40 backdrop-blur-md text-sm"
                     >
                       <div>
-                        <label className="block text-xs text-gray-500 mb-1">Meter point *</label>
+                        <label className="block text-xs text-gray-400 mb-1">Meter point *</label>
                         <input
                           type="text"
                           value={mp.meterPoint}
@@ -8534,12 +8534,12 @@ export default function ElectricalEntry() {
                               payload: { id: mp.id, updates: { meterPoint: e.target.value } },
                             })
                           }
-                          className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                          className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                           placeholder="Main 11kV incomer"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-gray-500 mb-1">Voltage level</label>
+                        <label className="block text-xs text-gray-400 mb-1">Voltage level</label>
                         <select
                           value={mp.voltageLevel}
                           onChange={(e) =>
@@ -8551,7 +8551,7 @@ export default function ElectricalEntry() {
                               },
                             })
                           }
-                          className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                          className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                         >
                           {Object.entries(METER_VOLTAGE_LABELS).map(([v, l]) => (
                             <option key={v} value={v}>
@@ -8561,7 +8561,7 @@ export default function ElectricalEntry() {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-xs text-gray-500 mb-1">Interval (min)</label>
+                        <label className="block text-xs text-gray-400 mb-1">Interval (min)</label>
                         <div className="flex gap-1 flex-wrap">
                           {[1, 5, 15, 30, 60].map((n) => (
                             <button
@@ -8577,7 +8577,7 @@ export default function ElectricalEntry() {
                                 'px-2 py-0.5 rounded text-xs border',
                                 mp.intervalMinutes === n
                                   ? 'bg-green-100 border-green-400 text-green-700'
-                                  : 'border-gray-300 text-gray-600'
+                                  : 'border-white/20 text-gray-300'
                               )}
                             >
                               {n}
@@ -8586,7 +8586,7 @@ export default function ElectricalEntry() {
                         </div>
                       </div>
                       <div>
-                        <label className="block text-xs text-gray-500 mb-1">Communication</label>
+                        <label className="block text-xs text-gray-400 mb-1">Communication</label>
                         <select
                           value={mp.communicationType ?? ''}
                           onChange={(e) =>
@@ -8601,7 +8601,7 @@ export default function ElectricalEntry() {
                               },
                             })
                           }
-                          className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                          className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                         >
                           <option value="">—</option>
                           {Object.entries(METER_COMM_LABELS).map(([v, l]) => (
@@ -8612,7 +8612,7 @@ export default function ElectricalEntry() {
                         </select>
                       </div>
                       <div className="col-span-2 sm:col-span-3">
-                        <label className="block text-xs text-gray-500 mb-1">CT/PT class</label>
+                        <label className="block text-xs text-gray-400 mb-1">CT/PT class</label>
                         <input
                           type="text"
                           value={mp.ctPtClass ?? ''}
@@ -8622,7 +8622,7 @@ export default function ElectricalEntry() {
                               payload: { id: mp.id, updates: { ctPtClass: e.target.value } },
                             })
                           }
-                          className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                          className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                           placeholder="Class 0.5S, 5VA"
                         />
                       </div>
@@ -8658,7 +8658,7 @@ export default function ElectricalEntry() {
 
                 {/* Metering coverage summary */}
                 {state.smartMeterPlan.length > 0 && (
-                  <div className="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-3 text-xs text-gray-600">
+                  <div className="mt-3 bg-white/5 border border-white/10 rounded-lg p-3 text-xs text-gray-300">
                     <p className="font-medium">
                       {state.smartMeterPlan.length} meter point(s) planned / installed
                     </p>
@@ -8689,10 +8689,10 @@ export default function ElectricalEntry() {
               id="ev-vehicles"
             >
               <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-white">
                   EV infrastructure & vehicle fleet
                 </h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-gray-400 mt-1">
                   Electric vehicle infrastructure adds to electricity demand (Scope 2). Vehicle
                   fleet fuel consumption is a direct Scope 1 emission source.
                 </p>
@@ -8708,10 +8708,10 @@ export default function ElectricalEntry() {
 
               {/* 9.1 EV Charging */}
               <div className="mb-8">
-                <h3 className="text-base font-medium text-gray-800 mb-1">
+                <h3 className="text-base font-medium text-gray-100 mb-1">
                   EV charging infrastructure
                 </h3>
-                <p className="text-xs text-gray-500 mb-3">
+                <p className="text-xs text-gray-400 mb-3">
                   Record installed or planned EV Supply Equipment (EVSE). EV charging load is added
                   to your electricity consumption and Scope 2 emissions.
                 </p>
@@ -8733,19 +8733,19 @@ export default function ElectricalEntry() {
                     return (
                       <div
                         key={ev.id}
-                        className="border border-gray-200 rounded-xl overflow-hidden"
+                        className="border border-white/10 rounded-xl overflow-hidden"
                       >
                         <button
                           type="button"
                           onClick={() =>
                             dispatch({ type: 'TOGGLE_CARD_EXPAND', payload: `ev-${ev.id}` })
                           }
-                          className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 text-sm text-left"
+                          className="w-full flex items-center justify-between px-4 py-3 bg-white/5 hover:bg-white/10 text-sm text-left"
                         >
-                          <span className="font-medium text-gray-800">
+                          <span className="font-medium text-gray-100">
                             {ev.evseId || 'EVSE'}
                             {ev.connectorType && (
-                              <span className="ml-2 text-xs text-gray-500">
+                              <span className="ml-2 text-xs text-gray-400">
                                 {EV_CONNECTOR_LABELS[ev.connectorType] ?? ev.connectorType}
                               </span>
                             )}
@@ -8769,7 +8769,7 @@ export default function ElectricalEntry() {
                         {state.expandedCards.includes(`ev-${ev.id}`) && (
                           <div className="p-4 grid grid-cols-2 gap-3">
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 EVSE ID *
                               </label>
                               <input
@@ -8781,12 +8781,12 @@ export default function ElectricalEntry() {
                                     payload: { id: ev.id, updates: { evseId: e.target.value } },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                                className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                                 placeholder="EVSE-01, EV-Parking-A"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Connector type
                               </label>
                               <select
@@ -8800,7 +8800,7 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                                className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                               >
                                 {Object.entries(EV_CONNECTOR_LABELS).map(([v, l]) => (
                                   <option key={v} value={v}>
@@ -8810,7 +8810,7 @@ export default function ElectricalEntry() {
                               </select>
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Rating (kW) *
                               </label>
                               <div className="flex gap-1 flex-wrap mb-1">
@@ -8828,7 +8828,7 @@ export default function ElectricalEntry() {
                                       'px-2 py-0.5 rounded text-xs border',
                                       ev.ratingKw === kw
                                         ? 'bg-blue-100 border-blue-400 text-blue-700'
-                                        : 'border-gray-300 text-gray-600'
+                                        : 'border-white/20 text-gray-300'
                                     )}
                                   >
                                     {kw}
@@ -8846,12 +8846,12 @@ export default function ElectricalEntry() {
                                     payload: { id: ev.id, updates: { ratingKw: +e.target.value } },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                                className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                                 placeholder="kW"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Quantity *
                               </label>
                               <input
@@ -8864,11 +8864,11 @@ export default function ElectricalEntry() {
                                     payload: { id: ev.id, updates: { quantity: +e.target.value } },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                                className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Diversity factor: {((ev.diversityFactor ?? 0.4) * 100).toFixed(0)}%
                                 simultaneous utilisation
                               </label>
@@ -8892,7 +8892,7 @@ export default function ElectricalEntry() {
                               <p className="text-xs text-gray-400">Campus typical: 0.3–0.5</p>
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Operating hours/day
                               </label>
                               <input
@@ -8910,12 +8910,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                                className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                                 placeholder="8"
                               />
                             </div>
                             <div className="col-span-2">
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Monthly kWh consumption (actual metered)
                                 <span className="ml-1 text-green-600 text-xs">
                                   (overrides calculated)
@@ -8937,12 +8937,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border-l-4 border-l-green-400 border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                                className="w-full border-l-4 border-l-green-400 border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                                 placeholder="If sub-metered, enter actual monthly kWh"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Interconnection point
                               </label>
                               <input
@@ -8957,7 +8957,7 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+                                className="w-full border border-white/20 rounded-lg px-3 py-1.5 text-sm"
                                 placeholder="MDB-Parking, LT panel sub-feeder 4"
                               />
                             </div>
@@ -8968,7 +8968,7 @@ export default function ElectricalEntry() {
                                   {annualKwh.toLocaleString()} kWh/year
                                 </p>
                               ) : (
-                                <p className="text-gray-600">
+                                <p className="text-gray-300">
                                   Estimated: {calcMonthlyKwh.toFixed(0)} kWh/month ={' '}
                                   {(calcMonthlyKwh * 12).toFixed(0)} kWh/year
                                   {calcMonthlyKwh === 0 && ' (enter kW and qty to calculate)'}
@@ -9047,10 +9047,10 @@ export default function ElectricalEntry() {
 
               {/* 9.2 Vehicle fleet */}
               <div>
-                <h3 className="text-base font-medium text-gray-800 mb-1">
+                <h3 className="text-base font-medium text-gray-100 mb-1">
                   Vehicle fleet & fuel use
                 </h3>
-                <p className="text-xs text-gray-500 mb-2">
+                <p className="text-xs text-gray-400 mb-2">
                   Fuel consumed by campus vehicles is a direct Scope 1 emission. Enter consumption
                   by vehicle type. EVs reduce these emissions to zero.
                 </p>
@@ -9079,10 +9079,10 @@ export default function ElectricalEntry() {
                       return (
                         <div
                           key={v.id}
-                          className="border border-gray-200 rounded-xl p-3 bg-white grid grid-cols-4 gap-2 text-xs"
+                          className="border border-white/10 rounded-xl p-3 bg-black/40 backdrop-blur-md grid grid-cols-4 gap-2 text-xs"
                         >
                           <div className="col-span-4 sm:col-span-1">
-                            <label className="block text-gray-500 mb-1">Vehicle type</label>
+                            <label className="block text-gray-400 mb-1">Vehicle type</label>
                             <select
                               value={v.vehicleType}
                               onChange={(e) =>
@@ -9094,7 +9094,7 @@ export default function ElectricalEntry() {
                                   },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                              className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                             >
                               {Object.entries(VEHICLE_TYPE_LABELS).map(([val, lbl]) => (
                                 <option key={val} value={val}>
@@ -9112,13 +9112,13 @@ export default function ElectricalEntry() {
                                     payload: { id: v.id, updates: { customLabel: e.target.value } },
                                   })
                                 }
-                                className="w-full mt-1 border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full mt-1 border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="Custom label"
                               />
                             )}
                           </div>
                           <div>
-                            <label className="block text-gray-500 mb-1">Total qty</label>
+                            <label className="block text-gray-400 mb-1">Total qty</label>
                             <input
                               type="number"
                               min="0"
@@ -9132,11 +9132,11 @@ export default function ElectricalEntry() {
                                   },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                              className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                             />
                           </div>
                           <div>
-                            <label className="block text-gray-500 mb-1">EVs ({pctEv}%)</label>
+                            <label className="block text-gray-400 mb-1">EVs ({pctEv}%)</label>
                             <input
                               type="number"
                               min="0"
@@ -9147,11 +9147,11 @@ export default function ElectricalEntry() {
                                   payload: { id: v.id, updates: { qtyEvs: +e.target.value } },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                              className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                             />
                           </div>
                           <div>
-                            <label className="block text-gray-500 mb-1">Monthly diesel (L)</label>
+                            <label className="block text-gray-400 mb-1">Monthly diesel (L)</label>
                             <input
                               type="number"
                               min="0"
@@ -9165,11 +9165,11 @@ export default function ElectricalEntry() {
                                   },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                              className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                             />
                           </div>
                           <div>
-                            <label className="block text-gray-500 mb-1">Annual diesel (L)</label>
+                            <label className="block text-gray-400 mb-1">Annual diesel (L)</label>
                             <input
                               type="number"
                               min="0"
@@ -9183,7 +9183,7 @@ export default function ElectricalEntry() {
                                   },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                              className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                               placeholder={
                                 v.monthlyDieselLitres
                                   ? `= ${(v.monthlyDieselLitres * 12).toLocaleString()} L`
@@ -9192,7 +9192,7 @@ export default function ElectricalEntry() {
                             />
                           </div>
                           <div>
-                            <label className="block text-gray-500 mb-1">Monthly kerosene (L)</label>
+                            <label className="block text-gray-400 mb-1">Monthly kerosene (L)</label>
                             <input
                               type="number"
                               min="0"
@@ -9208,11 +9208,11 @@ export default function ElectricalEntry() {
                                   },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                              className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                             />
                           </div>
                           <div>
-                            <label className="block text-gray-500 mb-1">Annual kerosene (L)</label>
+                            <label className="block text-gray-400 mb-1">Annual kerosene (L)</label>
                             <input
                               type="number"
                               min="0"
@@ -9226,11 +9226,11 @@ export default function ElectricalEntry() {
                                   },
                                 })
                               }
-                              className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                              className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                             />
                           </div>
                           <div>
-                            <label className="block text-gray-500 mb-1">
+                            <label className="block text-gray-400 mb-1">
                               Annual CO₂e
                               <span className="ml-1 text-red-500 font-medium">(Scope 1)</span>
                             </label>
@@ -9240,7 +9240,7 @@ export default function ElectricalEntry() {
                           </div>
                           <div className="col-span-4 grid grid-cols-2 gap-2">
                             <div>
-                              <label className="block text-gray-500 mb-1">
+                              <label className="block text-gray-400 mb-1">
                                 Diesel EF (kgCO₂/L)
                               </label>
                               <input
@@ -9258,12 +9258,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder={`IPCC default: ${VEHICLE_FUEL_EMISSION_FACTORS.diesel}`}
                               />
                             </div>
                             <div>
-                              <label className="block text-gray-500 mb-1">EV upgrade target</label>
+                              <label className="block text-gray-400 mb-1">EV upgrade target</label>
                               <input
                                 type="text"
                                 value={v.plannedUpgradeDate ?? ''}
@@ -9276,7 +9276,7 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="April 2027"
                               />
                             </div>
@@ -9377,10 +9377,10 @@ export default function ElectricalEntry() {
               id="refrigerants-fire"
             >
               <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-white">
                   Refrigerants &amp; fire extinguishers
                 </h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-gray-400 mt-1">
                   Refrigerant leakage and CO₂ fire extinguisher discharge are Scope 1 emission
                   sources. Refrigerant leakage is often the largest hidden emission in large
                   buildings.
@@ -9391,7 +9391,7 @@ export default function ElectricalEntry() {
               </div>
 
               {/* Sub-tab bar */}
-              <div className="inline-flex rounded-lg border border-gray-200 overflow-hidden mb-5">
+              <div className="inline-flex rounded-lg border border-white/10 overflow-hidden mb-5">
                 {(
                   [
                     { key: 'refrigerants', label: 'Refrigerants' },
@@ -9406,7 +9406,7 @@ export default function ElectricalEntry() {
                       'px-5 py-2 text-sm font-medium transition-colors',
                       phase10SubTab === tab.key
                         ? 'bg-iitbhu text-white'
-                        : 'bg-white text-gray-600 hover:bg-gray-50'
+                        : 'bg-black/40 backdrop-blur-md text-gray-300 hover:bg-white/5'
                     )}
                   >
                     {tab.label}
@@ -9430,19 +9430,19 @@ export default function ElectricalEntry() {
                     {state.refrigerantRecords.map((rec) => (
                       <div
                         key={rec.id}
-                        className="border border-gray-200 rounded-xl overflow-hidden"
+                        className="border border-white/10 rounded-xl overflow-hidden"
                       >
                         <button
                           type="button"
                           onClick={() =>
                             dispatch({ type: 'TOGGLE_CARD_EXPAND', payload: `ref-${rec.id}` })
                           }
-                          className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 text-sm text-left"
+                          className="w-full flex items-center justify-between px-4 py-3 bg-white/5 hover:bg-white/10 text-sm text-left"
                         >
-                          <span className="font-medium text-gray-800">
+                          <span className="font-medium text-gray-100">
                             {rec.equipmentName || 'Refrigerant system'}
                             {rec.refrigerantType && (
-                              <span className="ml-2 text-xs text-gray-500">
+                              <span className="ml-2 text-xs text-gray-400">
                                 {rec.refrigerantType}
                               </span>
                             )}
@@ -9461,7 +9461,7 @@ export default function ElectricalEntry() {
                         {state.expandedCards.includes(`ref-${rec.id}`) && (
                           <div className="p-4 grid grid-cols-2 gap-3">
                             <div className="col-span-2">
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Equipment name *
                               </label>
                               <input
@@ -9476,12 +9476,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="e.g. Split AC Block A, Chiller Unit 1"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Refrigerant type *
                               </label>
                               <select
@@ -9498,7 +9498,7 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                               >
                                 {(['R22', 'R407C', 'R134A', 'R410A', 'R404A', 'R32'] as const).map(
                                   (r) => (
@@ -9510,7 +9510,7 @@ export default function ElectricalEntry() {
                               </select>
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Annual top-up (kg) — preferred
                               </label>
                               <input
@@ -9527,12 +9527,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="kg added per year"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Installation charge (kg)
                               </label>
                               <input
@@ -9551,12 +9551,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="Total charge at install"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Annual leakage rate (%) — if no top-up data
                               </label>
                               <input
@@ -9576,12 +9576,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="Default: 5%"
                               />
                             </div>
                             <div className="col-span-2">
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Notes
                               </label>
                               <input
@@ -9593,7 +9593,7 @@ export default function ElectricalEntry() {
                                     payload: { id: rec.id, updates: { notes: e.target.value } },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="Optional notes"
                               />
                             </div>
@@ -9632,7 +9632,7 @@ export default function ElectricalEntry() {
               {/* ── FIRE EXTINGUISHERS ── */}
               {phase10SubTab === 'fire' && (
                 <div>
-                  <p className="text-xs text-gray-500 mb-3">
+                  <p className="text-xs text-gray-400 mb-3">
                     CO₂ fire extinguishers discharge carbon dioxide during testing and accidental
                     activation. Enter the charge per unit and estimated annual discharge percentage
                     (typically 5% for routine testing losses).
@@ -9646,10 +9646,10 @@ export default function ElectricalEntry() {
                           (rec.annualDischargePercent ?? 5)) /
                         100;
                       return (
-                        <div key={rec.id} className="border border-gray-200 rounded-xl p-4">
+                        <div key={rec.id} className="border border-white/10 rounded-xl p-4">
                           <div className="grid grid-cols-2 gap-3">
                             <div className="col-span-2">
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Location (optional)
                               </label>
                               <input
@@ -9661,12 +9661,12 @@ export default function ElectricalEntry() {
                                     payload: { id: rec.id, updates: { location: e.target.value } },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="e.g. Block A corridor, Server room"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 CO₂ charge per unit (kg)
                               </label>
                               <input
@@ -9683,12 +9683,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="e.g. 4.5"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Count
                               </label>
                               <input
@@ -9704,12 +9704,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="Number of units"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Annual discharge % (default 5%)
                               </label>
                               <input
@@ -9729,12 +9729,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="5"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Est. annual CO₂ discharged
                               </label>
                               <div className="flex items-center h-6 px-2 bg-red-50 border border-red-200 rounded text-xs font-mono text-red-700">
@@ -9742,7 +9742,7 @@ export default function ElectricalEntry() {
                               </div>
                             </div>
                             <div className="col-span-2">
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Notes
                               </label>
                               <input
@@ -9754,7 +9754,7 @@ export default function ElectricalEntry() {
                                     payload: { id: rec.id, updates: { notes: e.target.value } },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="Optional notes"
                               />
                             </div>
@@ -9828,8 +9828,8 @@ export default function ElectricalEntry() {
               id="scope3-activities"
             >
               <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">Scope 3 activities</h2>
-                <p className="text-sm text-gray-500 mt-1">
+                <h2 className="text-xl font-semibold text-white">Scope 3 activities</h2>
+                <p className="text-sm text-gray-400 mt-1">
                   Employee/student commute, business air travel, and equipment procurement are Scope
                   3 emission sources. All inputs are optional — absence is treated as zero.
                 </p>
@@ -9839,7 +9839,7 @@ export default function ElectricalEntry() {
               </div>
 
               {/* Sub-tab bar */}
-              <div className="inline-flex rounded-lg border border-gray-200 overflow-hidden mb-5">
+              <div className="inline-flex rounded-lg border border-white/10 overflow-hidden mb-5">
                 {(
                   [
                     { key: 'commute', label: 'Commute' },
@@ -9855,7 +9855,7 @@ export default function ElectricalEntry() {
                       'px-5 py-2 text-sm font-medium transition-colors',
                       phase11SubTab === tab.key
                         ? 'bg-iitbhu text-white'
-                        : 'bg-white text-gray-600 hover:bg-gray-50'
+                        : 'bg-black/40 backdrop-blur-md text-gray-300 hover:bg-white/5'
                     )}
                   >
                     {tab.label}
@@ -9866,7 +9866,7 @@ export default function ElectricalEntry() {
               {/* ── COMMUTE ── */}
               {phase11SubTab === 'commute' && (
                 <div>
-                  <p className="text-xs text-gray-500 mb-4">
+                  <p className="text-xs text-gray-400 mb-4">
                     EF: 0.15 kgCO₂e/km (DEFRA) · Formula: commuters × 2 × distance × days/yr × EF
                   </p>
                   <div className="space-y-3 mb-3">
@@ -9879,10 +9879,10 @@ export default function ElectricalEntry() {
                           0.15) /
                         1000;
                       return (
-                        <div key={rec.id} className="border border-gray-200 rounded-xl p-4">
+                        <div key={rec.id} className="border border-white/10 rounded-xl p-4">
                           <div className="grid grid-cols-2 gap-3">
                             <div className="col-span-2">
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Mode of transport
                               </label>
                               <select
@@ -9899,7 +9899,7 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                               >
                                 {(
                                   [
@@ -9919,7 +9919,7 @@ export default function ElectricalEntry() {
                               </select>
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Avg one-way distance (km)
                               </label>
                               <input
@@ -9938,12 +9938,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="km"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Commute days / year
                               </label>
                               <input
@@ -9960,12 +9960,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="e.g. 240"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Number of commuters
                               </label>
                               <input
@@ -9981,12 +9981,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="headcount"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Est. annual CO₂e
                               </label>
                               <div className="flex items-center h-6 px-2 bg-purple-50 border border-purple-200 rounded text-xs font-mono text-purple-700">
@@ -9994,7 +9994,7 @@ export default function ElectricalEntry() {
                               </div>
                             </div>
                             <div className="col-span-2">
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Notes
                               </label>
                               <input
@@ -10006,7 +10006,7 @@ export default function ElectricalEntry() {
                                     payload: { id: rec.id, updates: { notes: e.target.value } },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="Optional notes"
                               />
                             </div>
@@ -10077,7 +10077,7 @@ export default function ElectricalEntry() {
               {/* ── AIR TRAVEL ── */}
               {phase11SubTab === 'air_travel' && (
                 <div>
-                  <p className="text-xs text-gray-500 mb-4">
+                  <p className="text-xs text-gray-400 mb-4">
                     EF: 0.20 kgCO₂e/passenger-km (ICAO) · Enter total passenger-km directly, or trip
                     count × distance.
                   </p>
@@ -10090,10 +10090,10 @@ export default function ElectricalEntry() {
                           : (rec.numberOfTrips ?? 0) * (rec.averageDistanceKmPerTrip ?? 0) * legs;
                       const tco2e = (passengerKm * 0.2) / 1000;
                       return (
-                        <div key={rec.id} className="border border-gray-200 rounded-xl p-4">
+                        <div key={rec.id} className="border border-white/10 rounded-xl p-4">
                           <div className="grid grid-cols-2 gap-3">
                             <div className="col-span-2">
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Purpose
                               </label>
                               <input
@@ -10105,12 +10105,12 @@ export default function ElectricalEntry() {
                                     payload: { id: rec.id, updates: { purpose: e.target.value } },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="e.g. Conference travel, Research visit"
                               />
                             </div>
                             <div className="col-span-2">
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Total passenger-km{' '}
                                 <span className="text-gray-400">(preferred)</span>
                               </label>
@@ -10127,12 +10127,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="passenger-km"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Trip count <span className="text-gray-400">(alt)</span>
                               </label>
                               <input
@@ -10148,12 +10148,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="trips"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Avg distance/trip (km)
                               </label>
                               <input
@@ -10171,7 +10171,7 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="km"
                               />
                             </div>
@@ -10191,12 +10191,12 @@ export default function ElectricalEntry() {
                                 }
                                 className="w-4 h-4 rounded"
                               />
-                              <label htmlFor={`rt-${rec.id}`} className="text-xs text-gray-600">
+                              <label htmlFor={`rt-${rec.id}`} className="text-xs text-gray-300">
                                 Round trip
                               </label>
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Est. annual CO₂e
                               </label>
                               <div className="flex items-center h-6 px-2 bg-purple-50 border border-purple-200 rounded text-xs font-mono text-purple-700">
@@ -10204,7 +10204,7 @@ export default function ElectricalEntry() {
                               </div>
                             </div>
                             <div className="col-span-2">
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Notes
                               </label>
                               <input
@@ -10216,7 +10216,7 @@ export default function ElectricalEntry() {
                                     payload: { id: rec.id, updates: { notes: e.target.value } },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="Optional notes"
                               />
                             </div>
@@ -10270,10 +10270,10 @@ export default function ElectricalEntry() {
                           : (rec.totalSpendINR ?? 0) / 83;
                       const tco2e = (usd * 0.246) / 1000;
                       return (
-                        <div key={rec.id} className="border border-gray-200 rounded-xl p-4">
+                        <div key={rec.id} className="border border-white/10 rounded-xl p-4">
                           <div className="grid grid-cols-2 gap-3">
                             <div className="col-span-2">
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Description
                               </label>
                               <input
@@ -10288,12 +10288,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="e.g. Lab equipment procurement, Laptop replacement"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Spend (2022 USD) <span className="text-gray-400">preferred</span>
                               </label>
                               <input
@@ -10309,12 +10309,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="USD"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Spend (INR) <span className="text-gray-400">÷83 → USD</span>
                               </label>
                               <input
@@ -10330,12 +10330,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="₹"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Year
                               </label>
                               <input
@@ -10352,12 +10352,12 @@ export default function ElectricalEntry() {
                                     },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="e.g. 2024"
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Est. CO₂e
                               </label>
                               <div className="flex items-center h-6 px-2 bg-purple-50 border border-purple-200 rounded text-xs font-mono text-purple-700">
@@ -10365,7 +10365,7 @@ export default function ElectricalEntry() {
                               </div>
                             </div>
                             <div className="col-span-2">
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Notes
                               </label>
                               <input
@@ -10377,7 +10377,7 @@ export default function ElectricalEntry() {
                                     payload: { id: rec.id, updates: { notes: e.target.value } },
                                   })
                                 }
-                                className="w-full border border-gray-300 rounded px-2 py-1 text-xs"
+                                className="w-full border border-white/20 rounded px-2 py-1 text-xs"
                                 placeholder="Optional notes"
                               />
                             </div>
@@ -10424,7 +10424,7 @@ export default function ElectricalEntry() {
           title="Add standard technology assessments"
         >
           <div className="space-y-4">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-300">
               Select technologies to add empty assessment records for:
             </p>
             <div className="space-y-2">
@@ -10440,7 +10440,7 @@ export default function ElectricalEntry() {
               ).map(([tech, label]) => (
                 <label
                   key={tech}
-                  className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 rounded p-2"
+                  className="flex items-center gap-3 cursor-pointer hover:bg-white/5 rounded p-2"
                 >
                   <input
                     type="checkbox"
@@ -10453,7 +10453,7 @@ export default function ElectricalEntry() {
                     }}
                     className="w-4 h-4 rounded text-green-600"
                   />
-                  <span className="text-sm text-gray-800">{label}</span>
+                  <span className="text-sm text-gray-100">{label}</span>
                 </label>
               ))}
             </div>
@@ -10461,7 +10461,7 @@ export default function ElectricalEntry() {
               <button
                 type="button"
                 onClick={() => setShowPrepopulateModal(false)}
-                className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg"
+                className="px-4 py-2 text-sm text-gray-300 hover:bg-white/10 rounded-lg"
               >
                 Cancel
               </button>
@@ -10504,7 +10504,7 @@ export default function ElectricalEntry() {
                   style={{ width: `${state.validationResult?.completenessScore ?? 0}%` }}
                 />
               </div>
-              <span className="text-sm font-medium text-gray-700">
+              <span className="text-sm font-medium text-gray-200">
                 {state.validationResult?.completenessScore ?? 0}% complete
               </span>
             </div>
@@ -10512,7 +10512,7 @@ export default function ElectricalEntry() {
             {/* Warnings */}
             {(state.validationResult?.warnings ?? []).length > 0 ? (
               <div className="space-y-2">
-                <p className="text-sm font-medium text-gray-700">Warnings (non-blocking):</p>
+                <p className="text-sm font-medium text-gray-200">Warnings (non-blocking):</p>
                 {state.validationResult!.warnings.map((w, i) => (
                   <div
                     key={i}
@@ -10530,7 +10530,7 @@ export default function ElectricalEntry() {
               </div>
             )}
 
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-400">
               Submitting sends this section for admin review. You can still edit until it's
               verified.
             </p>

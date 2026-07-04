@@ -23,6 +23,11 @@ export interface IBuildingDocument extends Document {
   yearBuilt?: number;
   latitude?: number;
   longitude?: number;
+  footprintGeometry?: {
+    type: 'Polygon';
+    coordinates: number[][][];
+  };
+  shapefileHeight?: number;
   imageUrl?: string;
   campusId: mongoose.Types.ObjectId;
   assignedMembers: mongoose.Types.ObjectId[];
@@ -134,6 +139,11 @@ const buildingSchema = new Schema<IBuildingDocument>(
     yearBuilt: Number,
     latitude: Number,
     longitude: Number,
+    footprintGeometry: {
+      type: { type: String, enum: ['Polygon'], default: 'Polygon' },
+      coordinates: [[[Number]]],
+    },
+    shapefileHeight: Number,
     imageUrl: String,
     campusId: {
       type: Schema.Types.ObjectId,

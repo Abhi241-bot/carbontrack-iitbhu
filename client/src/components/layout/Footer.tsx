@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <footer className="bg-forest-dark text-white">
+    <footer className="bg-black/20 backdrop-blur-sm border-t border-white/10 text-white mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Col 1 — Brand */}
@@ -35,14 +35,14 @@ export default function Footer() {
               </svg>
               <h3 className="text-lg font-semibold">CarbonTrack</h3>
             </div>
-            <p className="text-sm text-green-300 leading-relaxed">
+            <p className="text-sm text-gray-400 leading-relaxed">
               Tracking campus carbon for a sustainable future
             </p>
           </div>
 
           {/* Col 2 — Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-widest text-green-400 mb-4">
+            <h4 className="text-sm font-semibold uppercase tracking-widest text-gray-300 mb-4">
               Quick Links
             </h4>
             <ul className="space-y-2">
@@ -55,7 +55,7 @@ export default function Footer() {
                 <li key={to}>
                   <Link
                     to={to}
-                    className="text-sm text-green-200 hover:text-white transition-colors no-underline"
+                    className="text-sm text-gray-400 hover:text-white transition-colors no-underline"
                   >
                     {label}
                   </Link>
@@ -66,17 +66,17 @@ export default function Footer() {
 
           {/* Col 3 — Contact */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-widest text-green-400 mb-4">
+            <h4 className="text-sm font-semibold uppercase tracking-widest text-gray-300 mb-4">
               Contact
             </h4>
-            <address className="not-italic text-sm text-green-200 leading-relaxed space-y-1">
+            <address className="not-italic text-sm text-gray-400 leading-relaxed space-y-1">
               <p>Campus Sustainability Research Group</p>
               <p>Indian Institute of Technology (BHU)</p>
               <p>Varanasi 221005, UP, India</p>
               <p className="mt-3">
                 <a
                   href="mailto:sustainability@iitbhu.ac.in"
-                  className="text-green-300 hover:text-white transition-colors"
+                  className="text-gray-300 hover:text-white transition-colors"
                 >
                   sustainability@iitbhu.ac.in
                 </a>
@@ -87,8 +87,8 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-forest-light">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-green-400">
+      <div className="border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-gray-500">
           <span>© 2025 CarbonTrack</span>
           <span>Carbon calculation methodology follows IPCC AR6 guidelines</span>
         </div>

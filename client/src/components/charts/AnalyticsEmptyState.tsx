@@ -31,7 +31,7 @@ export default function AnalyticsEmptyState({ message, callToAction, ctaLink }: 
   return (
     <div className="flex flex-col items-center justify-center h-48 text-center px-4">
       <LeafIcon />
-      <p className="text-sm text-gray-500">{message}</p>
+      <p className="text-sm text-gray-400">{message}</p>
       <Link
         to={ctaLink}
         className="mt-3 text-sm font-medium hover:underline"

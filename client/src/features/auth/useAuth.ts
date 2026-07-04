@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from './authStore';
 import { authApi, RegisterData, LoginData } from './authApi';
@@ -9,6 +9,7 @@ export function useLogin(from?: string) {
   const { setUser, setAccessToken } = useAuthStore();
   const navigate = useNavigate();
   const { showSuccess, showError } = useToast();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (data: LoginData) => authApi.login(data),
@@ -16,11 +17,12 @@ export function useLogin(from?: string) {
       const { user, accessToken } = res.data.data;
       setUser(user);
       setAccessToken(accessToken);
+      queryClient.invalidateQueries();
       showSuccess('Welcome back!');
       if (user.role === UserRole.ADMIN) {
         navigate('/admin');
       } else {
-        navigate(from || '/dashboard');
+        navigate(from || '/map');
       }
     },
     onError: (err: unknown) => {
@@ -50,11 +52,13 @@ export function useLogout() {
   const { clearAuth } = useAuthStore();
   const navigate = useNavigate();
   const { showSuccess } = useToast();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: () => authApi.logout(),
     onSettled: () => {
       clearAuth();
+      queryClient.clear();
       showSuccess('Logged out successfully');
       navigate('/');
     },

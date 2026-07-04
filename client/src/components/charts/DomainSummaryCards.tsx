@@ -96,41 +96,45 @@ function DomainCard({
 }) {
   if (isLoading) {
     return (
-      <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm animate-pulse">
-        <div className="h-6 bg-gray-100 rounded w-1/3 mb-4" />
-        <div className="h-12 bg-gray-100 rounded mb-4" />
-        <div className="h-40 bg-gray-50 rounded" />
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#121212]/70 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] ring-1 ring-inset ring-white/5 p-5 animate-pulse flex flex-col gap-4">
+        <div className="h-6 bg-white/10 rounded w-1/3" />
+        <div className="h-12 bg-white/10 rounded" />
+        <div className="h-40 bg-white/5 rounded" />
       </div>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm flex flex-col gap-4">
-      <div className="flex items-center gap-2.5">
+    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#121212]/70 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] ring-1 ring-inset ring-white/5 p-5 flex flex-col gap-4">
+      <div 
+        className="absolute -top-12 -right-12 w-40 h-40 rounded-full blur-[50px] opacity-20 pointer-events-none" 
+        style={{ background: iconColor }} 
+      />
+      <div className="relative z-10 flex items-center gap-2.5">
         <div
-          className="flex items-center justify-center h-8 w-8 rounded-lg text-white flex-shrink-0"
+          className="flex items-center justify-center h-8 w-8 rounded-lg text-white flex-shrink-0 shadow-sm"
           style={{ background: iconColor }}
         >
           {icon}
         </div>
-        <h3 className="text-sm font-semibold text-gray-700">{title}</h3>
+        <h3 className="text-sm font-semibold text-gray-200">{title}</h3>
       </div>
 
-      <div>
-        <span className="text-3xl font-bold text-gray-900">{primaryStat}</span>
-        <span className="text-sm text-gray-500 ml-1.5">{primaryUnit}</span>
+      <div className="relative z-10">
+        <span className="text-3xl font-bold text-white">{primaryStat}</span>
+        <span className="text-sm text-gray-400 ml-1.5">{primaryUnit}</span>
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className="relative z-10 grid grid-cols-2 gap-2">
         {secondaryStats.map((s) => (
-          <div key={s.label} className="bg-gray-50 rounded-lg px-3 py-2">
+          <div key={s.label} className="bg-white/5 rounded-lg px-3 py-2 border border-white/5 shadow-inner">
             <p className="text-[10px] text-gray-400 uppercase tracking-wide">{s.label}</p>
-            <p className="text-sm font-semibold text-gray-800 mt-0.5">{s.value}</p>
+            <p className="text-sm font-semibold text-gray-100 mt-0.5">{s.value}</p>
           </div>
         ))}
       </div>
 
-      <div className="flex-1">{chart}</div>
+      <div className="relative z-10 flex-1">{chart}</div>
     </div>
   );
 }

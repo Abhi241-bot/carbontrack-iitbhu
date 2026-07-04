@@ -231,34 +231,45 @@ interface KpiCardProps {
 }
 
 function KpiCard({ icon: Icon, value, label, badge, isLoading, color }: KpiCardProps) {
+  const glowColor = color ?? '#8B1A1A';
+
   return (
-    <div className="bg-white border border-gray-100 rounded-xl p-3 sm:p-4 shadow-sm relative overflow-hidden">
-      <Icon
-        className="absolute top-3 right-3 h-4 w-4 opacity-40"
-        style={{ color: color ?? '#8B1A1A' }}
+    <div className="relative overflow-hidden bg-[#121212]/70 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] ring-1 ring-inset ring-white/5 rounded-xl p-3 sm:p-4">
+      {/* Glow effect */}
+      <div 
+        className="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-[40px] opacity-20 pointer-events-none" 
+        style={{ background: glowColor }} 
       />
-      {isLoading ? (
-        <>
-          <Skeleton className="h-7 w-20 mb-1" />
-          <Skeleton className="h-3 w-24" />
-        </>
-      ) : (
-        <>
-          <div className="flex items-end gap-2 flex-wrap">
-            <p className="text-xl sm:text-2xl font-bold text-gray-900" style={{ color: color }}>
-              {value}
+      
+      <Icon
+        className="absolute top-3 right-3 h-4 w-4 opacity-40 z-10"
+        style={{ color: glowColor }}
+      />
+      
+      <div className="relative z-10">
+        {isLoading ? (
+          <>
+            <Skeleton className="h-7 w-20 mb-1" />
+            <Skeleton className="h-3 w-24" />
+          </>
+        ) : (
+          <>
+            <div className="flex items-end gap-2 flex-wrap">
+              <p className="text-xl sm:text-2xl font-bold text-white" style={{ color }}>
+                {value}
+              </p>
+              {badge && (
+                <span className="mb-0.5 text-xs font-medium text-green-700 bg-green-100 px-2 py-0.5 rounded-full">
+                  {badge}
+                </span>
+              )}
+            </div>
+            <p className="text-xs text-gray-400 mt-0.5 uppercase tracking-wide leading-snug">
+              {label}
             </p>
-            {badge && (
-              <span className="mb-0.5 text-xs font-medium text-green-700 bg-green-100 px-2 py-0.5 rounded-full">
-                {badge}
-              </span>
-            )}
-          </div>
-          <p className="text-xs text-gray-500 mt-0.5 uppercase tracking-wide leading-snug">
-            {label}
-          </p>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </div>
   );
 }
@@ -277,7 +288,7 @@ function SectionHeader({
   return (
     <div className="mb-5">
       <div className="flex items-center gap-3">
-        <h2 className="text-base sm:text-lg font-bold text-gray-900">{title}</h2>
+        <h2 className="text-base sm:text-lg font-bold text-white">{title}</h2>
         {badge && (
           <span
             className="text-[10px] text-white px-2 py-0.5 rounded-full font-medium"
@@ -287,7 +298,7 @@ function SectionHeader({
           </span>
         )}
       </div>
-      {subtitle && <p className="text-sm text-gray-500 mt-1">{subtitle}</p>}
+      {subtitle && <p className="text-sm text-gray-400 mt-1">{subtitle}</p>}
     </div>
   );
 }
@@ -326,17 +337,17 @@ function CampusCard({
       onClick={onSelect}
       className={`text-left w-full rounded-xl border transition-all duration-150 p-4 sm:p-5 ${
         isSelected
-          ? 'border-iitbhu bg-red-50 shadow-md ring-1 ring-iitbhu/30'
-          : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
+          ? 'border-iitbhu bg-iitbhu/20 backdrop-blur-md shadow-md ring-1 ring-iitbhu/30'
+          : 'border-white/10 bg-black/40 backdrop-blur-md hover:border-white/20 hover:shadow-sm'
       }`}
     >
       {/* Campus name + status dot */}
       <div className="flex items-start justify-between gap-2 mb-2">
         <div className="min-w-0">
-          <div className="font-bold text-gray-900 text-sm leading-tight truncate">
+          <div className="font-bold text-white text-sm leading-tight truncate">
             {campus.shortName ?? campus.name}
           </div>
-          <div className="text-xs text-gray-500 truncate mt-0.5">{campus.institution}</div>
+          <div className="text-xs text-gray-400 truncate mt-0.5">{campus.institution}</div>
         </div>
         <span
           className="flex-shrink-0 h-2 w-2 rounded-full mt-1"
@@ -359,26 +370,26 @@ function CampusCard({
       <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
         <div>
           <span className="text-gray-400">Buildings</span>
-          <div className="font-semibold text-gray-800">
+          <div className="font-semibold text-gray-100">
             {campus.verifiedBuildingCount}
             <span className="font-normal text-gray-400"> / {campus.buildingCount}</span>
           </div>
         </div>
         <div>
           <span className="text-gray-400">Coverage</span>
-          <div className="font-semibold text-gray-800">{coveragePct}%</div>
+          <div className="font-semibold text-gray-100">{coveragePct}%</div>
         </div>
         {hasData && (
           <>
             <div>
               <span className="text-gray-400">Annual CO₂e</span>
-              <div className="font-semibold text-gray-800">
+              <div className="font-semibold text-gray-100">
                 {fmtK(campus.totalOperational)} <span className="font-normal text-gray-400">t</span>
               </div>
             </div>
             <div>
               <span className="text-gray-400">Embodied</span>
-              <div className="font-semibold text-gray-800">
+              <div className="font-semibold text-gray-100">
                 {fmtK(campus.totalEmbodied)} <span className="font-normal text-gray-400">t</span>
               </div>
             </div>
@@ -392,7 +403,7 @@ function CampusCard({
       </div>
 
       {/* Progress bar */}
-      <div className="mt-3 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+      <div className="mt-3 h-1.5 bg-white/10 rounded-full overflow-hidden">
         <div
           className="h-full rounded-full transition-all"
           style={{ width: `${coveragePct}%`, background: '#8B1A1A' }}
@@ -445,8 +456,8 @@ function CampusGrid({
         onClick={() => onSelect(null)}
         className={`text-left rounded-xl border transition-all duration-150 p-4 sm:p-5 ${
           selectedSlug === null
-            ? 'border-iitbhu bg-red-50 shadow-md ring-1 ring-iitbhu/30'
-            : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
+            ? 'border-iitbhu bg-iitbhu/20 backdrop-blur-md shadow-md ring-1 ring-iitbhu/30'
+            : 'border-white/10 bg-black/40 backdrop-blur-md hover:border-white/20 hover:shadow-sm'
         }`}
       >
         <div className="flex items-center gap-2 mb-3">
@@ -457,30 +468,30 @@ function CampusGrid({
             <Globe size={16} style={{ color: '#8B1A1A' }} />
           </div>
           <div>
-            <div className="font-bold text-gray-900 text-sm">All Campuses</div>
-            <div className="text-xs text-gray-500">Network overview</div>
+            <div className="font-bold text-white text-sm">All Campuses</div>
+            <div className="text-xs text-gray-400">Network overview</div>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
           <div>
             <span className="text-gray-400">Campuses</span>
-            <div className="font-semibold text-gray-800">{campuses.length}</div>
+            <div className="font-semibold text-gray-100">{campuses.length}</div>
           </div>
           <div>
             <span className="text-gray-400">Total buildings</span>
-            <div className="font-semibold text-gray-800">
+            <div className="font-semibold text-gray-100">
               {campuses.reduce((s, c) => s + c.buildingCount, 0)}
             </div>
           </div>
           <div>
             <span className="text-gray-400">Verified</span>
-            <div className="font-semibold text-gray-800">
+            <div className="font-semibold text-gray-100">
               {campuses.reduce((s, c) => s + c.verifiedBuildingCount, 0)}
             </div>
           </div>
           <div>
             <span className="text-gray-400">Total CO₂e/yr</span>
-            <div className="font-semibold text-gray-800">
+            <div className="font-semibold text-gray-100">
               {fmtK(campuses.reduce((s, c) => s + c.totalOperational, 0))}{' '}
               <span className="font-normal text-gray-400">t</span>
             </div>
@@ -519,7 +530,7 @@ function CampusDetailHeader({
 
   return (
     <div
-      className="rounded-xl border border-gray-200 bg-white overflow-hidden"
+      className="rounded-xl border border-white/10 bg-black/40 backdrop-blur-md overflow-hidden"
       style={{ borderLeft: '4px solid #8B1A1A' }}
     >
       <div className="p-5 sm:p-6">
@@ -527,7 +538,7 @@ function CampusDetailHeader({
         <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-4">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-lg sm:text-xl font-bold text-gray-900">{campus.name}</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-white">{campus.name}</h2>
               <span
                 className="text-[10px] px-2 py-0.5 rounded-full font-medium text-white"
                 style={{ background: STATUS_COLOR[campus.overviewStatus] ?? '#6b7280' }}
@@ -535,7 +546,7 @@ function CampusDetailHeader({
                 {STATUS_LABEL[campus.overviewStatus] ?? campus.overviewStatus}
               </span>
             </div>
-            <div className="text-sm text-gray-500 mt-0.5">{campus.institution}</div>
+            <div className="text-sm text-gray-400 mt-0.5">{campus.institution}</div>
             <div className="flex items-center gap-1 text-xs text-gray-400 mt-1">
               <MapPin size={11} />
               <span>
@@ -558,13 +569,13 @@ function CampusDetailHeader({
           <div className="flex items-center gap-2">
             <Link
               to={`/campus/${campus.slug}`}
-              className="text-xs border border-gray-200 rounded-lg px-3 py-1.5 hover:border-gray-300 bg-white text-gray-600 flex items-center gap-1"
+              className="text-xs border border-white/10 rounded-lg px-3 py-1.5 hover:border-white/20 bg-black/40 backdrop-blur-md text-gray-300 flex items-center gap-1"
             >
               Campus hub <ArrowRight size={12} />
             </Link>
             <button
               onClick={onClear}
-              className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 border border-gray-200 rounded-lg px-3 py-1.5"
+              className="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-300 border border-white/10 rounded-lg px-3 py-1.5"
             >
               <X size={12} /> All campuses
             </button>
@@ -599,12 +610,16 @@ function CampusDetailHeader({
               color: '#10b981',
             },
           ].map((stat) => (
-            <div key={stat.label} className="bg-gray-50 rounded-lg p-3">
-              <div className="text-xs text-gray-500 mb-0.5">{stat.label}</div>
-              <div className="font-bold text-gray-900" style={{ color: stat.color }}>
+            <div key={stat.label} className="relative overflow-hidden bg-[#121212]/70 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] ring-1 ring-inset ring-white/5 rounded-lg p-3">
+              <div 
+                className="absolute -bottom-8 -left-8 w-24 h-24 rounded-full blur-[30px] opacity-20 pointer-events-none" 
+                style={{ background: stat.color }} 
+              />
+              <div className="relative z-10 text-xs text-gray-400 mb-0.5">{stat.label}</div>
+              <div className="relative z-10 font-bold text-white" style={{ color: stat.color }}>
                 {stat.value}
               </div>
-              <div className="text-xs text-gray-400">{stat.sub}</div>
+              <div className="relative z-10 text-xs text-gray-400">{stat.sub}</div>
             </div>
           ))}
         </div>
@@ -612,11 +627,11 @@ function CampusDetailHeader({
         {/* Scope breakdown bar */}
         {campus.scope1 + campus.scope2 + campus.scope3 > 0 && (
           <div className="mb-4">
-            <div className="flex items-center justify-between text-xs text-gray-500 mb-1.5">
-              <span className="font-medium text-gray-700">Scope breakdown</span>
+            <div className="flex items-center justify-between text-xs text-gray-400 mb-1.5">
+              <span className="font-medium text-gray-200">Scope breakdown</span>
               <span>{fmtT(campus.scope1 + campus.scope2 + campus.scope3)} tCO₂e total</span>
             </div>
-            <div className="flex rounded-full overflow-hidden h-3 w-full bg-gray-100">
+            <div className="flex rounded-full overflow-hidden h-3 w-full bg-white/10">
               {[
                 { v: campus.scope1, color: '#ef4444', label: 'Scope 1' },
                 { v: campus.scope2, color: '#f59e0b', label: 'Scope 2' },
@@ -640,7 +655,7 @@ function CampusDetailHeader({
                 { label: 'Scope 2', v: campus.scope2, color: '#f59e0b' },
                 { label: 'Scope 3', v: campus.scope3, color: '#3b82f6' },
               ].map((s) => (
-                <div key={s.label} className="flex items-center gap-1 text-xs text-gray-500">
+                <div key={s.label} className="flex items-center gap-1 text-xs text-gray-400">
                   <span
                     className="inline-block h-2 w-2 rounded-full"
                     style={{ background: s.color }}
@@ -654,7 +669,7 @@ function CampusDetailHeader({
 
         {/* Infrastructure carbon */}
         {hasInfra && (
-          <div className="flex flex-wrap gap-3 pt-3 border-t border-gray-100">
+          <div className="flex flex-wrap gap-3 pt-3 border-t border-white/5">
             {campus.vegetationSequestration > 0 && (
               <div className="flex items-center gap-2 text-xs text-green-700 bg-green-50 rounded-lg px-3 py-2">
                 <TreePine size={13} />
@@ -665,7 +680,7 @@ function CampusDetailHeader({
               </div>
             )}
             {campus.infrastructureCarbon !== 0 && (
-              <div className="flex items-center gap-2 text-xs text-gray-600 bg-gray-50 rounded-lg px-3 py-2">
+              <div className="flex items-center gap-2 text-xs text-gray-300 bg-white/5 rounded-lg px-3 py-2">
                 <TrendingUp size={13} />
                 <span>
                   Net infrastructure: <strong>{fmtT(campus.infrastructureCarbon)} tCO₂e/yr</strong>
@@ -820,11 +835,11 @@ function CampusEmissionsOverview({
 
   return (
     <div className="space-y-4">
-      <div className="bg-white rounded-xl border border-gray-100 p-5">
+      <div className="bg-black/40 backdrop-blur-md rounded-xl border border-white/5 p-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <div>
-            <div className="text-2xl font-bold text-gray-900">{fmtT(annualTotal)} tCO₂e/yr</div>
-            <div className="text-xs text-gray-500 mt-0.5">
+            <div className="text-2xl font-bold text-white">{fmtT(annualTotal)} tCO₂e/yr</div>
+            <div className="text-xs text-gray-400 mt-0.5">
               Annual operational + waste · {coveredBuildings} buildings verified
             </div>
           </div>
@@ -839,7 +854,7 @@ function CampusEmissionsOverview({
           </div>
         </div>
 
-        <div className="flex rounded-full overflow-hidden h-3 w-full bg-gray-100">
+        <div className="flex rounded-full overflow-hidden h-3 w-full bg-white/10">
           {scopeItems.map((s) =>
             s.value > 0 ? (
               <div
@@ -877,8 +892,8 @@ function CampusEmissionsOverview({
             desc: 'Construction materials',
           },
         ].map((card) => (
-          <div key={card.label} className="bg-white rounded-xl border border-gray-100 p-4">
-            <div className="text-xs font-medium text-gray-500 mb-1">{card.label}</div>
+          <div key={card.label} className="bg-black/40 backdrop-blur-md rounded-xl border border-white/5 p-4">
+            <div className="text-xs font-medium text-gray-400 mb-1">{card.label}</div>
             <div className={`text-xl font-bold ${card.color}`}>{fmtT(card.value)}</div>
             <div className="text-xs text-gray-400 mt-0.5">{card.unit}</div>
             <div className="text-xs text-gray-400 mt-1">{card.desc}</div>
@@ -912,7 +927,7 @@ function StickyFilterBar({
   }
 
   return (
-    <div className="sticky top-14 z-30 bg-white border-b border-gray-100 shadow-sm">
+    <div className="sticky top-14 z-30 bg-black/40 backdrop-blur-md border-b border-white/5 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-2 flex items-center gap-2 overflow-x-auto scrollbar-hide">
         {campusName && (
           <span className="text-xs text-iitbhu font-medium flex-shrink-0 bg-red-50 px-2 py-0.5 rounded">
@@ -925,7 +940,7 @@ function StickyFilterBar({
           className={`flex-shrink-0 text-xs px-3 py-1 rounded-full border font-medium transition-colors ${
             allSelected
               ? 'text-white border-transparent'
-              : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
+              : 'bg-black/40 backdrop-blur-md text-gray-300 border-white/10 hover:border-white/20'
           }`}
           style={allSelected ? { background: '#8B1A1A', borderColor: '#8B1A1A' } : undefined}
         >
@@ -941,7 +956,7 @@ function StickyFilterBar({
               className={`flex-shrink-0 flex items-center gap-1.5 text-xs px-3 py-1 rounded-full border font-medium transition-colors capitalize ${
                 active
                   ? 'text-white border-transparent'
-                  : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
+                  : 'bg-black/40 backdrop-blur-md text-gray-300 border-white/10 hover:border-white/20'
               }`}
               style={active ? { background: color, borderColor: color } : undefined}
             >
@@ -956,7 +971,7 @@ function StickyFilterBar({
         {!allSelected && (
           <button
             onClick={() => onChange(ALL_TYPES)}
-            className="flex-shrink-0 flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600 ml-2"
+            className="flex-shrink-0 flex items-center gap-1 text-xs text-gray-400 hover:text-gray-300 ml-2"
           >
             <X size={12} />
             clear
@@ -1023,22 +1038,22 @@ function ExportMenu({
     <div className="relative">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-1.5 text-sm border border-gray-200 rounded-lg px-3 py-1.5 hover:border-gray-300 bg-white"
+        className="flex items-center gap-1.5 text-sm border border-white/10 rounded-lg px-3 py-1.5 hover:border-white/20 bg-black/40 backdrop-blur-md"
       >
         <Download size={14} />
         Export
         <ChevronDown size={14} className="text-gray-400" />
       </button>
       {open && (
-        <div className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg py-1 z-20 w-56">
+        <div className="absolute right-0 top-full mt-1 bg-black/40 backdrop-blur-md border border-white/10 rounded-xl shadow-lg py-1 z-20 w-56">
           <button
-            className="w-full text-left text-sm px-4 py-2 hover:bg-gray-50"
+            className="w-full text-left text-sm px-4 py-2 hover:bg-white/5"
             onClick={exportSummary}
           >
             Building summary CSV
           </button>
           <button
-            className="w-full text-left text-sm px-4 py-2 hover:bg-gray-50"
+            className="w-full text-left text-sm px-4 py-2 hover:bg-white/5"
             onClick={exportDomain}
           >
             Domain breakdown CSV
@@ -1154,8 +1169,8 @@ export default function Dashboard() {
     return (
       <PageWrapper title="Campus Carbon Network">
         <div className="max-w-7xl mx-auto px-4 py-16 flex flex-col items-center text-center gap-4">
-          <h1 className="text-2xl font-bold text-gray-900">Could not load campus data</h1>
-          <p className="text-gray-500 max-w-md">
+          <h1 className="text-2xl font-bold text-white">Could not load campus data</h1>
+          <p className="text-gray-400 max-w-md">
             The server may be starting up. Please wait a moment and try refreshing.
           </p>
           <button
@@ -1182,8 +1197,8 @@ export default function Dashboard() {
     return (
       <PageWrapper title="Campus Carbon Network">
         <div className="max-w-7xl mx-auto px-4 py-16 flex flex-col items-center text-center gap-4">
-          <h1 className="text-2xl font-bold text-gray-900">No campuses yet</h1>
-          <p className="text-gray-500 max-w-md">
+          <h1 className="text-2xl font-bold text-white">No campuses yet</h1>
+          <p className="text-gray-400 max-w-md">
             Add your first campus and buildings to start tracking carbon emissions.
           </p>
           <button
@@ -1337,8 +1352,8 @@ export default function Dashboard() {
         {/* ── Page header ──────────────────────────────────────────────────────── */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Campus Carbon Network</h1>
-            <p className="text-sm text-gray-500 mt-0.5">
+            <h1 className="text-xl sm:text-2xl font-bold text-white">Campus Carbon Network</h1>
+            <p className="text-sm text-gray-400 mt-0.5">
               Multi-campus carbon tracking platform · public analytics
             </p>
           </div>
@@ -1768,17 +1783,17 @@ export default function Dashboard() {
         <section>
           <details className="group">
             <summary className="flex items-center gap-2 cursor-pointer list-none select-none">
-              <div className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-700">
+              <div className="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-gray-200">
                 <ChevronDown size={16} className="transition-transform group-open:rotate-180" />
                 Advanced: Compare Buildings
               </div>
             </summary>
 
             <div className="mt-6 space-y-6">
-              <div className="bg-white border border-gray-100 rounded-xl shadow-sm p-4 sm:p-5">
+              <div className="bg-black/40 backdrop-blur-md border border-white/5 rounded-xl shadow-sm p-4 sm:p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div>
-                    <p className="font-semibold text-gray-900 text-sm">
+                    <p className="font-semibold text-white text-sm">
                       Select up to 6 buildings to compare
                     </p>
                     <p className="text-xs text-gray-400 mt-0.5">
@@ -1788,7 +1803,7 @@ export default function Dashboard() {
                   {compareSelectedIds.length > 0 && (
                     <button
                       onClick={() => setCompareSelectedIds([])}
-                      className="text-xs text-gray-400 hover:text-gray-600 flex items-center gap-1"
+                      className="text-xs text-gray-400 hover:text-gray-300 flex items-center gap-1"
                     >
                       <X size={12} /> Clear
                     </button>
@@ -1799,7 +1814,7 @@ export default function Dashboard() {
                   placeholder="Search buildings..."
                   value={compareSearchQ}
                   onChange={(e) => setCompareSearchQ(e.target.value)}
-                  className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-1 focus:ring-gray-300"
+                  className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-1 focus:ring-gray-300"
                 />
                 <div className="max-h-60 overflow-y-auto divide-y divide-gray-50">
                   {compareFilteredLeaderboard.map((b) => {
@@ -1809,7 +1824,7 @@ export default function Dashboard() {
                         key={b.buildingId}
                         onClick={() => toggleCompareBuilding(b.buildingId)}
                         className={`w-full text-left flex items-center justify-between gap-3 py-2.5 px-2 rounded-lg text-sm transition-colors ${
-                          selected ? 'bg-red-50' : 'hover:bg-gray-50'
+                          selected ? 'bg-red-50' : 'hover:bg-white/5'
                         }`}
                       >
                         <div className="flex items-center gap-2 min-w-0">
@@ -1817,7 +1832,7 @@ export default function Dashboard() {
                             className="h-2 w-2 rounded-full flex-shrink-0"
                             style={{ background: BUILDING_TYPE_COLORS[b.type] ?? '#9CA3AF' }}
                           />
-                          <span className="truncate text-gray-800">{b.name}</span>
+                          <span className="truncate text-gray-100">{b.name}</span>
                           <span className="text-xs text-gray-400 capitalize flex-shrink-0">
                             {b.type}
                           </span>
@@ -1840,8 +1855,8 @@ export default function Dashboard() {
                   {BULLET_METRICS.map(({ key, label }) => {
                     const max = getMaxForMetric(key);
                     return (
-                      <div key={key} className="bg-white border border-gray-100 rounded-xl p-4">
-                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+                      <div key={key} className="bg-black/40 backdrop-blur-md border border-white/5 rounded-xl p-4">
+                        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
                           {label}
                         </p>
                         <div className="space-y-2.5">
@@ -1854,10 +1869,10 @@ export default function Dashboard() {
                             );
                             return (
                               <div key={building.id as string} className="flex items-center gap-3">
-                                <span className="text-xs text-gray-600 truncate w-28 flex-shrink-0">
+                                <span className="text-xs text-gray-300 truncate w-28 flex-shrink-0">
                                   {building.name as string}
                                 </span>
-                                <div className="flex-1 bg-gray-100 rounded-full h-2">
+                                <div className="flex-1 bg-white/10 rounded-full h-2">
                                   <div
                                     className="h-2 rounded-full"
                                     style={{
@@ -1866,18 +1881,18 @@ export default function Dashboard() {
                                     }}
                                   />
                                 </div>
-                                <span className="text-xs text-gray-700 font-medium w-16 text-right flex-shrink-0">
+                                <span className="text-xs text-gray-200 font-medium w-16 text-right flex-shrink-0">
                                   {v.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                                 </span>
                               </div>
                             );
                           })}
                           {/* Campus average reference */}
-                          <div className="flex items-center gap-3 border-t border-dashed border-gray-200 pt-2.5">
+                          <div className="flex items-center gap-3 border-t border-dashed border-white/10 pt-2.5">
                             <span className="text-xs text-gray-400 italic w-28 flex-shrink-0">
                               Campus avg
                             </span>
-                            <div className="flex-1 bg-gray-100 rounded-full h-2">
+                            <div className="flex-1 bg-white/10 rounded-full h-2">
                               <div
                                 className="h-2 rounded-full bg-gray-400"
                                 style={{

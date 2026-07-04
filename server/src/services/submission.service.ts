@@ -63,6 +63,11 @@ export async function getOrCreateDraft(
 
   if (existing) return existing;
 
+  const user = await User.findById(userId).lean();
+  if (user?.role === UserRole.VIEWER) {
+    throw makeError('Viewers are not authorized to create submissions', '403');
+  }
+
   // Create a new draft
   const lifecycle = lifecycleFor(section);
   const submission = await Submission.create({
@@ -94,6 +99,10 @@ export async function updateSectionDraft(
 
   // Authorization: must be submitter, or admin/reviewer
   const user = await User.findById(userId).lean();
+  if (user?.role === UserRole.VIEWER) {
+    throw makeError('Viewers are not authorized to update submissions', '403');
+  }
+
   const isPrivileged = user?.role === UserRole.ADMIN || user?.role === UserRole.REVIEWER;
   if (submission.submittedBy.toString() !== userId && !isPrivileged) {
     throw makeError('Not authorized to edit this submission', '403');

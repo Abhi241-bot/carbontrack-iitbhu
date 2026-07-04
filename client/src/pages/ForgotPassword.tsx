@@ -52,21 +52,21 @@ export default function ForgotPassword() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-        <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-8 w-full max-w-md text-center">
+      <div className="min-h-screen bg-white/5 flex items-center justify-center px-4">
+        <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-md border border-white/5 p-8 w-full max-w-md text-center">
           <div className="flex items-center justify-center gap-2 mb-8">
             <IITBHULogo />
             <span className="text-sm font-semibold text-iitbhu">Carbon Portal</span>
           </div>
 
           <MailCheck size={48} className="text-iitbhu mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Check your email</h2>
-          <p className="text-gray-600 text-sm mb-2">
+          <h2 className="text-2xl font-bold text-white mb-2">Check your email</h2>
+          <p className="text-gray-300 text-sm mb-2">
             If{' '}
-            <span className="font-medium text-gray-900">{submittedEmail}</span> is registered,
+            <span className="font-medium text-white">{submittedEmail}</span> is registered,
             you'll receive a password reset link within a few minutes.
           </p>
-          <p className="text-gray-500 text-sm mb-6">The link expires in 1 hour.</p>
+          <p className="text-gray-400 text-sm mb-6">The link expires in 1 hour.</p>
 
           <div className="space-y-3">
             <Link
@@ -77,7 +77,7 @@ export default function ForgotPassword() {
             </Link>
             <button
               onClick={() => setSubmitted(false)}
-              className="block w-full text-sm text-gray-500 hover:text-gray-700"
+              className="block w-full text-sm text-gray-400 hover:text-gray-200"
             >
               Didn't receive it? Try again
             </button>
@@ -88,12 +88,12 @@ export default function ForgotPassword() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-8 w-full max-w-md">
+    <div className="min-h-screen bg-white/5 flex items-center justify-center px-4">
+      <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-md border border-white/5 p-8 w-full max-w-md">
         {/* Back link */}
         <Link
           to="/login"
-          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 mb-6"
+          className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-200 mb-6"
         >
           <ArrowLeft size={14} />
           Back to login
@@ -105,9 +105,9 @@ export default function ForgotPassword() {
           <span className="text-sm font-semibold text-iitbhu">Carbon Portal</span>
         </div>
 
-        <h2 className="text-2xl font-bold text-gray-900 mb-1">Forgot your password?</h2>
-        <p className="text-sm text-gray-500 mb-6">
-          Enter your IIT BHU email and we'll send you a reset link.
+        <h2 className="text-2xl font-bold text-white mb-1">Forgot your password?</h2>
+        <p className="text-sm text-gray-400 mb-6">
+          Enter your institutional email and we'll send you a reset link.
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>

@@ -142,7 +142,7 @@ function ScopeCard({
   total: number;
 }) {
   return (
-    <div className="bg-white border border-gray-100 rounded-xl p-5 flex flex-col gap-1">
+    <div className="bg-black/40 backdrop-blur-md border border-white/5 rounded-xl p-5 flex flex-col gap-1">
       <div className="flex items-center gap-1.5 mb-1">
         <span
           className="text-xs font-bold px-2 py-0.5 rounded-full text-white"
@@ -152,9 +152,9 @@ function ScopeCard({
         </span>
         <span className="text-xs text-gray-400">{pct(value, total)}</span>
       </div>
-      <div className="text-3xl font-bold text-gray-900">{fmt(value)}</div>
+      <div className="text-3xl font-bold text-white">{fmt(value)}</div>
       <div className="text-xs text-gray-400">tCO₂e/yr</div>
-      <div className="text-xs text-gray-500 mt-1">{label}</div>
+      <div className="text-xs text-gray-400 mt-1">{label}</div>
     </div>
   );
 }
@@ -170,9 +170,9 @@ function ChartTooltip({
 }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-white border border-gray-200 rounded-lg px-3 py-2 shadow text-xs">
-      <div className="font-medium text-gray-700">{payload[0].name}</div>
-      <div className="text-gray-900">{fmt(payload[0].value)} tCO₂e/yr</div>
+    <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-lg px-3 py-2 shadow text-xs">
+      <div className="font-medium text-gray-200">{payload[0].name}</div>
+      <div className="text-white">{fmt(payload[0].value)} tCO₂e/yr</div>
     </div>
   );
 }
@@ -205,13 +205,13 @@ function Collapsible({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="bg-white border border-gray-100 rounded-xl overflow-hidden">
+    <div className="bg-black/40 backdrop-blur-md border border-white/5 rounded-xl overflow-hidden">
       <button
         type="button"
         onClick={() => setOpen((p) => !p)}
-        className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+        className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/5 transition-colors"
       >
-        <span className="text-sm font-semibold text-gray-800">{title}</span>
+        <span className="text-sm font-semibold text-gray-100">{title}</span>
         {open ? (
           <ChevronUp size={16} className="text-gray-400" />
         ) : (
@@ -248,7 +248,7 @@ function SectionStatusCard({
 }) {
   if (!data) {
     return (
-      <div className="border border-gray-100 rounded-xl p-4">
+      <div className="border border-white/5 rounded-xl p-4">
         <div className="flex items-center gap-2 mb-2">
           <Icon size={15} className="text-gray-300" />
           <span className="text-sm font-medium text-gray-400">{label}</span>
@@ -262,11 +262,11 @@ function SectionStatusCard({
   const confPct = typeof confidence === 'number' ? Math.round(confidence * 100) : confidence;
 
   return (
-    <div className="border border-gray-100 rounded-xl p-4 space-y-3">
+    <div className="border border-white/5 rounded-xl p-4 space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Icon size={15} style={{ color: accentColor }} />
-          <span className="text-sm font-semibold text-gray-800">{label}</span>
+          <span className="text-sm font-semibold text-gray-100">{label}</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full flex items-center gap-1">
@@ -285,7 +285,7 @@ function SectionStatusCard({
       </div>
 
       <div className="flex items-end gap-2">
-        <span className="text-xl font-bold text-gray-900">{fmt(primaryValue)}</span>
+        <span className="text-xl font-bold text-white">{fmt(primaryValue)}</span>
         <span className="text-xs text-gray-400 mb-0.5">tCO₂e/yr</span>
         <span
           className="text-xs px-1.5 py-0.5 rounded font-mono ml-1 mb-0.5"
@@ -298,15 +298,15 @@ function SectionStatusCard({
           {scopeLabel}
         </span>
       </div>
-      <div className="text-xs text-gray-500">{primaryLabel}</div>
+      <div className="text-xs text-gray-400">{primaryLabel}</div>
 
       {confPct > 0 && (
         <div className="space-y-1">
-          <div className="flex justify-between text-xs text-gray-500">
+          <div className="flex justify-between text-xs text-gray-400">
             <span>Confidence</span>
             <span className="font-medium">{confPct}%</span>
           </div>
-          <div className="w-full bg-gray-100 rounded-full h-1.5">
+          <div className="w-full bg-white/10 rounded-full h-1.5">
             <div
               className={`h-1.5 rounded-full ${confPct >= 80 ? 'bg-green-500' : confPct >= 50 ? 'bg-amber-400' : 'bg-red-400'}`}
               style={{ width: `${confPct}%` }}
@@ -316,7 +316,7 @@ function SectionStatusCard({
       )}
 
       <Link
-        to={`/buildings/${buildingId}/${sectionKey}`}
+        to={`/buildings/${buildingId}/entry/${sectionKey}`}
         className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700"
       >
         View data <ExternalLink size={10} />
@@ -368,7 +368,7 @@ export default function BuildingCarbonPage() {
       <PageWrapper title="Carbon Summary">
         <div className="max-w-5xl mx-auto px-4 py-16 text-center">
           <AlertCircle size={32} className="mx-auto mb-3 text-gray-300" />
-          <p className="text-gray-500 text-sm">No verified carbon data found for this building.</p>
+          <p className="text-gray-400 text-sm">No verified carbon data found for this building.</p>
           <Link
             to={`/buildings/${id}`}
             className="mt-4 inline-block text-sm text-blue-600 hover:underline"
@@ -385,8 +385,8 @@ export default function BuildingCarbonPage() {
       <PageWrapper title={`Carbon — ${summary.buildingName}`}>
         <div className="max-w-5xl mx-auto px-4 py-16 text-center">
           <AlertCircle size={32} className="mx-auto mb-3 text-gray-300" />
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Carbon not yet calculated</h2>
-          <p className="text-sm text-gray-500 mb-4">
+          <h2 className="text-lg font-semibold text-gray-200 mb-2">Carbon not yet calculated</h2>
+          <p className="text-sm text-gray-400 mb-4">
             At least one section must be verified before carbon results are available.
           </p>
           <Link
@@ -426,14 +426,14 @@ export default function BuildingCarbonPage() {
         {/* Back link */}
         <Link
           to={`/buildings/${id}`}
-          className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700"
+          className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-200"
         >
           <ArrowLeft size={14} /> Back to {summary.buildingName}
         </Link>
 
         {/* Page title */}
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-white">
             {summary.buildingName} — Carbon Footprint
           </h1>
           <div className="flex items-center gap-3 mt-1 flex-wrap">
@@ -513,8 +513,8 @@ export default function BuildingCarbonPage() {
         {/* ── SECTION 2 & 3: Charts ────────────────────────────────────────── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* Donut: scope breakdown */}
-          <div className="bg-white border border-gray-100 rounded-xl p-5">
-            <h3 className="text-sm font-semibold text-gray-700 mb-4">Scope breakdown</h3>
+          <div className="bg-black/40 backdrop-blur-md border border-white/5 rounded-xl p-5">
+            <h3 className="text-sm font-semibold text-gray-200 mb-4">Scope breakdown</h3>
             {donutData.length > 0 ? (
               <ResponsiveContainer width="100%" height={230}>
                 <PieChart>
@@ -540,7 +540,7 @@ export default function BuildingCarbonPage() {
                     formatter={(v, entry) => {
                       const val = (entry as { payload?: { value: number } }).payload?.value ?? 0;
                       return (
-                        <span className="text-xs text-gray-600">
+                        <span className="text-xs text-gray-300">
                           {v}: {fmt(val)} ({pct(val, scopeTotal)})
                         </span>
                       );
@@ -554,8 +554,8 @@ export default function BuildingCarbonPage() {
           </div>
 
           {/* Horizontal bar: per-source */}
-          <div className="bg-white border border-gray-100 rounded-xl p-5">
-            <h3 className="text-sm font-semibold text-gray-700 mb-4">Source breakdown</h3>
+          <div className="bg-black/40 backdrop-blur-md border border-white/5 rounded-xl p-5">
+            <h3 className="text-sm font-semibold text-gray-200 mb-4">Source breakdown</h3>
             {barData.length > 0 ? (
               <ResponsiveContainer width="100%" height={230}>
                 <BarChart
@@ -627,10 +627,10 @@ export default function BuildingCarbonPage() {
           </div>
 
           {summary.totalEmbodiedCarbon > 0 && (
-            <div className="mt-4 flex items-start gap-2 text-xs text-gray-400 bg-gray-50 rounded-lg px-3 py-2">
+            <div className="mt-4 flex items-start gap-2 text-xs text-gray-400 bg-white/5 rounded-lg px-3 py-2">
               <Info size={12} className="mt-0.5 flex-shrink-0" />
               One-time embodied carbon (total construction):{' '}
-              <span className="font-semibold text-gray-600 ml-0.5">
+              <span className="font-semibold text-gray-300 ml-0.5">
                 {fmt(summary.totalEmbodiedCarbon)} tCO₂e
               </span>{' '}
               — amortised at {fmt(summary.totalEmbodiedCarbonPerYear)} tCO₂e/yr over 50 years
@@ -651,18 +651,18 @@ export default function BuildingCarbonPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-xs">
               <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="text-left py-2 text-gray-500 font-medium w-1/2">Source</th>
-                  <th className="text-right py-2 text-gray-500 font-medium">EF Value</th>
-                  <th className="text-right py-2 text-gray-500 font-medium">Reference</th>
+                <tr className="border-b border-white/5">
+                  <th className="text-left py-2 text-gray-400 font-medium w-1/2">Source</th>
+                  <th className="text-right py-2 text-gray-400 font-medium">EF Value</th>
+                  <th className="text-right py-2 text-gray-400 font-medium">Reference</th>
                 </tr>
               </thead>
               <tbody>
                 {EF_TABLE.map((row) => (
                   <tr key={row.source} className="border-b border-gray-50">
-                    <td className="py-2 text-gray-700">{row.source}</td>
-                    <td className="py-2 text-right font-mono text-gray-800">{row.value}</td>
-                    <td className="py-2 text-right text-gray-500">{row.ref}</td>
+                    <td className="py-2 text-gray-200">{row.source}</td>
+                    <td className="py-2 text-right font-mono text-gray-100">{row.value}</td>
+                    <td className="py-2 text-right text-gray-400">{row.ref}</td>
                   </tr>
                 ))}
               </tbody>
@@ -680,7 +680,7 @@ export default function BuildingCarbonPage() {
                 {summary.efSnapshot.gridEF && (
                   <span className="ml-3">
                     Grid EF used:{' '}
-                    <span className="font-semibold text-gray-600">
+                    <span className="font-semibold text-gray-300">
                       {summary.efSnapshot.gridEF as number} kg CO₂/kWh
                     </span>
                   </span>
@@ -701,7 +701,7 @@ export default function BuildingCarbonPage() {
         >
           <ul className="space-y-2 pt-1">
             {METHODOLOGY_LINES.map((line, i) => (
-              <li key={i} className="flex items-start gap-2 text-xs text-gray-600">
+              <li key={i} className="flex items-start gap-2 text-xs text-gray-300">
                 <span className="mt-0.5 text-gray-300 flex-shrink-0">•</span>
                 {line}
               </li>

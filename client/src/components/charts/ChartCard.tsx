@@ -34,24 +34,24 @@ export default function ChartCard({
   onRefresh,
 }: ChartCardProps) {
   return (
-    <div className="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">
-      <div className="flex items-start justify-between px-4 sm:px-5 pt-4 sm:pt-5 pb-3 border-b border-gray-100">
+    <div className="bg-black/40 backdrop-blur-md border border-white/5 rounded-xl shadow-sm overflow-hidden">
+      <div className="flex items-start justify-between px-4 sm:px-5 pt-4 sm:pt-5 pb-3 border-b border-white/5">
         <div className="min-w-0 flex-1 pr-3">
           <div className="flex items-center gap-2">
-            <h3 className="font-semibold text-gray-900 text-sm sm:text-base leading-tight truncate">
+            <h3 className="font-semibold text-white text-sm sm:text-base leading-tight truncate">
               {title}
             </h3>
             {onRefresh && (
               <button
                 onClick={onRefresh}
-                className="flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors"
+                className="flex-shrink-0 text-gray-400 hover:text-gray-300 transition-colors"
                 title="Refresh data"
               >
                 <RotateCcw size={14} />
               </button>
             )}
           </div>
-          {subtitle && <p className="text-xs text-gray-500 mt-0.5 leading-snug">{subtitle}</p>}
+          {subtitle && <p className="text-xs text-gray-400 mt-0.5 leading-snug">{subtitle}</p>}
           {dataUpdatedAt && (
             <p className="text-[10px] text-gray-400 mt-0.5">{timeAgo(dataUpdatedAt)}</p>
           )}

@@ -152,8 +152,8 @@ function FactorRow({ factor, onSaved }: { factor: EmissionFactor; onSaved: () =>
   const isBusy = updateMutation.isPending || defaultMutation.isPending || deleteMutation.isPending;
 
   return (
-    <tr className="hover:bg-gray-50 transition-colors">
-      <td className="px-4 py-3 text-sm font-medium text-gray-900">
+    <tr className="hover:bg-white/5 transition-colors">
+      <td className="px-4 py-3 text-sm font-medium text-white">
         <div className="flex items-center gap-2">
           {factor.name}
           {factor.isDefault && (
@@ -164,7 +164,7 @@ function FactorRow({ factor, onSaved }: { factor: EmissionFactor; onSaved: () =>
           )}
         </div>
       </td>
-      <td className="px-4 py-3 text-xs text-gray-500">{factor.category}</td>
+      <td className="px-4 py-3 text-xs text-gray-400">{factor.category}</td>
       <td className="px-4 py-3">
         {editing ? (
           <div className="flex items-center gap-1">
@@ -194,17 +194,17 @@ function FactorRow({ factor, onSaved }: { factor: EmissionFactor; onSaved: () =>
             </button>
             <button
               onClick={cancelEdit}
-              className="p-1 text-gray-400 hover:text-gray-600"
+              className="p-1 text-gray-400 hover:text-gray-300"
               title="Cancel"
             >
               <X size={14} />
             </button>
           </div>
         ) : (
-          <span className="font-mono text-sm text-gray-800">{factor.value}</span>
+          <span className="font-mono text-sm text-gray-100">{factor.value}</span>
         )}
       </td>
-      <td className="px-4 py-3 text-sm text-gray-500">{factor.unit}</td>
+      <td className="px-4 py-3 text-sm text-gray-400">{factor.unit}</td>
       <td className="px-4 py-3 text-xs text-gray-400">{factor.source ?? '—'}</td>
       <td className="px-4 py-3 text-xs text-gray-400">{factor.year ?? '—'}</td>
       <td className="px-4 py-3">
@@ -306,20 +306,20 @@ function AddFactorModal({ open, onClose }: { open: boolean; onClose: () => void 
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">Name *</label>
+            <label className="block text-xs font-medium text-gray-200 mb-1">Name *</label>
             <input
               value={form.name}
               onChange={(e) => field('name', e.target.value)}
               placeholder="e.g. Natural Gas"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">Category *</label>
+            <label className="block text-xs font-medium text-gray-200 mb-1">Category *</label>
             <select
               value={form.category}
               onChange={(e) => field('category', e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select category…</option>
               {CATEGORY_OPTIONS.map((c) => (
@@ -330,31 +330,31 @@ function AddFactorModal({ open, onClose }: { open: boolean; onClose: () => void 
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">Value *</label>
+            <label className="block text-xs font-medium text-gray-200 mb-1">Value *</label>
             <input
               type="number"
               step="any"
               value={form.value}
               onChange={(e) => field('value', e.target.value)}
               placeholder="0.00"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">Unit *</label>
+            <label className="block text-xs font-medium text-gray-200 mb-1">Unit *</label>
             <input
               value={form.unit}
               onChange={(e) => field('unit', e.target.value)}
               placeholder="kgCO2e/kWh"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">Scope *</label>
+            <label className="block text-xs font-medium text-gray-200 mb-1">Scope *</label>
             <select
               value={form.scope}
               onChange={(e) => field('scope', e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select scope…</option>
               <option value="scope1">Scope 1</option>
@@ -364,45 +364,45 @@ function AddFactorModal({ open, onClose }: { open: boolean; onClose: () => void 
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">Subcategory</label>
+            <label className="block text-xs font-medium text-gray-200 mb-1">Subcategory</label>
             <input
               value={form.subcategory}
               onChange={(e) => field('subcategory', e.target.value)}
               placeholder="fuel / refrigerant / transport…"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">Source</label>
+            <label className="block text-xs font-medium text-gray-200 mb-1">Source</label>
             <input
               value={form.source}
               onChange={(e) => field('source', e.target.value)}
               placeholder="IPCC AR6"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">Year</label>
+            <label className="block text-xs font-medium text-gray-200 mb-1">Year</label>
             <input
               type="number"
               value={form.year}
               onChange={(e) => field('year', e.target.value)}
               placeholder="2024"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">Region</label>
+            <label className="block text-xs font-medium text-gray-200 mb-1">Region</label>
             <input
               value={form.region}
               onChange={(e) => field('region', e.target.value)}
               placeholder="India / Global"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 pt-2 border-t border-gray-100">
+        <div className="flex justify-end gap-3 pt-2 border-t border-white/5">
           <Button variant="secondary" onClick={onClose} disabled={createMutation.isPending}>
             Cancel
           </Button>
@@ -444,7 +444,7 @@ function ScopeSection({
   return (
     <div>
       <h3
-        className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border mb-3 ${SCOPE_COLORS[scopeKey] ?? 'bg-gray-100 text-gray-700 border-gray-200'}`}
+        className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border mb-3 ${SCOPE_COLORS[scopeKey] ?? 'bg-white/10 text-gray-200 border-white/10'}`}
       >
         {SCOPE_LABELS[scopeKey] ?? scopeKey}
       </h3>
@@ -457,19 +457,19 @@ function ScopeSection({
           <Card padding="none" className="overflow-hidden">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-100">
-                <thead className="bg-gray-50">
+                <thead className="bg-white/5">
                   <tr>
                     {['Name', 'Category', 'Value', 'Unit', 'Source', 'Year', ''].map((h) => (
                       <th
                         key={h}
-                        className="px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                        className="px-4 py-2.5 text-left text-xs font-semibold text-gray-400 uppercase tracking-wide"
                       >
                         {h}
                       </th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-50 bg-white">
+                <tbody className="divide-y divide-gray-50 bg-black/40 backdrop-blur-md">
                   {rows.map((f) => (
                     <FactorRow key={f._id} factor={f} onSaved={onSaved} />
                   ))}
@@ -529,7 +529,7 @@ export function EmissionFactorsPanel() {
     <div className="space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-base font-semibold text-gray-900">Emission Factors</h2>
+        <h2 className="text-base font-semibold text-white">Emission Factors</h2>
         <Button onClick={() => setShowAdd(true)} className="flex items-center gap-2 text-sm">
           <Plus size={14} />
           Add Factor
@@ -547,11 +547,11 @@ export function EmissionFactorsPanel() {
       {/* Filters */}
       <div className="flex items-center gap-3 flex-wrap">
         <div>
-          <label className="text-xs font-medium text-gray-500 mr-1.5">Scope</label>
+          <label className="text-xs font-medium text-gray-400 mr-1.5">Scope</label>
           <select
             value={scopeFilter}
             onChange={(e) => setScopeFilter(e.target.value)}
-            className="border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-white/20 rounded-lg px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">All scopes</option>
             {SCOPE_ORDER.map((s) => (
@@ -562,11 +562,11 @@ export function EmissionFactorsPanel() {
           </select>
         </div>
         <div>
-          <label className="text-xs font-medium text-gray-500 mr-1.5">Subcategory</label>
+          <label className="text-xs font-medium text-gray-400 mr-1.5">Subcategory</label>
           <select
             value={subFilter}
             onChange={(e) => setSubFilter(e.target.value)}
-            className="border border-gray-300 rounded-lg px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-white/20 rounded-lg px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">All</option>
             {allSubcategories.map((s) => (
@@ -582,7 +582,7 @@ export function EmissionFactorsPanel() {
               setScopeFilter('');
               setSubFilter('');
             }}
-            className="text-xs text-gray-500 hover:text-gray-700 underline"
+            className="text-xs text-gray-400 hover:text-gray-200 underline"
           >
             Clear filters
           </button>

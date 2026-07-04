@@ -15,13 +15,16 @@ interface CardProps {
 function EquivalencyCard({ icon, value, label, sublabel, color }: CardProps) {
   return (
     <div
-      className="flex flex-col items-center justify-center gap-2 rounded-xl p-4 text-white"
-      style={{ background: color }}
+      className="relative overflow-hidden flex flex-col items-center justify-center gap-2 rounded-xl p-4 text-white bg-[#121212]/70 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] ring-1 ring-inset ring-white/5"
     >
-      <div className="opacity-80">{icon}</div>
-      <p className="text-2xl font-bold leading-none">{value}</p>
-      <p className="text-sm font-medium opacity-90 text-center">{label}</p>
-      <p className="text-[11px] opacity-60 text-center">{sublabel}</p>
+      <div 
+        className="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-[40px] opacity-30 pointer-events-none" 
+        style={{ background: color }} 
+      />
+      <div className="relative z-10" style={{ color }}>{icon}</div>
+      <p className="relative z-10 text-2xl font-bold leading-none">{value}</p>
+      <p className="relative z-10 text-sm font-medium text-gray-300 text-center">{label}</p>
+      <p className="relative z-10 text-[11px] text-gray-500 text-center">{sublabel}</p>
     </div>
   );
 }
@@ -42,21 +45,21 @@ export default function CarbonEquivalency({ totalCarbonTCO2e }: Props) {
         value={fmt(trees)}
         label="Trees needed to offset"
         sublabel="per year of growth"
-        color="#15803D"
+        color="#4ade80"
       />
       <EquivalencyCard
         icon={<Car size={24} />}
         value={fmt(cars)}
         label="Cars driven for a year"
         sublabel="avg 2.3 tCO₂e/car/yr"
-        color="#0F766E"
+        color="#2dd4bf"
       />
       <EquivalencyCard
         icon={<Plane size={24} />}
         value={fmt(flights)}
         label="London–NY return flights"
         sublabel="≈ 1.8 tCO₂e per flight"
-        color="#1D4ED8"
+        color="#60a5fa"
       />
     </div>
   );

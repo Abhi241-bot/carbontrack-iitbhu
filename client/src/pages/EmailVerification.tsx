@@ -52,8 +52,8 @@ export default function EmailVerification() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-8 w-full max-w-md text-center">
+    <div className="min-h-screen bg-white/5 flex items-center justify-center px-4">
+      <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-md border border-white/5 p-8 w-full max-w-md text-center">
         {/* Logo */}
         <div className="flex items-center justify-center gap-2 mb-8">
           <IITBHULogo />
@@ -63,15 +63,15 @@ export default function EmailVerification() {
         {state === 'loading' && (
           <div className="flex flex-col items-center gap-4">
             <Spinner size="lg" color="brand" />
-            <p className="text-gray-600">Verifying your email…</p>
+            <p className="text-gray-300">Verifying your email…</p>
           </div>
         )}
 
         {state === 'success' && (
           <div className="flex flex-col items-center gap-4">
             <CheckCircle2 size={56} className="text-green-500" />
-            <h2 className="text-2xl font-bold text-gray-900">Email Verified!</h2>
-            <p className="text-gray-600">Your account is now active. You can log in.</p>
+            <h2 className="text-2xl font-bold text-white">Email Verified!</h2>
+            <p className="text-gray-300">Your account is now active. You can log in.</p>
             <Link
               to="/login"
               className="mt-2 inline-flex items-center justify-center rounded-lg bg-iitbhu text-white hover:bg-iitbhu-dark px-6 py-3 text-base font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-iitbhu focus:ring-offset-2"
@@ -84,21 +84,21 @@ export default function EmailVerification() {
         {state === 'error' && (
           <div className="flex flex-col items-center gap-4">
             <XCircle size={56} className="text-red-500" />
-            <h2 className="text-2xl font-bold text-gray-900">Verification Failed</h2>
-            <p className="text-gray-500 text-sm">{errorMessage}</p>
+            <h2 className="text-2xl font-bold text-white">Verification Failed</h2>
+            <p className="text-gray-400 text-sm">{errorMessage}</p>
 
             {resendStatus === 'sent' ? (
               <p className="text-sm text-green-600">Sent! Check your inbox.</p>
             ) : (
               <form onSubmit={handleResend} className="w-full space-y-2 mt-2">
-                <p className="text-sm text-gray-500 text-left">Request a new verification link:</p>
+                <p className="text-sm text-gray-400 text-left">Request a new verification link:</p>
                 <input
                   type="email"
                   placeholder="Enter your email"
                   value={resendEmail}
                   onChange={(e) => setResendEmail(e.target.value)}
                   required
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu focus:border-transparent"
+                  className="w-full rounded-lg border border-white/20 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu focus:border-transparent"
                 />
                 <Button
                   type="submit"
@@ -113,7 +113,7 @@ export default function EmailVerification() {
 
             <Link
               to="/login"
-              className="text-sm text-gray-500 hover:text-gray-700 hover:underline mt-1"
+              className="text-sm text-gray-400 hover:text-gray-200 hover:underline mt-1"
             >
               Back to Login
             </Link>

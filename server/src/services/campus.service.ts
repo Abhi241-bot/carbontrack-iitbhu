@@ -65,6 +65,7 @@ export async function getCampusWithStats(
   const campus = (await Campus.findOne({ slug, isActive: true })
     .populate('createdBy', 'name email')
     .populate('overviewSubmittedBy', 'name email')
+    .populate('infrastructureAssignedMembers', '_id name email')
     .lean()) as Record<string, unknown> | null;
 
   if (!campus) throw new AppError('Campus not found', 404);
@@ -118,6 +119,11 @@ export async function createCampus(
     slug,
     country: data.country ?? 'India',
     createdBy,
+    overviewStatus: 'verified',
+    overviewVersion: 1,
+    overviewSubmittedBy: createdBy,
+    overviewReviewedBy: createdBy,
+    overviewVerifiedAt: new Date(),
     infrastructureData: {
       roads: {
         segments: [],
@@ -215,7 +221,15 @@ export async function getCampusInfrastructureDraft(slug: string) {
 
 export async function updateInfrastructureDraft(
   slug: string,
-  data: { roads?: unknown; vegetation?: unknown; waterBodies?: unknown },
+  data: { 
+    roads?: unknown; 
+    vegetation?: unknown; 
+    waterBodies?: unknown;
+    commutation?: unknown;
+    airTravel?: unknown;
+    purchasedGoods?: unknown;
+    totalAreaAcres?: number;
+  },
   userId: string
 ) {
   const campus = await Campus.findOne({ slug });
@@ -233,6 +247,16 @@ export async function updateInfrastructureDraft(
       ...campus.infrastructureData.waterBodies,
       ...data.waterBodies,
     } as any;
+  if (data.commutation !== undefined)
+    campus.infrastructureData.commutation = data.commutation as any;
+  if (data.airTravel !== undefined)
+    campus.infrastructureData.airTravel = data.airTravel as any;
+  if (data.purchasedGoods !== undefined)
+    campus.infrastructureData.purchasedGoods = data.purchasedGoods as any;
+
+  if (data.totalAreaAcres !== undefined) {
+    campus.totalAreaAcres = data.totalAreaAcres;
+  }
 
   campus.markModified('infrastructureData');
   campus.infrastructureStatus = 'draft';

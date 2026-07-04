@@ -27,7 +27,7 @@ const TYPE_BADGE: Record<string, string> = {
   academic: 'bg-teal-100 text-teal-700',
   hostel: 'bg-green-100 text-green-700',
   lab: 'bg-violet-100 text-violet-700',
-  administrative: 'bg-gray-100 text-gray-700',
+  administrative: 'bg-white/10 text-gray-200',
   residential: 'bg-purple-100 text-purple-700',
   commercial: 'bg-amber-100 text-amber-700',
   infrastructure: 'bg-slate-100 text-slate-700',
@@ -37,10 +37,10 @@ function ConfidenceBar({ score }: { score: number }) {
   const color = score >= 80 ? 'bg-green-500' : score >= 50 ? 'bg-amber-500' : 'bg-red-500';
   return (
     <div className="flex items-center gap-1.5">
-      <div className="w-14 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+      <div className="w-14 h-1.5 bg-white/10 rounded-full overflow-hidden">
         <div className={`h-full rounded-full ${color}`} style={{ width: `${score}%` }} />
       </div>
-      <span className="text-xs text-gray-500">{score.toFixed(0)}%</span>
+      <span className="text-xs text-gray-400">{score.toFixed(0)}%</span>
     </div>
   );
 }
@@ -73,9 +73,9 @@ export default function LeaderboardTable({ data, onBuildingClick, selectedIds = 
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-gray-100 text-xs text-gray-500 uppercase tracking-wide">
+          <tr className="border-b border-white/5 text-xs text-gray-400 uppercase tracking-wide">
             <th
-              className="pb-2 text-left cursor-pointer hover:text-gray-700 select-none w-10 pl-2"
+              className="pb-2 text-left cursor-pointer hover:text-gray-200 select-none w-10 pl-2"
               onClick={() => handleSort('rank')}
             >
               #{sortArrow('rank')}
@@ -83,25 +83,25 @@ export default function LeaderboardTable({ data, onBuildingClick, selectedIds = 
             <th className="pb-2 text-left">Building</th>
             <th className="pb-2 text-left hidden sm:table-cell">Type</th>
             <th
-              className="pb-2 text-right hidden md:table-cell cursor-pointer hover:text-gray-700 select-none"
+              className="pb-2 text-right hidden md:table-cell cursor-pointer hover:text-gray-200 select-none"
               onClick={() => handleSort('embodiedCarbon')}
             >
               Embodied{sortArrow('embodiedCarbon')}
             </th>
             <th
-              className="pb-2 text-right hidden md:table-cell cursor-pointer hover:text-gray-700 select-none"
+              className="pb-2 text-right hidden md:table-cell cursor-pointer hover:text-gray-200 select-none"
               onClick={() => handleSort('operationalCarbon')}
             >
               Operational{sortArrow('operationalCarbon')}
             </th>
             <th
-              className="pb-2 text-right cursor-pointer hover:text-gray-700 select-none"
+              className="pb-2 text-right cursor-pointer hover:text-gray-200 select-none"
               onClick={() => handleSort('totalCarbon')}
             >
               Total{sortArrow('totalCarbon')}
             </th>
             <th
-              className="pb-2 text-right cursor-pointer hover:text-gray-700 select-none hidden sm:table-cell"
+              className="pb-2 text-right cursor-pointer hover:text-gray-200 select-none hidden sm:table-cell"
               onClick={() => handleSort('intensityPerSqm')}
             >
               Intensity{sortArrow('intensityPerSqm')}
@@ -116,7 +116,7 @@ export default function LeaderboardTable({ data, onBuildingClick, selectedIds = 
               <tr
                 key={b.buildingId}
                 onClick={() => onBuildingClick(b.buildingId)}
-                className={`border-b border-gray-50 cursor-pointer hover:bg-gray-50 transition-colors ${
+                className={`border-b border-gray-50 cursor-pointer hover:bg-white/5 transition-colors ${
                   isSelected ? 'border-l-2' : ''
                 }`}
                 style={isSelected ? { borderLeftColor: '#8B1A1A' } : undefined}
@@ -130,31 +130,31 @@ export default function LeaderboardTable({ data, onBuildingClick, selectedIds = 
                       {b.rank}
                     </span>
                   ) : (
-                    <span className="text-gray-500 text-xs">{b.rank}</span>
+                    <span className="text-gray-400 text-xs">{b.rank}</span>
                   )}
                 </td>
-                <td className="py-2.5 pr-4 font-medium text-gray-900 max-w-[160px] truncate">
+                <td className="py-2.5 pr-4 font-medium text-white max-w-[160px] truncate">
                   {b.name}
                 </td>
                 <td className="py-2.5 hidden sm:table-cell">
                   <span
                     className={`capitalize text-xs px-2 py-0.5 rounded-full ${
-                      TYPE_BADGE[b.type] ?? 'bg-gray-100 text-gray-600'
+                      TYPE_BADGE[b.type] ?? 'bg-white/10 text-gray-300'
                     }`}
                   >
                     {b.type}
                   </span>
                 </td>
-                <td className="py-2.5 text-right text-gray-700 hidden md:table-cell pr-3">
+                <td className="py-2.5 text-right text-gray-200 hidden md:table-cell pr-3">
                   {b.embodiedCarbon.toFixed(1)}
                 </td>
-                <td className="py-2.5 text-right text-gray-700 hidden md:table-cell pr-3">
+                <td className="py-2.5 text-right text-gray-200 hidden md:table-cell pr-3">
                   {b.operationalCarbon.toFixed(1)}
                 </td>
-                <td className="py-2.5 text-right font-medium text-gray-900 pr-3">
+                <td className="py-2.5 text-right font-medium text-white pr-3">
                   {b.totalCarbon.toFixed(1)}
                 </td>
-                <td className="py-2.5 text-right text-gray-600 hidden sm:table-cell pr-3">
+                <td className="py-2.5 text-right text-gray-300 hidden sm:table-cell pr-3">
                   {b.intensityPerSqm > 0 ? b.intensityPerSqm.toFixed(4) : '—'}
                 </td>
                 <td className="py-2.5 pl-3 hidden lg:table-cell">

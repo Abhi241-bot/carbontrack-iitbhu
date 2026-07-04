@@ -29,7 +29,7 @@ export default function ProgressBar({
     <div className="w-full">
       {showLabel && (
         <div className="flex justify-end mb-1">
-          <span className="text-xs text-gray-600">{clamped}%</span>
+          <span className="text-xs text-gray-300">{clamped}%</span>
         </div>
       )}
       <div className={`w-full bg-gray-200 rounded-full ${heightClasses[size]}`}>

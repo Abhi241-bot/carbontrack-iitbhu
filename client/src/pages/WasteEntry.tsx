@@ -146,7 +146,7 @@ const WASTEWATER_OPTIONS: Array<{
   {
     value: WastewaterTreatmentType.UNMANAGED_SEPTIC,
     label: 'A — Unmanaged / septic tank',
-    desc: 'Septic tank, cesspit, or no treatment (most common at IIT BHU hostels)',
+    desc: 'Septic tank, cesspit, or no treatment',
     color: 'border-red-200 bg-red-50',
     textColor: 'text-red-700',
     efLabel: 'High emissions',
@@ -207,12 +207,12 @@ const WW_SOURCE_LABELS: Record<WastewaterSourceType, string> = {
 
 // ── Water source scope badges ────────────────────────────────────────────────
 const SOURCE_SCOPE: Record<WaterSourceType, { label: string; color: string }> = {
-  municipal: { label: 'Scope 3', color: 'bg-gray-100 text-gray-600' },
+  municipal: { label: 'Scope 3', color: 'bg-white/10 text-gray-300' },
   groundwater_borewell: { label: 'Scope 2 (pumping)', color: 'bg-amber-100 text-amber-700' },
   recycled_reclaimed: { label: 'Low impact', color: 'bg-green-100 text-green-700' },
   surface_water: { label: 'Campus managed', color: 'bg-blue-100 text-blue-700' },
   rainwater_harvested: { label: 'Zero carbon', color: 'bg-emerald-100 text-emerald-700' },
-  other: { label: 'Unknown', color: 'bg-gray-100 text-gray-500' },
+  other: { label: 'Unknown', color: 'bg-white/10 text-gray-400' },
 };
 
 const SOURCE_LABELS: Record<WaterSourceType, string> = {
@@ -325,7 +325,7 @@ function ProgressRing({ pct, color = '#d97706' }: { pct: number; color?: string 
           style={{ transition: 'stroke-dashoffset 0.4s ease' }}
         />
       </svg>
-      <span className="absolute text-xs font-semibold text-gray-700">{pct}%</span>
+      <span className="absolute text-xs font-semibold text-gray-200">{pct}%</span>
     </div>
   );
 }
@@ -373,7 +373,7 @@ function DisposalMethodRow({
       <div className="flex flex-wrap items-center gap-3">
         {/* Name + impact badge */}
         <div className="flex-1 min-w-[140px]">
-          <p className="text-sm font-medium text-gray-800">{label}</p>
+          <p className="text-sm font-medium text-gray-100">{label}</p>
           {meta && (
             <p className={cn('text-xs mt-0.5', meta.textColor)}>
               {meta.impact} · {meta.desc}
@@ -400,7 +400,7 @@ function DisposalMethodRow({
         {/* tCO₂e preview */}
         <div className="text-right min-w-[80px]">
           {kgPerDay > 0 && co2Preview > 0 && (
-            <span className="text-xs text-gray-500 font-mono">
+            <span className="text-xs text-gray-400 font-mono">
               {co2Preview.toFixed(2)} tCO₂e/yr
             </span>
           )}
@@ -414,7 +414,7 @@ function DisposalMethodRow({
             max={100}
             value={stream.fractionPercent}
             onChange={(e) => onFractionChange(stream.id, parseInt(e.target.value) || 0)}
-            className="w-14 text-center text-sm border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
+            className="w-14 text-center text-sm border border-white/10 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
           />
           <span className="text-sm text-gray-400">%</span>
         </div>
@@ -467,17 +467,17 @@ function CustomWasteStreamForm({
       <p className="text-sm font-medium text-purple-800">Add custom disposal method</p>
       <div className="grid grid-cols-2 gap-3">
         <div className="col-span-2">
-          <label className="text-xs text-gray-500 mb-1 block">Method name *</label>
+          <label className="text-xs text-gray-400 mb-1 block">Method name *</label>
           <input
             type="text"
             value={form.label}
             onChange={(e) => setForm((f) => ({ ...f, label: e.target.value }))}
             placeholder="e.g. Hazardous waste pickup, E-waste collection"
-            className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20 bg-white"
+            className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20 bg-black/40 backdrop-blur-md"
           />
         </div>
         <div>
-          <label className="text-xs text-gray-500 mb-1 block">
+          <label className="text-xs text-gray-400 mb-1 block">
             Emission factor (kgCO₂e/kg) <span className="text-gray-400">— optional</span>
           </label>
           <input
@@ -487,28 +487,28 @@ function CustomWasteStreamForm({
             value={form.ef}
             onChange={(e) => setForm((f) => ({ ...f, ef: e.target.value }))}
             placeholder={`default ${SOLID_EF[SolidWasteDisposalMethod.UNMANAGED_DUMP]}`}
-            className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20 bg-white"
+            className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20 bg-black/40 backdrop-blur-md"
           />
         </div>
         <div>
-          <label className="text-xs text-gray-500 mb-1 block">Initial fraction (%)</label>
+          <label className="text-xs text-gray-400 mb-1 block">Initial fraction (%)</label>
           <input
             type="number"
             min={0}
             max={100}
             value={form.fraction}
             onChange={(e) => setForm((f) => ({ ...f, fraction: e.target.value }))}
-            className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20 bg-white"
+            className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20 bg-black/40 backdrop-blur-md"
           />
         </div>
         <div className="col-span-2">
-          <label className="text-xs text-gray-500 mb-1 block">Notes (optional)</label>
+          <label className="text-xs text-gray-400 mb-1 block">Notes (optional)</label>
           <input
             type="text"
             value={form.notes}
             onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
             placeholder="Any additional context"
-            className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20 bg-white"
+            className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20 bg-black/40 backdrop-blur-md"
           />
         </div>
       </div>
@@ -556,28 +556,28 @@ function CustomDischargePointForm({
       <p className="text-sm font-medium text-blue-800">Add custom liquid discharge point</p>
       <div className="grid grid-cols-2 gap-3">
         <div className="col-span-2">
-          <label className="text-xs text-gray-500 mb-1 block">Description *</label>
+          <label className="text-xs text-gray-400 mb-1 block">Description *</label>
           <input
             type="text"
             value={form.label}
             onChange={(e) => setForm((f) => ({ ...f, label: e.target.value }))}
             placeholder="e.g. Lab chemical drain, Cooling tower blowdown"
-            className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20 bg-white"
+            className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20 bg-black/40 backdrop-blur-md"
           />
         </div>
         <div>
-          <label className="text-xs text-gray-500 mb-1 block">Volume (litres/day)</label>
+          <label className="text-xs text-gray-400 mb-1 block">Volume (litres/day)</label>
           <input
             type="number"
             min={0}
             value={form.value}
             onChange={(e) => setForm((f) => ({ ...f, value: e.target.value }))}
             placeholder="e.g. 500"
-            className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20 bg-white"
+            className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20 bg-black/40 backdrop-blur-md"
           />
         </div>
         <div>
-          <label className="text-xs text-gray-500 mb-1 block">Treatment</label>
+          <label className="text-xs text-gray-400 mb-1 block">Treatment</label>
           <select
             value={form.treatment}
             onChange={(e) =>
@@ -586,7 +586,7 @@ function CustomDischargePointForm({
                 treatment: e.target.value as WastewaterTreatmentType,
               }))
             }
-            className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20 bg-white"
+            className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20 bg-black/40 backdrop-blur-md"
           >
             {WASTEWATER_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>
@@ -596,13 +596,13 @@ function CustomDischargePointForm({
           </select>
         </div>
         <div className="col-span-2">
-          <label className="text-xs text-gray-500 mb-1 block">Notes (optional)</label>
+          <label className="text-xs text-gray-400 mb-1 block">Notes (optional)</label>
           <input
             type="text"
             value={form.notes}
             onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
             placeholder="Any additional context"
-            className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20 bg-white"
+            className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20 bg-black/40 backdrop-blur-md"
           />
         </div>
       </div>
@@ -646,13 +646,13 @@ function ZoneCard({
   );
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-      <div className="px-4 py-3 bg-gray-50 border-b border-gray-100 flex items-center justify-between gap-3">
+    <div className="bg-black/40 backdrop-blur-md rounded-xl border border-white/10 overflow-hidden">
+      <div className="px-4 py-3 bg-white/5 border-b border-white/5 flex items-center justify-between gap-3">
         <input
           type="text"
           value={zone.zoneName}
           onChange={(e) => onUpdateName(zone.id, e.target.value)}
-          className="flex-1 text-sm font-medium border-0 bg-transparent focus:outline-none focus:ring-0 text-gray-800 placeholder-gray-400"
+          className="flex-1 text-sm font-medium border-0 bg-transparent focus:outline-none focus:ring-0 text-gray-100 placeholder-gray-400"
           placeholder="Zone name (e.g. Lab wing)"
         />
         <div className="flex items-center gap-2 shrink-0">
@@ -661,12 +661,12 @@ function ZoneCard({
             min={0}
             value={zone.kgPerDay || ''}
             onChange={(e) => onUpdateKg(zone.id, parseFloat(e.target.value) || 0)}
-            className="w-20 text-sm text-center border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
+            className="w-20 text-sm text-center border border-white/10 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
             placeholder="0"
           />
           <span className="text-xs text-gray-400">kg/day</span>
           {zoneCO2 > 0 && (
-            <span className="text-xs font-mono text-gray-500">{zoneCO2.toFixed(2)} t/yr</span>
+            <span className="text-xs font-mono text-gray-400">{zoneCO2.toFixed(2)} t/yr</span>
           )}
           <button
             type="button"
@@ -1364,16 +1364,16 @@ export default function WasteEntry() {
 
   return (
     <PageWrapper title="Waste & Sanitation Data">
-      <div className="bg-gray-50 min-h-[calc(100vh-4rem)]">
+      <div className="bg-white/5 min-h-[calc(100vh-4rem)]">
         <div className="max-w-7xl mx-auto px-4 py-8 lg:flex lg:gap-8 items-start">
           {/* ── Sidebar ────────────────────────────────────────────────────── */}
           <aside className="hidden lg:block w-64 shrink-0">
             <div className="sticky top-20 space-y-4">
               {/* Building info */}
-              <div className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
+              <div className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-4 shadow-sm">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-gray-900 truncate">
+                    <p className="text-sm font-semibold text-white truncate">
                       {building?.name ?? 'Loading…'}
                     </p>
                     {building?.shortName && (
@@ -1386,7 +1386,7 @@ export default function WasteEntry() {
                 </div>
 
                 {isReEntry && (
-                  <div className="mt-2 pt-2 border-t border-gray-100">
+                  <div className="mt-2 pt-2 border-t border-white/5">
                     <p className="text-xs font-medium text-amber-700">
                       Version {state.version} — updating from Version {state.version - 1}
                     </p>
@@ -1395,8 +1395,8 @@ export default function WasteEntry() {
               </div>
 
               {/* Contents nav */}
-              <div className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+              <div className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-4 shadow-sm">
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
                   Contents
                 </p>
                 <nav className="space-y-1">
@@ -1408,7 +1408,7 @@ export default function WasteEntry() {
                         'w-full text-left px-3 py-2 rounded-lg text-sm transition-colors flex items-center gap-2',
                         activeSection === sid
                           ? 'bg-rose-50 text-rose-700 font-medium'
-                          : 'text-gray-600 hover:bg-gray-50'
+                          : 'text-gray-300 hover:bg-white/5'
                       )}
                     >
                       <ChevronRight
@@ -1424,8 +1424,8 @@ export default function WasteEntry() {
               </div>
 
               {/* Save status + actions */}
-              <div className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm space-y-3">
-                <div className="flex items-center gap-2 text-xs text-gray-500">
+              <div className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-4 shadow-sm space-y-3">
+                <div className="flex items-center gap-2 text-xs text-gray-400">
                   <Clock className="w-3.5 h-3.5" />
                   {formatSaveStatus(state.lastSavedAt, state.isSaving, state.isDirty)}
                 </div>
@@ -1434,7 +1434,7 @@ export default function WasteEntry() {
                 <div className="flex items-center gap-3">
                   <ProgressRing pct={completeness} color="#e11d48" />
                   <div>
-                    <p className="text-sm font-medium text-gray-700">{completeness}% complete</p>
+                    <p className="text-sm font-medium text-gray-200">{completeness}% complete</p>
                     <p className="text-xs text-gray-400">
                       {completeness >= 100 ? 'Ready to submit' : 'Fill in more data'}
                     </p>
@@ -1480,18 +1480,18 @@ export default function WasteEntry() {
 
               {/* Wastewater Phase 2 carbon preview */}
               {wastewaterCarbonPreview && (
-                <div className="bg-white rounded-2xl border border-gray-200 p-3 shadow-sm">
-                  <div className="text-xs text-gray-500 mb-1 font-medium">
+                <div className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-3 shadow-sm">
+                  <div className="text-xs text-gray-400 mb-1 font-medium">
                     Wastewater (IPCC Tier 1):
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">CH₄ (Scope 1):</span>
+                    <span className="text-gray-300">CH₄ (Scope 1):</span>
                     <span className="text-red-600 font-mono">
                       +{wastewaterCarbonPreview.ch4Co2e.toFixed(1)} tCO₂e/yr
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">N₂O (Scope 1):</span>
+                    <span className="text-gray-300">N₂O (Scope 1):</span>
                     <span className="text-red-600 font-mono">
                       +{wastewaterCarbonPreview.n2oCo2e.toFixed(1)} tCO₂e/yr
                     </span>
@@ -1505,13 +1505,13 @@ export default function WasteEntry() {
 
               {/* Water carbon live estimates */}
               {(wtpCarbonPreview.tco2e > 0 || roCarbonPreview.tco2e > 0) && (
-                <div className="bg-white rounded-2xl border border-gray-200 p-3 shadow-sm">
-                  <div className="text-xs text-gray-500 mb-1 font-medium">
+                <div className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-3 shadow-sm">
+                  <div className="text-xs text-gray-400 mb-1 font-medium">
                     Water treatment (Scope 2):
                   </div>
                   {wtpCarbonPreview.tco2e > 0 && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">WTP:</span>
+                      <span className="text-gray-300">WTP:</span>
                       <span className="text-blue-600 font-mono">
                         +{wtpCarbonPreview.tco2e.toFixed(1)} tCO₂e/yr
                       </span>
@@ -1519,7 +1519,7 @@ export default function WasteEntry() {
                   )}
                   {roCarbonPreview.tco2e > 0 && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">RO plants:</span>
+                      <span className="text-gray-300">RO plants:</span>
                       <span className="text-blue-600 font-mono">
                         +{roCarbonPreview.tco2e.toFixed(1)} tCO₂e/yr
                       </span>
@@ -1530,19 +1530,19 @@ export default function WasteEntry() {
 
               {/* Solid waste Phase 3 carbon preview */}
               {solidWasteCarbonPreview.total > 0 ? (
-                <div className="bg-white rounded-2xl border border-gray-200 p-3 shadow-sm">
-                  <div className="text-xs text-gray-500 mb-1 font-medium">
+                <div className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-3 shadow-sm">
+                  <div className="text-xs text-gray-400 mb-1 font-medium">
                     Solid waste (IPCC FOD):
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Landfill CH₄ (Scope 1):</span>
+                    <span className="text-gray-300">Landfill CH₄ (Scope 1):</span>
                     <span className="text-red-600 font-mono">
                       +{solidWasteCarbonPreview.landfillCh4.toFixed(1)} tCO₂e/yr
                     </span>
                   </div>
                   {solidWasteCarbonPreview.incineration > 0 && (
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600">Incineration (Scope 1):</span>
+                      <span className="text-gray-300">Incineration (Scope 1):</span>
                       <span className="text-red-600 font-mono">
                         +{solidWasteCarbonPreview.incineration.toFixed(1)} tCO₂e/yr
                       </span>
@@ -1564,7 +1564,7 @@ export default function WasteEntry() {
 
               <button
                 onClick={() => navigate(`/buildings/${id}`)}
-                className="w-full text-xs text-gray-400 hover:text-gray-600 hover:underline text-left"
+                className="w-full text-xs text-gray-400 hover:text-gray-300 hover:underline text-left"
               >
                 ← Back to building
               </button>
@@ -1611,7 +1611,7 @@ export default function WasteEntry() {
                       dispatch({ type: 'SET_WHAT_CHANGED', payload: e.target.value })
                     }
                     placeholder="Briefly describe what changed since the last submission…"
-                    className="w-full text-sm border border-amber-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400/30 bg-white resize-none"
+                    className="w-full text-sm border border-amber-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-400/30 bg-black/40 backdrop-blur-md resize-none"
                   />
                 </div>
               </div>
@@ -1620,16 +1620,16 @@ export default function WasteEntry() {
             {/* ══ 4.1 SOLID WASTE GENERATION ════════════════════════════ */}
             <div
               id="sw-generation"
-              className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm"
+              className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-sm"
             >
-              <div className="px-6 py-5 border-b border-gray-100 bg-gray-50">
+              <div className="px-6 py-5 border-b border-white/5 bg-white/5">
                 <div className="flex items-center gap-2">
                   <Trash2 className="w-5 h-5 text-rose-600" />
-                  <h2 className="text-base font-semibold text-gray-900">
+                  <h2 className="text-base font-semibold text-white">
                     Solid waste generation by category
                   </h2>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-400">
                   Record annual waste quantities by type. Category-specific DOC values enable
                   accurate IPCC First Order Decay CH₄ calculation — more precise than a single daily
                   waste figure.
@@ -1653,7 +1653,7 @@ export default function WasteEntry() {
                 </div>
 
                 {/* Helper: 3-column horizon layout */}
-                <div className="grid grid-cols-4 gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wide pb-1 border-b border-gray-100">
+                <div className="grid grid-cols-4 gap-2 text-xs font-semibold text-gray-400 uppercase tracking-wide pb-1 border-b border-white/5">
                   <span>Category</span>
                   <span className="text-center">Current (t/yr)</span>
                   <span className="text-center">In 5 Years</span>
@@ -1662,7 +1662,7 @@ export default function WasteEntry() {
 
                 {/* GROUP 1 — Domestic waste */}
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                  <p className="text-xs font-semibold text-gray-200 uppercase tracking-wide">
                     Domestic waste
                   </p>
                   {[
@@ -1686,10 +1686,10 @@ export default function WasteEntry() {
                   ].map(({ key, label, doc, highlight }) => (
                     <div
                       key={key}
-                      className={`grid grid-cols-4 gap-2 items-center rounded-lg p-2 ${highlight ? 'border-l-4 border-l-blue-400 bg-blue-50/40' : 'bg-gray-50'}`}
+                      className={`grid grid-cols-4 gap-2 items-center rounded-lg p-2 ${highlight ? 'border-l-4 border-l-blue-400 bg-blue-50/40' : 'bg-white/5'}`}
                     >
                       <div className="min-w-0">
-                        <p className="text-sm text-gray-700 truncate">{label}</p>
+                        <p className="text-sm text-gray-200 truncate">{label}</p>
                         <span className="text-xs text-amber-600 font-mono">DOC: {doc}</span>
                       </div>
                       {(['current', 'inFiveYears', 'inTenYears'] as const).map((horizon) => (
@@ -1721,7 +1721,7 @@ export default function WasteEntry() {
                               },
                             })
                           }
-                          className="w-full text-sm border border-gray-200 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
+                          className="w-full text-sm border border-white/10 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
                         />
                       ))}
                     </div>
@@ -1730,7 +1730,7 @@ export default function WasteEntry() {
 
                 {/* GROUP 2 — Garden/horticulture */}
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                  <p className="text-xs font-semibold text-gray-200 uppercase tracking-wide">
                     Garden and horticulture waste
                   </p>
                   {[
@@ -1753,10 +1753,10 @@ export default function WasteEntry() {
                   ].map(({ key, label, doc }) => (
                     <div
                       key={key}
-                      className="grid grid-cols-4 gap-2 items-center bg-gray-50 rounded-lg p-2"
+                      className="grid grid-cols-4 gap-2 items-center bg-white/5 rounded-lg p-2"
                     >
                       <div>
-                        <p className="text-sm text-gray-700">{label}</p>
+                        <p className="text-sm text-gray-200">{label}</p>
                         <span className="text-xs text-amber-600 font-mono">DOC: {doc}</span>
                       </div>
                       {(['current', 'inFiveYears', 'inTenYears'] as const).map((horizon) => (
@@ -1788,7 +1788,7 @@ export default function WasteEntry() {
                               },
                             })
                           }
-                          className="w-full text-sm border border-gray-200 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
+                          className="w-full text-sm border border-white/10 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
                         />
                       ))}
                     </div>
@@ -1797,7 +1797,7 @@ export default function WasteEntry() {
 
                 {/* GROUP 3 — Hospital/biomedical */}
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                  <p className="text-xs font-semibold text-gray-200 uppercase tracking-wide">
                     Hospital and biomedical waste
                   </p>
                   {[
@@ -1814,9 +1814,9 @@ export default function WasteEntry() {
                     },
                   ].map(({ key, label, doc, note }) => (
                     <div key={key} className="space-y-1">
-                      <div className="grid grid-cols-4 gap-2 items-center bg-gray-50 rounded-lg p-2">
+                      <div className="grid grid-cols-4 gap-2 items-center bg-white/5 rounded-lg p-2">
                         <div>
-                          <p className="text-sm text-gray-700">{label}</p>
+                          <p className="text-sm text-gray-200">{label}</p>
                           <span className="text-xs text-amber-600 font-mono">DOC: {doc}</span>
                         </div>
                         {(['current', 'inFiveYears', 'inTenYears'] as const).map((horizon) => (
@@ -1850,7 +1850,7 @@ export default function WasteEntry() {
                                 },
                               })
                             }
-                            className="w-full text-sm border border-gray-200 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
+                            className="w-full text-sm border border-white/10 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
                           />
                         ))}
                       </div>
@@ -1859,7 +1859,7 @@ export default function WasteEntry() {
                   ))}
                   <div className="grid grid-cols-2 gap-4 mt-2">
                     <div>
-                      <p className="text-xs font-medium text-gray-600 mb-1">Collection system</p>
+                      <p className="text-xs font-medium text-gray-300 mb-1">Collection system</p>
                       <div className="flex gap-2">
                         {(['manual', 'mechanical'] as const).map((v) => (
                           <button
@@ -1874,7 +1874,7 @@ export default function WasteEntry() {
                               'px-3 py-1.5 rounded-lg text-sm border transition-colors',
                               state.solidWasteGeneration.hospitalCollectionSystem === v
                                 ? 'bg-rose-600 text-white border-rose-600'
-                                : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+                                : 'border-white/10 text-gray-300 hover:bg-white/5'
                             )}
                           >
                             {v.charAt(0).toUpperCase() + v.slice(1)}
@@ -1883,7 +1883,7 @@ export default function WasteEntry() {
                       </div>
                     </div>
                     <div>
-                      <p className="text-xs font-medium text-gray-600 mb-1">Segregation system</p>
+                      <p className="text-xs font-medium text-gray-300 mb-1">Segregation system</p>
                       <div className="flex gap-2">
                         {([true, false] as const).map((v) => (
                           <button
@@ -1898,7 +1898,7 @@ export default function WasteEntry() {
                               'px-3 py-1.5 rounded-lg text-sm border transition-colors',
                               state.solidWasteGeneration.hospitalSegregationSystem === v
                                 ? 'bg-rose-600 text-white border-rose-600'
-                                : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+                                : 'border-white/10 text-gray-300 hover:bg-white/5'
                             )}
                           >
                             {v ? 'Yes' : 'No'}
@@ -1911,12 +1911,12 @@ export default function WasteEntry() {
 
                 {/* GROUP 4 — Kitchen/food */}
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                  <p className="text-xs font-semibold text-gray-200 uppercase tracking-wide">
                     Kitchen and food waste
                   </p>
-                  <div className="grid grid-cols-4 gap-2 items-center bg-gray-50 rounded-lg p-2">
+                  <div className="grid grid-cols-4 gap-2 items-center bg-white/5 rounded-lg p-2">
                     <div>
-                      <p className="text-sm text-gray-700">Liquid kitchen waste</p>
+                      <p className="text-sm text-gray-200">Liquid kitchen waste</p>
                       <span className="text-xs text-gray-400">Unit: KLD</span>
                     </div>
                     {(['current', 'inFiveYears', 'inTenYears'] as const).map((h) => (
@@ -1944,13 +1944,13 @@ export default function WasteEntry() {
                             },
                           })
                         }
-                        className="w-full text-sm border border-gray-200 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
+                        className="w-full text-sm border border-white/10 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
                       />
                     ))}
                   </div>
                   <div className="grid grid-cols-4 gap-2 items-center border-l-4 border-l-blue-400 bg-blue-50/40 rounded-lg p-2">
                     <div>
-                      <p className="text-sm text-gray-700">Solid food waste</p>
+                      <p className="text-sm text-gray-200">Solid food waste</p>
                       <span className="text-xs text-amber-600 font-mono">DOC: 0.15</span>
                     </div>
                     {(['current', 'inFiveYears', 'inTenYears'] as const).map((h) => (
@@ -1978,7 +1978,7 @@ export default function WasteEntry() {
                             },
                           })
                         }
-                        className="w-full text-sm border border-gray-200 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
+                        className="w-full text-sm border border-white/10 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
                       />
                     ))}
                   </div>
@@ -1986,7 +1986,7 @@ export default function WasteEntry() {
 
                 {/* GROUP 5 — Construction */}
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                  <p className="text-xs font-semibold text-gray-200 uppercase tracking-wide">
                     Construction & demolition waste
                   </p>
                   {[
@@ -1995,10 +1995,10 @@ export default function WasteEntry() {
                   ].map(({ key, label, doc }) => (
                     <div
                       key={key}
-                      className="grid grid-cols-4 gap-2 items-center bg-gray-50 rounded-lg p-2"
+                      className="grid grid-cols-4 gap-2 items-center bg-white/5 rounded-lg p-2"
                     >
                       <div>
-                        <p className="text-sm text-gray-700">{label}</p>
+                        <p className="text-sm text-gray-200">{label}</p>
                         <span className="text-xs text-amber-600 font-mono">DOC: {doc}</span>
                       </div>
                       {(['current', 'inFiveYears', 'inTenYears'] as const).map((h) => (
@@ -2030,7 +2030,7 @@ export default function WasteEntry() {
                               },
                             })
                           }
-                          className="w-full text-sm border border-gray-200 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
+                          className="w-full text-sm border border-white/10 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
                         />
                       ))}
                     </div>
@@ -2039,7 +2039,7 @@ export default function WasteEntry() {
 
                 {/* GROUP 6 — Other organic */}
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                  <p className="text-xs font-semibold text-gray-200 uppercase tracking-wide">
                     Other organic waste
                   </p>
                   {[
@@ -2049,10 +2049,10 @@ export default function WasteEntry() {
                   ].map(({ key, label, doc }) => (
                     <div
                       key={key}
-                      className="grid grid-cols-4 gap-2 items-center bg-gray-50 rounded-lg p-2"
+                      className="grid grid-cols-4 gap-2 items-center bg-white/5 rounded-lg p-2"
                     >
                       <div>
-                        <p className="text-sm text-gray-700">{label}</p>
+                        <p className="text-sm text-gray-200">{label}</p>
                         <span className="text-xs text-amber-600 font-mono">DOC: {doc}</span>
                       </div>
                       {(['current', 'inFiveYears', 'inTenYears'] as const).map((h) => (
@@ -2084,7 +2084,7 @@ export default function WasteEntry() {
                               },
                             })
                           }
-                          className="w-full text-sm border border-gray-200 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
+                          className="w-full text-sm border border-white/10 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
                         />
                       ))}
                     </div>
@@ -2093,7 +2093,7 @@ export default function WasteEntry() {
 
                 {/* GROUP 7 — Scrap yard */}
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
+                  <p className="text-xs font-semibold text-gray-200 uppercase tracking-wide">
                     Scrap yard waste
                   </p>
                   {[
@@ -2103,10 +2103,10 @@ export default function WasteEntry() {
                   ].map(({ key, label, doc }) => (
                     <div
                       key={key}
-                      className="grid grid-cols-4 gap-2 items-center bg-gray-50 rounded-lg p-2"
+                      className="grid grid-cols-4 gap-2 items-center bg-white/5 rounded-lg p-2"
                     >
                       <div>
-                        <p className="text-sm text-gray-700">{label}</p>
+                        <p className="text-sm text-gray-200">{label}</p>
                         <span className="text-xs text-gray-400 font-mono">DOC: {doc} (inert)</span>
                       </div>
                       {(['current', 'inFiveYears', 'inTenYears'] as const).map((h) => (
@@ -2138,7 +2138,7 @@ export default function WasteEntry() {
                               },
                             })
                           }
-                          className="w-full text-sm border border-gray-200 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
+                          className="w-full text-sm border border-white/10 rounded-lg px-2 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400"
                         />
                       ))}
                     </div>
@@ -2147,25 +2147,25 @@ export default function WasteEntry() {
 
                 {/* Running totals */}
                 {swGenTotals.totalTons > 0 && (
-                  <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
-                    <p className="text-sm font-semibold text-gray-700 mb-2">
+                  <div className="bg-white/5 rounded-xl p-4 border border-white/10">
+                    <p className="text-sm font-semibold text-gray-200 mb-2">
                       Generation totals (current year)
                     </p>
                     <div className="grid grid-cols-3 gap-3 text-sm">
                       <div>
-                        <p className="text-gray-500 text-xs">Total waste</p>
-                        <p className="font-semibold text-gray-900">
+                        <p className="text-gray-400 text-xs">Total waste</p>
+                        <p className="font-semibold text-white">
                           {swGenTotals.totalTons.toFixed(1)} t/yr
                         </p>
                       </div>
                       <div>
-                        <p className="text-gray-500 text-xs">Organic (high CH₄)</p>
+                        <p className="text-gray-400 text-xs">Organic (high CH₄)</p>
                         <p className="font-semibold text-red-600">
                           {swGenTotals.organicTons.toFixed(1)} t/yr
                         </p>
                       </div>
                       <div>
-                        <p className="text-gray-500 text-xs">Inert/recyclable</p>
+                        <p className="text-gray-400 text-xs">Inert/recyclable</p>
                         <p className="font-semibold text-green-600">
                           {swGenTotals.inertTons.toFixed(1)} t/yr
                         </p>
@@ -2179,13 +2179,13 @@ export default function WasteEntry() {
             {/* ══ 4.2 LANDFILL DEPOSITION RECORDS ═══════════════════════ */}
             <div
               id="sw-landfill"
-              className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm"
+              className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-sm"
             >
-              <div className="px-6 py-5 border-b border-gray-100 bg-gray-50">
+              <div className="px-6 py-5 border-b border-white/5 bg-white/5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Trash2 className="w-5 h-5 text-orange-600" />
-                    <h2 className="text-base font-semibold text-gray-900">
+                    <h2 className="text-base font-semibold text-white">
                       Waste sent to landfill
                     </h2>
                   </div>
@@ -2205,17 +2205,17 @@ export default function WasteEntry() {
                     Add landfill site
                   </button>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-400">
                   Monthly landfill quantities are the most accurate input for the IPCC FOD model.
                 </p>
               </div>
               <div className="p-6 space-y-4">
                 {/* MCF reference */}
                 <details className="text-sm">
-                  <summary className="cursor-pointer text-gray-500 hover:text-gray-700">
+                  <summary className="cursor-pointer text-gray-400 hover:text-gray-200">
                     MCF values by landfill type
                   </summary>
-                  <div className="mt-2 p-3 bg-gray-50 rounded-lg text-xs space-y-1">
+                  <div className="mt-2 p-3 bg-white/5 rounded-lg text-xs space-y-1">
                     <div className="flex justify-between">
                       <span>Managed sanitary landfill</span>
                       <span className="font-mono font-semibold">MCF = 1.0</span>
@@ -2253,21 +2253,21 @@ export default function WasteEntry() {
                   return (
                     <div
                       key={site.id}
-                      className="border border-gray-200 rounded-xl overflow-hidden"
+                      className="border border-white/10 rounded-xl overflow-hidden"
                     >
-                      <div className="px-4 py-3 bg-gray-50 flex items-center justify-between">
+                      <div className="px-4 py-3 bg-white/5 flex items-center justify-between">
                         <div className="flex items-center gap-3 min-w-0">
-                          <span className="text-xs font-medium text-gray-500">
+                          <span className="text-xs font-medium text-gray-400">
                             Site {siteIdx + 1}
                           </span>
-                          <span className="font-medium text-gray-800 truncate">
+                          <span className="font-medium text-gray-100 truncate">
                             {site.siteLocationName || 'Unnamed site'}
                           </span>
                           <span className="text-xs px-2 py-0.5 bg-orange-100 text-orange-700 rounded-full">
                             {site.landfillType?.replace(/_/g, ' ') ?? 'Managed'}
                           </span>
                           {siteTotal && siteTotal.annual > 0 && (
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-400">
                               {siteTotal.annual.toFixed(0)} t/yr · {siteTotal.ch4Co2e.toFixed(1)}{' '}
                               tCO₂e/yr
                             </span>
@@ -2286,7 +2286,7 @@ export default function WasteEntry() {
                         {/* Site details */}
                         <div className="grid grid-cols-2 gap-3">
                           <div className="col-span-2">
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Site / location name *
                             </label>
                             <input
@@ -2302,11 +2302,11 @@ export default function WasteEntry() {
                                 })
                               }
                               placeholder="Municipal landfill, Campus composting site…"
-                              className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400"
+                              className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Start year
                             </label>
                             <input
@@ -2327,11 +2327,11 @@ export default function WasteEntry() {
                                   },
                                 })
                               }
-                              className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400/30"
+                              className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400/30"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Management type
                             </label>
                             <select
@@ -2347,7 +2347,7 @@ export default function WasteEntry() {
                                   },
                                 })
                               }
-                              className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400/30"
+                              className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400/30"
                             >
                               <option value="managed_sanitary">Managed sanitary (MCF = 1.0)</option>
                               <option value="semi_controlled">Semi-controlled (MCF = 0.5)</option>
@@ -2357,7 +2357,7 @@ export default function WasteEntry() {
                             </select>
                           </div>
                           <div className="flex items-center gap-3">
-                            <label className="text-xs font-medium text-gray-600">
+                            <label className="text-xs font-medium text-gray-300">
                               Biogas capture?
                             </label>
                             <button
@@ -2374,7 +2374,7 @@ export default function WasteEntry() {
                                 'px-3 py-1 rounded-lg text-sm border',
                                 site.hasBiogasCapture
                                   ? 'bg-green-600 text-white border-green-600'
-                                  : 'border-gray-200 text-gray-500'
+                                  : 'border-white/10 text-gray-400'
                               )}
                             >
                               {site.hasBiogasCapture ? 'Yes' : 'No'}
@@ -2382,7 +2382,7 @@ export default function WasteEntry() {
                           </div>
                           {site.hasBiogasCapture && (
                             <div>
-                              <label className="block text-xs font-medium text-gray-600 mb-1">
+                              <label className="block text-xs font-medium text-gray-300 mb-1">
                                 Capture efficiency (%)
                               </label>
                               <input
@@ -2401,14 +2401,14 @@ export default function WasteEntry() {
                                     },
                                   })
                                 }
-                                className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400/30"
+                                className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400/30"
                               />
                             </div>
                           )}
                         </div>
 
                         {/* Entry mode toggle */}
-                        <div className="flex items-center gap-1 p-1 bg-gray-100 rounded-xl w-fit">
+                        <div className="flex items-center gap-1 p-1 bg-white/10 rounded-xl w-fit">
                           {(['annual', 'monthly'] as const).map((m) => (
                             <button
                               key={m}
@@ -2416,8 +2416,8 @@ export default function WasteEntry() {
                               className={cn(
                                 'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
                                 entryMode === m
-                                  ? 'bg-white shadow-sm text-gray-900'
-                                  : 'text-gray-500 hover:text-gray-700'
+                                  ? 'bg-black/40 backdrop-blur-md shadow-sm text-white'
+                                  : 'text-gray-400 hover:text-gray-200'
                               )}
                             >
                               {m === 'annual' ? 'Annual totals' : 'Monthly breakdown'}
@@ -2427,7 +2427,7 @@ export default function WasteEntry() {
 
                         {entryMode === 'annual' && (
                           <div className="space-y-2">
-                            <div className="grid grid-cols-3 gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wide pb-1 border-b border-gray-100">
+                            <div className="grid grid-cols-3 gap-2 text-xs font-semibold text-gray-400 uppercase tracking-wide pb-1 border-b border-white/5">
                               <span>Year</span>
                               <span className="text-center">Total tonnes</span>
                               <span>Remarks</span>
@@ -2441,7 +2441,7 @@ export default function WasteEntry() {
                                 ]
                             ).map((row) => (
                               <div key={row.year} className="grid grid-cols-3 gap-2 items-center">
-                                <span className="text-sm text-gray-600">{row.year}</span>
+                                <span className="text-sm text-gray-300">{row.year}</span>
                                 <input
                                   type="number"
                                   min={0}
@@ -2472,7 +2472,7 @@ export default function WasteEntry() {
                                       });
                                     }
                                   }}
-                                  className="text-sm border border-gray-200 rounded-lg px-3 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-orange-400/30"
+                                  className="text-sm border border-white/10 rounded-lg px-3 py-1.5 text-center focus:outline-none focus:ring-2 focus:ring-orange-400/30"
                                 />
                                 <input
                                   type="text"
@@ -2491,7 +2491,7 @@ export default function WasteEntry() {
                                       },
                                     })
                                   }
-                                  className="text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none"
+                                  className="text-sm border border-white/10 rounded-lg px-3 py-1.5 focus:outline-none"
                                 />
                               </div>
                             ))}
@@ -2501,11 +2501,11 @@ export default function WasteEntry() {
                         {entryMode === 'monthly' && (
                           <div className="space-y-3">
                             <div className="flex items-center gap-2">
-                              <label className="text-xs font-medium text-gray-600">Year:</label>
+                              <label className="text-xs font-medium text-gray-300">Year:</label>
                               <select
                                 value={selectedYear}
                                 onChange={(e) => setSelectedYear(parseInt(e.target.value))}
-                                className="text-sm border border-gray-200 rounded-lg px-2 py-1 focus:outline-none"
+                                className="text-sm border border-white/10 rounded-lg px-2 py-1 focus:outline-none"
                               >
                                 {[currentYear, currentYear - 1, currentYear - 2].map((y) => (
                                   <option key={y} value={y}>
@@ -2535,7 +2535,7 @@ export default function WasteEntry() {
                                 );
                                 return (
                                   <div key={mon} className="text-center">
-                                    <label className="text-xs text-gray-500 block mb-1">
+                                    <label className="text-xs text-gray-400 block mb-1">
                                       {mon}
                                     </label>
                                     <input
@@ -2573,16 +2573,16 @@ export default function WasteEntry() {
                                           });
                                         }
                                       }}
-                                      className="w-full text-xs border border-gray-200 rounded px-1 py-1 text-center focus:outline-none focus:ring-1 focus:ring-orange-400"
+                                      className="w-full text-xs border border-white/10 rounded px-1 py-1 text-center focus:outline-none focus:ring-1 focus:ring-orange-400"
                                     />
                                   </div>
                                 );
                               })}
                             </div>
                             {siteTotal && siteTotal.annual > 0 && (
-                              <p className="text-xs text-gray-500">
+                              <p className="text-xs text-gray-400">
                                 Running annual total ({selectedYear}):{' '}
-                                <span className="font-semibold text-gray-700">
+                                <span className="font-semibold text-gray-200">
                                   {siteTotal.annual.toFixed(1)} tonnes
                                 </span>
                               </p>
@@ -2638,13 +2638,13 @@ export default function WasteEntry() {
             {/* ══ 4.3 INCINERATION RECORDS ══════════════════════════════ */}
             <div
               id="sw-incineration"
-              className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm"
+              className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-sm"
             >
-              <div className="px-6 py-5 border-b border-gray-100 bg-gray-50">
+              <div className="px-6 py-5 border-b border-white/5 bg-white/5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Flame className="w-5 h-5 text-red-600" />
-                    <h2 className="text-base font-semibold text-gray-900">
+                    <h2 className="text-base font-semibold text-white">
                       Waste sent for incineration
                     </h2>
                   </div>
@@ -2664,17 +2664,17 @@ export default function WasteEntry() {
                     Add facility
                   </button>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-400">
                   Incineration produces direct CO₂ and N₂O emissions. Emission factors are based on
                   waste type and incinerator type (IPCC 2006).
                 </p>
               </div>
               <div className="p-6 space-y-4">
                 <details className="text-sm">
-                  <summary className="cursor-pointer text-gray-500 hover:text-gray-700">
+                  <summary className="cursor-pointer text-gray-400 hover:text-gray-200">
                     Incineration emission factors
                   </summary>
-                  <div className="mt-2 p-3 bg-gray-50 rounded-lg text-xs space-y-1">
+                  <div className="mt-2 p-3 bg-white/5 rounded-lg text-xs space-y-1">
                     <div className="flex justify-between">
                       <span>MSW incinerator</span>
                       <span className="font-mono">0.91 tCO₂/tonne</span>
@@ -2714,18 +2714,18 @@ export default function WasteEntry() {
                   return (
                     <div
                       key={facility.id}
-                      className="border border-gray-200 rounded-xl overflow-hidden"
+                      className="border border-white/10 rounded-xl overflow-hidden"
                     >
-                      <div className="px-4 py-3 bg-gray-50 flex items-center justify-between">
+                      <div className="px-4 py-3 bg-white/5 flex items-center justify-between">
                         <div className="flex items-center gap-3 min-w-0">
-                          <span className="text-xs font-medium text-gray-500">
+                          <span className="text-xs font-medium text-gray-400">
                             Facility {idx + 1}
                           </span>
-                          <span className="font-medium text-gray-800 truncate">
+                          <span className="font-medium text-gray-100 truncate">
                             {facility.facilityNameLocation || 'Unnamed facility'}
                           </span>
                           {facTotal && facTotal.annual > 0 && (
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-400">
                               {facTotal.annual.toFixed(0)} t/yr · {facTotal.co2e.toFixed(1)}{' '}
                               tCO₂e/yr
                             </span>
@@ -2743,7 +2743,7 @@ export default function WasteEntry() {
                       <div className="p-4 space-y-3">
                         <div className="grid grid-cols-2 gap-3">
                           <div className="col-span-2">
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Facility name / location *
                             </label>
                             <input
@@ -2759,11 +2759,11 @@ export default function WasteEntry() {
                                 })
                               }
                               placeholder="UVNSST Hospital incinerator, Municipal WtE plant…"
-                              className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400/30"
+                              className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400/30"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Incinerator type
                             </label>
                             <select
@@ -2777,7 +2777,7 @@ export default function WasteEntry() {
                                   },
                                 })
                               }
-                              className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400/30"
+                              className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400/30"
                             >
                               <option value="msw_incinerator">MSW incinerator</option>
                               <option value="biomedical_incinerator">
@@ -2789,7 +2789,7 @@ export default function WasteEntry() {
                             </select>
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Capacity (TPD)
                             </label>
                             <input
@@ -2808,11 +2808,11 @@ export default function WasteEntry() {
                                   },
                                 })
                               }
-                              className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400/30"
+                              className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-400/30"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Emission factor (tCO₂/tonne) — optional
                             </label>
                             <input
@@ -2846,13 +2846,13 @@ export default function WasteEntry() {
                         {/* Monthly data */}
                         <div>
                           <div className="flex items-center gap-2 mb-2">
-                            <label className="text-xs font-medium text-gray-600">
+                            <label className="text-xs font-medium text-gray-300">
                               Monthly data — Year:
                             </label>
                             <select
                               value={selYear}
                               onChange={(e) => setSelYear(parseInt(e.target.value))}
-                              className="text-sm border border-gray-200 rounded-lg px-2 py-1 focus:outline-none"
+                              className="text-sm border border-white/10 rounded-lg px-2 py-1 focus:outline-none"
                             >
                               {[currentYear, currentYear - 1].map((y) => (
                                 <option key={y} value={y}>
@@ -2882,7 +2882,7 @@ export default function WasteEntry() {
                               );
                               return (
                                 <div key={mon} className="text-center">
-                                  <label className="text-xs text-gray-500 block mb-1">{mon}</label>
+                                  <label className="text-xs text-gray-400 block mb-1">{mon}</label>
                                   <input
                                     type="number"
                                     min={0}
@@ -2918,7 +2918,7 @@ export default function WasteEntry() {
                                         });
                                       }
                                     }}
-                                    className="w-full text-xs border border-gray-200 rounded px-1 py-1 text-center focus:outline-none focus:ring-1 focus:ring-red-400"
+                                    className="w-full text-xs border border-white/10 rounded px-1 py-1 text-center focus:outline-none focus:ring-1 focus:ring-red-400"
                                   />
                                 </div>
                               );
@@ -2973,13 +2973,13 @@ export default function WasteEntry() {
             {/* ══ 4.4 SOLID WASTE MANAGEMENT PLANT ══════════════════════ */}
             <div
               id="sw-mswplant"
-              className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm"
+              className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-sm"
             >
-              <div className="px-6 py-5 border-b border-gray-100 bg-gray-50">
+              <div className="px-6 py-5 border-b border-white/5 bg-white/5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Zap className="w-5 h-5 text-green-600" />
-                    <h2 className="text-base font-semibold text-gray-900">
+                    <h2 className="text-base font-semibold text-white">
                       Solid waste management plant (sieve analysis)
                     </h2>
                   </div>
@@ -2999,7 +2999,7 @@ export default function WasteEntry() {
                     Add MSW plant
                   </button>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-400">
                   Particle size distribution determines the processing route for each waste
                   fraction. Composting and RDF production avoid landfill CH₄ emissions.
                 </p>
@@ -3017,18 +3017,18 @@ export default function WasteEntry() {
                   return (
                     <div
                       key={plant.id}
-                      className="border border-gray-200 rounded-xl overflow-hidden"
+                      className="border border-white/10 rounded-xl overflow-hidden"
                     >
-                      <div className="px-4 py-3 bg-gray-50 flex items-center justify-between">
+                      <div className="px-4 py-3 bg-white/5 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <span className="text-xs font-medium text-gray-500">
+                          <span className="text-xs font-medium text-gray-400">
                             Plant {plantIdx + 1}
                           </span>
-                          <span className="font-medium text-gray-800">
+                          <span className="font-medium text-gray-100">
                             {plant.plantName || 'Unnamed plant'}
                           </span>
                           {plant.plantCapacityTpd && (
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-400">
                               {plant.plantCapacityTpd} TPD
                             </span>
                           )}
@@ -3044,7 +3044,7 @@ export default function WasteEntry() {
                         {/* Plant overview */}
                         <div className="grid grid-cols-3 gap-3">
                           <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Plant name
                             </label>
                             <input
@@ -3057,11 +3057,11 @@ export default function WasteEntry() {
                                 })
                               }
                               placeholder="Campus MSW sorting plant"
-                              className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400/30"
+                              className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400/30"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Design capacity (TPD)
                             </label>
                             <input
@@ -3080,11 +3080,11 @@ export default function WasteEntry() {
                                   },
                                 })
                               }
-                              className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400/30"
+                              className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400/30"
                             />
                           </div>
                           <div>
-                            <label className="block text-xs font-medium text-gray-600 mb-1">
+                            <label className="block text-xs font-medium text-gray-300 mb-1">
                               Energy (kWh/tonne){' '}
                               <span className="font-normal text-gray-400">default 35</span>
                             </label>
@@ -3114,7 +3114,7 @@ export default function WasteEntry() {
                         {/* Sieve analysis table */}
                         <div>
                           <div className="flex items-center justify-between mb-2">
-                            <p className="text-xs font-semibold text-gray-700">
+                            <p className="text-xs font-semibold text-gray-200">
                               Sieve fractions (8 particle-size fractions)
                             </p>
                             <span
@@ -3131,7 +3131,7 @@ export default function WasteEntry() {
                           <div className="overflow-x-auto">
                             <table className="w-full text-xs">
                               <thead>
-                                <tr className="border-b border-gray-100 text-gray-500">
+                                <tr className="border-b border-white/5 text-gray-400">
                                   <th className="text-left py-2 pr-2 w-20">Sieve size</th>
                                   <th className="text-left py-2 pr-2">Waste type</th>
                                   <th className="text-left py-2 pr-2">Use/Destination</th>
@@ -3144,9 +3144,9 @@ export default function WasteEntry() {
                                 {plant.sieveFractions.map((frac) => (
                                   <tr
                                     key={frac.sieveSize}
-                                    className="border-b border-gray-50 hover:bg-gray-50"
+                                    className="border-b border-gray-50 hover:bg-white/5"
                                   >
-                                    <td className="py-1.5 pr-2 font-mono text-gray-600 whitespace-nowrap">
+                                    <td className="py-1.5 pr-2 font-mono text-gray-300 whitespace-nowrap">
                                       {SIEVE_SIZE_LABELS[frac.sieveSize as SieveSize]}
                                     </td>
                                     <td className="py-1.5 pr-2">
@@ -3166,7 +3166,7 @@ export default function WasteEntry() {
                                         placeholder={
                                           SIEVE_WASTE_TYPE_HINTS[frac.sieveSize as SieveSize]
                                         }
-                                        className="w-full border border-gray-200 rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-green-400 min-w-[120px]"
+                                        className="w-full border border-white/10 rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-green-400 min-w-[120px]"
                                       />
                                     </td>
                                     <td className="py-1.5 pr-2">
@@ -3184,7 +3184,7 @@ export default function WasteEntry() {
                                           })
                                         }
                                         placeholder="Composting yard, RDF plant…"
-                                        className="w-full border border-gray-200 rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-green-400 min-w-[100px]"
+                                        className="w-full border border-white/10 rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-green-400 min-w-[100px]"
                                       />
                                     </td>
                                     <td className="py-1.5 pr-2">
@@ -3200,7 +3200,7 @@ export default function WasteEntry() {
                                             },
                                           })
                                         }
-                                        className="w-full border border-gray-200 rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-green-400 min-w-[100px]"
+                                        className="w-full border border-white/10 rounded px-1.5 py-1 focus:outline-none focus:ring-1 focus:ring-green-400 min-w-[100px]"
                                       >
                                         <option value="">Select…</option>
                                         <option value="Compost">Compost</option>
@@ -3231,7 +3231,7 @@ export default function WasteEntry() {
                                             },
                                           })
                                         }
-                                        className="w-full border border-gray-200 rounded px-1 py-1 text-center focus:outline-none focus:ring-1 focus:ring-green-400"
+                                        className="w-full border border-white/10 rounded px-1 py-1 text-center focus:outline-none focus:ring-1 focus:ring-green-400"
                                       />
                                     </td>
                                     <td className="py-1.5">
@@ -3255,7 +3255,7 @@ export default function WasteEntry() {
                                             },
                                           })
                                         }
-                                        className="w-full border border-gray-200 rounded px-1 py-1 text-center focus:outline-none focus:ring-1 focus:ring-green-400"
+                                        className="w-full border border-white/10 rounded px-1 py-1 text-center focus:outline-none focus:ring-1 focus:ring-green-400"
                                       />
                                     </td>
                                   </tr>
@@ -3280,21 +3280,21 @@ export default function WasteEntry() {
             {/* ── SOLID WASTE SECTION (Quick entry fallback) ────────────── */}
             <div
               id="solid-waste"
-              className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm"
+              className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-sm"
             >
-              <div className="px-6 py-5 border-b border-gray-100 bg-gray-50">
+              <div className="px-6 py-5 border-b border-white/5 bg-white/5">
                 <div className="flex items-center gap-2">
                   <Trash2 className="w-5 h-5 text-rose-600" />
-                  <h2 className="text-base font-semibold text-gray-900">Solid waste</h2>
+                  <h2 className="text-base font-semibold text-white">Solid waste</h2>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-400">
                   How is solid waste from this building disposed of? Include all waste types.
                 </p>
               </div>
 
               <div className="p-6 space-y-6">
                 {/* Entry mode toggle */}
-                <div className="flex items-center gap-1 p-1 bg-gray-100 rounded-xl w-fit">
+                <div className="flex items-center gap-1 p-1 bg-white/10 rounded-xl w-fit">
                   {(['building_total', 'zone_by_zone'] as const).map((mode) => (
                     <button
                       key={mode}
@@ -3303,8 +3303,8 @@ export default function WasteEntry() {
                       className={cn(
                         'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
                         state.solidWasteMode === mode
-                          ? 'bg-white text-gray-900 shadow-sm'
-                          : 'text-gray-500 hover:text-gray-700'
+                          ? 'bg-black/40 backdrop-blur-md text-white shadow-sm'
+                          : 'text-gray-400 hover:text-gray-200'
                       )}
                     >
                       {mode === 'building_total' ? 'Building total' : 'Zone by zone'}
@@ -3325,11 +3325,11 @@ export default function WasteEntry() {
                     {/* Field 1 — Daily waste */}
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block text-sm font-medium text-gray-200">
                           Daily waste generated
                         </label>
                         <div className="flex items-center gap-2">
-                          <span className="text-xs text-gray-500">I don't have waste data</span>
+                          <span className="text-xs text-gray-400">I don't have waste data</span>
                           <button
                             type="button"
                             onClick={() =>
@@ -3345,7 +3345,7 @@ export default function WasteEntry() {
                           >
                             <span
                               className={cn(
-                                'absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform',
+                                'absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-black/40 backdrop-blur-md shadow transition-transform',
                                 !state.hasWasteData ? 'translate-x-5' : 'translate-x-0'
                               )}
                             />
@@ -3379,9 +3379,9 @@ export default function WasteEntry() {
                                 })
                               }
                               placeholder="e.g. 50"
-                              className="w-36 text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
+                              className="w-36 text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
                             />
-                            <span className="text-sm text-gray-500">kg/day total solid waste</span>
+                            <span className="text-sm text-gray-400">kg/day total solid waste</span>
                             {isFieldChanged('solidWasteKgPerDay') && (
                               <span className="text-xs text-amber-600 font-medium">
                                 Changed from previous version
@@ -3419,7 +3419,7 @@ export default function WasteEntry() {
                     <div className="space-y-3">
                       <div className="flex items-center justify-between flex-wrap gap-2">
                         <div>
-                          <p className="text-sm font-medium text-gray-700">
+                          <p className="text-sm font-medium text-gray-200">
                             How is this waste disposed?
                           </p>
                           <p className="text-xs text-gray-400 mt-0.5">Must total 100%</p>
@@ -3500,8 +3500,8 @@ export default function WasteEntry() {
                     {/* Summary table */}
                     {state.zones.length > 0 && (
                       <div className="overflow-x-auto">
-                        <table className="min-w-full text-xs border border-gray-100 rounded-lg overflow-hidden">
-                          <thead className="bg-gray-50">
+                        <table className="min-w-full text-xs border border-white/5 rounded-lg overflow-hidden">
+                          <thead className="bg-white/5">
                             <tr>
                               {[
                                 'Zone',
@@ -3514,14 +3514,14 @@ export default function WasteEntry() {
                               ].map((h) => (
                                 <th
                                   key={h}
-                                  className="px-3 py-2 text-left font-semibold text-gray-500 uppercase tracking-wide"
+                                  className="px-3 py-2 text-left font-semibold text-gray-400 uppercase tracking-wide"
                                 >
                                   {h}
                                 </th>
                               ))}
                             </tr>
                           </thead>
-                          <tbody className="divide-y divide-gray-50 bg-white">
+                          <tbody className="divide-y divide-gray-50 bg-black/40 backdrop-blur-md">
                             {state.zones.map((z) => {
                               const dumpFrac =
                                 z.streams.find(
@@ -3552,8 +3552,8 @@ export default function WasteEntry() {
                                 0
                               );
                               return (
-                                <tr key={z.id} className="hover:bg-gray-50">
-                                  <td className="px-3 py-2 font-medium text-gray-800">
+                                <tr key={z.id} className="hover:bg-white/5">
+                                  <td className="px-3 py-2 font-medium text-gray-100">
                                     {z.zoneName || '—'}
                                   </td>
                                   <td className="px-3 py-2">{z.kgPerDay}</td>
@@ -3629,14 +3629,14 @@ export default function WasteEntry() {
             ══════════════════════════════════════════════════════════════════ */}
             <div
               id="ww-generation"
-              className="bg-white rounded-2xl border border-blue-200 overflow-hidden shadow-sm"
+              className="bg-black/40 backdrop-blur-md rounded-2xl border border-blue-200 overflow-hidden shadow-sm"
             >
               <div className="px-6 py-5 border-b border-blue-100 bg-blue-50">
                 <div className="flex items-center gap-2">
                   <Droplets className="w-5 h-5 text-blue-600" />
-                  <h2 className="text-base font-semibold text-gray-900">Wastewater generation</h2>
+                  <h2 className="text-base font-semibold text-white">Wastewater generation</h2>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-400">
                   Record wastewater volumes by source. These flow figures drive the IPCC Tier 1
                   methane and nitrous oxide calculation — more accurate than occupant-based
                   estimates.
@@ -3645,7 +3645,7 @@ export default function WasteEntry() {
                   <span className="px-2 py-0.5 bg-red-100 text-red-700 rounded-full font-medium">
                     Scope 1
                   </span>
-                  <span className="text-gray-600">CH₄ &amp; N₂O from wastewater</span>
+                  <span className="text-gray-300">CH₄ &amp; N₂O from wastewater</span>
                 </div>
               </div>
               <div className="p-6 space-y-5">
@@ -3671,15 +3671,15 @@ export default function WasteEntry() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-gray-200">
-                        <th className="text-left py-2 text-gray-600 font-medium w-56">Source</th>
-                        <th className="text-center py-2 text-gray-600 font-medium w-28">
+                      <tr className="border-b border-white/10">
+                        <th className="text-left py-2 text-gray-300 font-medium w-56">Source</th>
+                        <th className="text-center py-2 text-gray-300 font-medium w-28">
                           Current (KLD)
                         </th>
-                        <th className="text-center py-2 text-gray-600 font-medium w-28">
+                        <th className="text-center py-2 text-gray-300 font-medium w-28">
                           In 5 Years
                         </th>
-                        <th className="text-center py-2 text-gray-600 font-medium w-28">
+                        <th className="text-center py-2 text-gray-300 font-medium w-28">
                           In 10 Years
                         </th>
                       </tr>
@@ -3720,7 +3720,7 @@ export default function WasteEntry() {
                               <p
                                 className={cn(
                                   'font-medium',
-                                  critical ? 'text-blue-800' : 'text-gray-700'
+                                  critical ? 'text-blue-800' : 'text-gray-200'
                                 )}
                               >
                                 {critical && <span className="text-blue-500 mr-1">★</span>}
@@ -3747,7 +3747,7 @@ export default function WasteEntry() {
                                     })
                                   }
                                   placeholder="—"
-                                  className="w-24 text-center text-sm border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                  className="w-24 text-center text-sm border border-white/10 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                                 />
                               </td>
                             ))}
@@ -3760,10 +3760,10 @@ export default function WasteEntry() {
 
                 {/* Totals row */}
                 {wastewaterTotals.totalKld > 0 && (
-                  <div className="bg-gray-50 rounded-xl p-4 text-sm space-y-1">
+                  <div className="bg-white/5 rounded-xl p-4 text-sm space-y-1">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Total current wastewater:</span>
-                      <span className="font-semibold text-gray-900">
+                      <span className="text-gray-300">Total current wastewater:</span>
+                      <span className="font-semibold text-white">
                         {wastewaterTotals.totalKld.toFixed(1)} KLD
                       </span>
                     </div>
@@ -3775,8 +3775,8 @@ export default function WasteEntry() {
                         </span>
                       </div>
                     )}
-                    <div className="flex justify-between border-t border-gray-200 pt-1 mt-1">
-                      <span className="font-medium text-gray-700">
+                    <div className="flex justify-between border-t border-white/10 pt-1 mt-1">
+                      <span className="font-medium text-gray-200">
                         Net wastewater to treatment:
                       </span>
                       <span className="font-bold text-blue-700">
@@ -3787,11 +3787,11 @@ export default function WasteEntry() {
                 )}
 
                 {/* Greywater reuse toggle */}
-                <div className="space-y-3 pt-2 border-t border-gray-100">
+                <div className="space-y-3 pt-2 border-t border-white/5">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-700">Greywater reuse feasible?</p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-sm font-medium text-gray-200">Greywater reuse feasible?</p>
+                      <p className="text-xs text-gray-400">
                         Reduces STP load and wastewater emissions
                       </p>
                     </div>
@@ -3815,7 +3815,7 @@ export default function WasteEntry() {
                     >
                       <span
                         className={cn(
-                          'absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform',
+                          'absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-black/40 backdrop-blur-md shadow transition-transform',
                           state.wastewaterGeneration.greywaterReuseFeasible
                             ? 'translate-x-5'
                             : 'translate-x-0'
@@ -3826,7 +3826,7 @@ export default function WasteEntry() {
                   {state.wastewaterGeneration.greywaterReuseFeasible && (
                     <div className="pl-4 space-y-3 bg-green-50 p-3 rounded-xl">
                       <div className="flex items-center gap-3">
-                        <label className="text-sm text-gray-700 w-44 shrink-0">
+                        <label className="text-sm text-gray-200 w-44 shrink-0">
                           Reuse capacity (KLD):
                         </label>
                         <input
@@ -3841,11 +3841,11 @@ export default function WasteEntry() {
                               },
                             })
                           }
-                          className="w-28 text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-green-500/20"
+                          className="w-28 text-sm border border-white/10 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-green-500/20"
                         />
                       </div>
                       <div>
-                        <label className="text-xs text-gray-500 block mb-1">
+                        <label className="text-xs text-gray-400 block mb-1">
                           Reuse application:
                         </label>
                         <input
@@ -3858,7 +3858,7 @@ export default function WasteEntry() {
                             })
                           }
                           placeholder="e.g. Toilet flushing, irrigation, vehicle washing"
-                          className="w-full text-sm border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-green-500/20 bg-white"
+                          className="w-full text-sm border border-white/10 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-green-500/20 bg-black/40 backdrop-blur-md"
                         />
                       </div>
                     </div>
@@ -3872,17 +3872,17 @@ export default function WasteEntry() {
                       Live carbon estimate (with defaults):
                     </p>
                     <div className="grid grid-cols-2 gap-2">
-                      <div className="bg-white rounded-lg p-2 text-center">
+                      <div className="bg-black/40 backdrop-blur-md rounded-lg p-2 text-center">
                         <p className="text-lg font-bold text-red-600">
                           {wastewaterCarbonPreview.ch4Co2e.toFixed(2)}
                         </p>
-                        <p className="text-xs text-gray-500">CH₄ tCO₂e/yr</p>
+                        <p className="text-xs text-gray-400">CH₄ tCO₂e/yr</p>
                       </div>
-                      <div className="bg-white rounded-lg p-2 text-center">
+                      <div className="bg-black/40 backdrop-blur-md rounded-lg p-2 text-center">
                         <p className="text-lg font-bold text-orange-600">
                           {wastewaterCarbonPreview.n2oCo2e.toFixed(2)}
                         </p>
-                        <p className="text-xs text-gray-500">N₂O tCO₂e/yr</p>
+                        <p className="text-xs text-gray-400">N₂O tCO₂e/yr</p>
                       </div>
                     </div>
                     <p className="text-xs text-amber-700">
@@ -3900,16 +3900,16 @@ export default function WasteEntry() {
             ══════════════════════════════════════════════════════════════════ */}
             <div
               id="ww-characteristics"
-              className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm"
+              className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-sm"
             >
-              <div className="px-6 py-5 border-b border-gray-100 bg-gray-50">
+              <div className="px-6 py-5 border-b border-white/5 bg-white/5">
                 <div className="flex items-center gap-2">
                   <Waves className="w-5 h-5 text-teal-600" />
-                  <h2 className="text-base font-semibold text-gray-900">
+                  <h2 className="text-base font-semibold text-white">
                     Wastewater characteristics
                   </h2>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-400">
                   Monthly monitoring as per IS 3025. BOD and TKN directly improve the accuracy of
                   CH₄ and N₂O emission calculations.
                 </p>
@@ -3963,28 +3963,28 @@ export default function WasteEntry() {
                 <div className="overflow-x-auto">
                   <table className="text-xs min-w-[900px]">
                     <thead>
-                      <tr className="border-b border-gray-200 bg-gray-50">
-                        <th className="px-3 py-2 text-left font-semibold text-gray-500 sticky left-0 bg-gray-50 w-52">
+                      <tr className="border-b border-white/10 bg-white/5">
+                        <th className="px-3 py-2 text-left font-semibold text-gray-400 sticky left-0 bg-white/5 w-52">
                           Parameter
                         </th>
-                        <th className="px-2 py-2 text-center font-semibold text-gray-500 w-16">
+                        <th className="px-2 py-2 text-center font-semibold text-gray-400 w-16">
                           Unit
                         </th>
                         {MONTH_LABELS.map((m) => (
                           <th
                             key={m}
-                            className="px-1 py-2 text-center font-semibold text-gray-500 w-14"
+                            className="px-1 py-2 text-center font-semibold text-gray-400 w-14"
                           >
                             {m}
                           </th>
                         ))}
-                        <th className="px-2 py-2 text-center font-semibold text-gray-500 w-20">
+                        <th className="px-2 py-2 text-center font-semibold text-gray-400 w-20">
                           CPCB Limit
                         </th>
                         <th className="px-2 py-2 w-8"></th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100 bg-white">
+                    <tbody className="divide-y divide-gray-100 bg-black/40 backdrop-blur-md">
                       {state.wastewaterCharacteristics.map((rec) => {
                         const isCustom = rec.parameter === 'custom';
                         const isCritical =
@@ -3993,9 +3993,9 @@ export default function WasteEntry() {
                         return (
                           <tr
                             key={rec.id}
-                            className={cn('hover:bg-gray-50', isCritical && 'bg-amber-50/40')}
+                            className={cn('hover:bg-white/5', isCritical && 'bg-amber-50/40')}
                           >
-                            <td className="px-3 py-1.5 sticky left-0 bg-inherit font-medium text-gray-700">
+                            <td className="px-3 py-1.5 sticky left-0 bg-inherit font-medium text-gray-200">
                               <div className="flex items-center gap-1">
                                 {isCritical && <span className="text-amber-500 text-xs">★</span>}
                                 {isCustom ? (
@@ -4012,7 +4012,7 @@ export default function WasteEntry() {
                                       })
                                     }
                                     placeholder="Parameter name"
-                                    className="w-full text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-teal-400"
+                                    className="w-full text-xs border border-white/10 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-teal-400"
                                   />
                                 ) : (
                                   <span>
@@ -4033,7 +4033,7 @@ export default function WasteEntry() {
                                     })
                                   }
                                   placeholder="unit"
-                                  className="w-12 text-center text-xs border border-gray-200 rounded px-1 py-1 focus:outline-none focus:ring-1 focus:ring-teal-400"
+                                  className="w-12 text-center text-xs border border-white/10 rounded px-1 py-1 focus:outline-none focus:ring-1 focus:ring-teal-400"
                                 />
                               ) : (
                                 (rec.unit ?? WASTEWATER_PARAMETER_UNITS[rec.parameter] ?? '—')
@@ -4073,7 +4073,7 @@ export default function WasteEntry() {
                                       })
                                     }
                                     placeholder="—"
-                                    className="w-12 text-center text-xs border border-gray-200 rounded px-1 py-0.5 focus:outline-none focus:ring-1 focus:ring-teal-400 bg-transparent"
+                                    className="w-12 text-center text-xs border border-white/10 rounded px-1 py-0.5 focus:outline-none focus:ring-1 focus:ring-teal-400 bg-transparent"
                                   />
                                 </td>
                               );
@@ -4129,16 +4129,16 @@ export default function WasteEntry() {
             ══════════════════════════════════════════════════════════════════ */}
             <div
               id="stp-etp"
-              className="bg-white rounded-2xl border border-teal-200 overflow-hidden shadow-sm"
+              className="bg-black/40 backdrop-blur-md rounded-2xl border border-teal-200 overflow-hidden shadow-sm"
             >
               <div className="px-6 py-5 border-b border-teal-100 bg-teal-50">
                 <div className="flex items-center gap-2">
                   <Zap className="w-5 h-5 text-teal-600" />
-                  <h2 className="text-base font-semibold text-gray-900">
+                  <h2 className="text-base font-semibold text-white">
                     Sewage &amp; effluent treatment plants (STP / ETP)
                   </h2>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-400">
                   Treatment stages determine the methane emission factor (MCF) and electricity
                   consumption. More complete treatment = lower CH₄ but higher electricity use.
                 </p>
@@ -4146,11 +4146,11 @@ export default function WasteEntry() {
               <div className="p-6 space-y-5">
                 {/* MCF reference */}
                 <details className="text-sm">
-                  <summary className="cursor-pointer text-gray-500 hover:text-gray-700 font-medium flex items-center gap-2">
+                  <summary className="cursor-pointer text-gray-400 hover:text-gray-200 font-medium flex items-center gap-2">
                     <ChevronRight className="w-4 h-4" />
                     MCF reference table (IPCC 2006 Table 6.8)
                   </summary>
-                  <div className="mt-2 bg-gray-50 rounded-xl p-3 text-xs space-y-1 text-gray-600">
+                  <div className="mt-2 bg-white/5 rounded-xl p-3 text-xs space-y-1 text-gray-300">
                     <div className="grid grid-cols-2 gap-x-4 gap-y-0.5">
                       <span>No treatment (direct discharge):</span>
                       <span className="font-mono text-red-600">MCF = 1.0</span>
@@ -4163,7 +4163,7 @@ export default function WasteEntry() {
                       <span>Anaerobic (lagoon, digester):</span>
                       <span className="font-mono text-orange-600">MCF = 0.8</span>
                     </div>
-                    <p className="text-gray-500 mt-1">
+                    <p className="text-gray-400 mt-1">
                       Lower MCF = less methane = better for carbon. Aerobic secondary is
                       significantly better than primary-only.
                     </p>
@@ -4215,17 +4215,17 @@ export default function WasteEntry() {
                     return (
                       <div
                         key={plant.id}
-                        className="border border-gray-200 rounded-xl overflow-hidden"
+                        className="border border-white/10 rounded-xl overflow-hidden"
                       >
                         {/* Card header */}
-                        <div className="px-4 py-3 bg-gray-50 flex items-center justify-between gap-3">
+                        <div className="px-4 py-3 bg-white/5 flex items-center justify-between gap-3">
                           <div className="flex items-center gap-3">
-                            <span className="text-sm font-medium text-gray-700">
+                            <span className="text-sm font-medium text-gray-200">
                               Plant {idx + 1} —{' '}
                               {WW_SOURCE_LABELS[plant.sourceOfWastewater] ??
                                 plant.sourceOfWastewater}
                             </span>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-400">
                               {plant.plantCapacityMld} MLD
                             </span>
                             <span
@@ -4250,7 +4250,7 @@ export default function WasteEntry() {
                           {/* Group A: Identity */}
                           <div className="grid grid-cols-2 gap-4">
                             <div>
-                              <label className="text-xs text-gray-500 mb-1 block">
+                              <label className="text-xs text-gray-400 mb-1 block">
                                 Source of wastewater *
                               </label>
                               <select
@@ -4266,7 +4266,7 @@ export default function WasteEntry() {
                                     },
                                   })
                                 }
-                                className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+                                className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
                               >
                                 {Object.entries(WW_SOURCE_LABELS).map(([v, l]) => (
                                   <option key={v} value={v}>
@@ -4276,7 +4276,7 @@ export default function WasteEntry() {
                               </select>
                             </div>
                             <div>
-                              <label className="text-xs text-gray-500 mb-1 block">
+                              <label className="text-xs text-gray-400 mb-1 block">
                                 Plant capacity (MLD) *
                               </label>
                               <div className="flex items-center gap-2">
@@ -4296,7 +4296,7 @@ export default function WasteEntry() {
                                       },
                                     })
                                   }
-                                  className="w-28 text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+                                  className="w-28 text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
                                 />
                                 <span className="text-xs text-gray-400">
                                   = {(plant.plantCapacityMld * 1000).toFixed(0)} m³/day
@@ -4304,7 +4304,7 @@ export default function WasteEntry() {
                               </div>
                             </div>
                             <div className="col-span-2">
-                              <label className="text-xs text-gray-500 mb-1 block">
+                              <label className="text-xs text-gray-400 mb-1 block">
                                 Source description (optional)
                               </label>
                               <input
@@ -4321,14 +4321,14 @@ export default function WasteEntry() {
                                 }
                                 maxLength={200}
                                 placeholder="e.g. Combined sewage from all residential hostels"
-                                className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+                                className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
                               />
                             </div>
                           </div>
 
                           {/* Group B: Treatment stages */}
                           <div className="space-y-2">
-                            <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                            <p className="text-xs font-semibold text-gray-300 uppercase tracking-wide">
                               Treatment stages (determines MCF)
                             </p>
                             <div className="grid grid-cols-2 gap-2">
@@ -4356,7 +4356,7 @@ export default function WasteEntry() {
                               ).map(({ key, label, desc, ef }) => (
                                 <label
                                   key={key}
-                                  className="flex items-start gap-2 p-2 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer"
+                                  className="flex items-start gap-2 p-2 rounded-lg border border-white/5 hover:bg-white/5 cursor-pointer"
                                 >
                                   <input
                                     type="checkbox"
@@ -4375,14 +4375,14 @@ export default function WasteEntry() {
                                     className="mt-0.5 accent-teal-600"
                                   />
                                   <div>
-                                    <p className="text-xs font-medium text-gray-700">{label}</p>
+                                    <p className="text-xs font-medium text-gray-200">{label}</p>
                                     <p className="text-xs text-gray-400">
                                       {desc} · {ef} kWh/m³
                                     </p>
                                   </div>
                                 </label>
                               ))}
-                              <div className="p-2 rounded-lg border border-gray-100">
+                              <div className="p-2 rounded-lg border border-white/5">
                                 <label className="flex items-start gap-2 cursor-pointer">
                                   <input
                                     type="checkbox"
@@ -4401,7 +4401,7 @@ export default function WasteEntry() {
                                     className="mt-0.5 accent-teal-600"
                                   />
                                   <div>
-                                    <p className="text-xs font-medium text-gray-700">Secondary</p>
+                                    <p className="text-xs font-medium text-gray-200">Secondary</p>
                                     <p className="text-xs text-gray-400">
                                       Biological · {STP_ENERGY_KWH_M3.secondary} kWh/m³
                                     </p>
@@ -4504,7 +4504,7 @@ export default function WasteEntry() {
                                 </label>
                                 {m.hasBiogasCapture && (
                                   <div className="flex items-center gap-3 ml-6">
-                                    <label className="text-xs text-gray-600">
+                                    <label className="text-xs text-gray-300">
                                       Capture efficiency (%):
                                     </label>
                                     <input
@@ -4535,7 +4535,7 @@ export default function WasteEntry() {
                             )}
 
                             <div>
-                              <label className="text-xs text-gray-500 mb-1 block">
+                              <label className="text-xs text-gray-400 mb-1 block">
                                 Technology details (optional)
                               </label>
                               <input
@@ -4554,19 +4554,19 @@ export default function WasteEntry() {
                                 }
                                 maxLength={300}
                                 placeholder="e.g. SBR with secondary clarifier + UV disinfection"
-                                className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+                                className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
                               />
                             </div>
                           </div>
 
                           {/* Group C: Effluent quality */}
                           <div className="space-y-2">
-                            <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                            <p className="text-xs font-semibold text-gray-300 uppercase tracking-wide">
                               Effluent quality &amp; disposal
                             </p>
                             <div className="grid grid-cols-2 gap-3">
                               <div>
-                                <label className="text-xs text-gray-500 mb-1 block">
+                                <label className="text-xs text-gray-400 mb-1 block">
                                   Effluent disposal method
                                 </label>
                                 <select
@@ -4583,7 +4583,7 @@ export default function WasteEntry() {
                                       },
                                     })
                                   }
-                                  className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+                                  className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
                                 >
                                   <option value="">Select method…</option>
                                   <option value="reuse_irrigation">Reuse — irrigation</option>
@@ -4594,7 +4594,7 @@ export default function WasteEntry() {
                                 </select>
                               </div>
                               <div>
-                                <label className="text-xs text-gray-500 mb-1 block">
+                                <label className="text-xs text-gray-400 mb-1 block">
                                   Effluent BOD (mg/L)
                                 </label>
                                 <div>
@@ -4618,7 +4618,7 @@ export default function WasteEntry() {
                                       'w-full text-sm border rounded-lg px-3 py-2 focus:outline-none focus:ring-2',
                                       plant.effluentBodMgL && plant.effluentBodMgL > 30
                                         ? 'border-amber-300 focus:ring-amber-500/20'
-                                        : 'border-gray-200 focus:ring-teal-500/20'
+                                        : 'border-white/10 focus:ring-teal-500/20'
                                     )}
                                   />
                                   {plant.effluentBodMgL && plant.effluentBodMgL > 30 && (
@@ -4639,17 +4639,17 @@ export default function WasteEntry() {
                             <div className="grid grid-cols-3 gap-2 text-center text-xs">
                               <div>
                                 <p className="font-bold text-red-600">{plantCh4Co2e.toFixed(2)}</p>
-                                <p className="text-gray-500">CH₄ tCO₂e/yr (Scope 1)</p>
+                                <p className="text-gray-400">CH₄ tCO₂e/yr (Scope 1)</p>
                               </div>
                               <div>
                                 <p className="font-bold text-orange-600">
                                   {plantN2oCo2e.toFixed(2)}
                                 </p>
-                                <p className="text-gray-500">N₂O tCO₂e/yr (Scope 1)</p>
+                                <p className="text-gray-400">N₂O tCO₂e/yr (Scope 1)</p>
                               </div>
                               <div>
                                 <p className="font-bold text-blue-600">{stpTco2e.toFixed(2)}</p>
-                                <p className="text-gray-500">Electricity tCO₂e/yr (Scope 2)</p>
+                                <p className="text-gray-400">Electricity tCO₂e/yr (Scope 2)</p>
                               </div>
                             </div>
                           </div>
@@ -4687,13 +4687,13 @@ export default function WasteEntry() {
                       {state.stpEtpPlants.length} plant(s) — Combined IPCC Tier 1 estimate:
                     </p>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">CH₄ (Scope 1):</span>
+                      <span className="text-gray-300">CH₄ (Scope 1):</span>
                       <span className="font-mono text-red-600">
                         {wastewaterCarbonPreview.ch4Co2e.toFixed(2)} tCO₂e/yr
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">N₂O (Scope 1):</span>
+                      <span className="text-gray-300">N₂O (Scope 1):</span>
                       <span className="font-mono text-orange-600">
                         {wastewaterCarbonPreview.n2oCo2e.toFixed(2)} tCO₂e/yr
                       </span>
@@ -4712,14 +4712,14 @@ export default function WasteEntry() {
             {/* ── LIQUID WASTE SECTION (Quick entry — fallback) ────────────── */}
             <div
               id="liquid-waste"
-              className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm"
+              className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-sm"
             >
-              <div className="px-6 py-5 border-b border-gray-100 bg-gray-50">
+              <div className="px-6 py-5 border-b border-white/5 bg-white/5">
                 <div className="flex items-center gap-2">
                   <Droplets className="w-5 h-5 text-blue-600" />
-                  <h2 className="text-base font-semibold text-gray-900">Quick entry (fallback)</h2>
+                  <h2 className="text-base font-semibold text-white">Quick entry (fallback)</h2>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-400">
                   Used only when Phase 2 wastewater generation and STP data above is incomplete. If
                   you have filled the sections above, this section is optional.
                 </p>
@@ -4728,10 +4728,10 @@ export default function WasteEntry() {
               <div className="p-6 space-y-6">
                 {/* Treatment type — 3 radio cards */}
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-gray-700">Wastewater treatment type</p>
+                  <p className="text-sm font-medium text-gray-200">Wastewater treatment type</p>
                   <p className="text-xs text-blue-600 flex items-center gap-1">
                     <Info className="w-3.5 h-3.5" />
-                    Most IIT BHU hostels use septic tanks — select option A unless you know
+                    Many older hostels use septic tanks — select option A unless you know
                     otherwise
                   </p>
                   <div className="grid gap-3 sm:grid-cols-3">
@@ -4749,14 +4749,14 @@ export default function WasteEntry() {
                           'text-left p-4 rounded-xl border-2 transition-colors',
                           state.wastewaterTreatmentType === opt.value
                             ? `${opt.color} border-2 border-opacity-100`
-                            : 'border-gray-200 hover:border-gray-300',
+                            : 'border-white/10 hover:border-white/20',
                           isFieldChanged('wastewaterTreatmentType') &&
                             state.wastewaterTreatmentType === opt.value &&
                             'ring-2 ring-amber-300'
                         )}
                       >
-                        <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
-                        <p className="text-xs text-gray-500 mt-1">{opt.desc}</p>
+                        <p className="text-sm font-semibold text-gray-100">{opt.label}</p>
+                        <p className="text-xs text-gray-400 mt-1">{opt.desc}</p>
                         <span
                           className={cn(
                             'inline-block mt-2 text-xs font-medium px-2 py-0.5 rounded-full',
@@ -4779,11 +4779,11 @@ export default function WasteEntry() {
                 {/* Wastewater volume */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-200">
                       Wastewater volume
                     </label>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-gray-500">I don't know volume</span>
+                      <span className="text-xs text-gray-400">I don't know volume</span>
                       <button
                         type="button"
                         onClick={() =>
@@ -4799,7 +4799,7 @@ export default function WasteEntry() {
                       >
                         <span
                           className={cn(
-                            'absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform',
+                            'absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-black/40 backdrop-blur-md shadow transition-transform',
                             state.wastewaterIsEstimated ? 'translate-x-5' : 'translate-x-0'
                           )}
                         />
@@ -4826,9 +4826,9 @@ export default function WasteEntry() {
                           })
                         }
                         placeholder="e.g. 5000"
-                        className="w-36 text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                        className="w-36 text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                       />
-                      <span className="text-sm text-gray-500">litres/day</span>
+                      <span className="text-sm text-gray-400">litres/day</span>
                       {isFieldChanged('wastewaterLitresPerDay') && (
                         <span className="text-xs text-amber-600 font-medium">
                           Changed from previous version
@@ -4837,7 +4837,7 @@ export default function WasteEntry() {
                     </div>
                   )}
 
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-400">
                     Estimated{' '}
                     <span className="font-medium">{estimatedLitresPerDay.toFixed(0)} L/day</span>{' '}
                     from {occupantEstimate} occupants ×{' '}
@@ -4848,7 +4848,7 @@ export default function WasteEntry() {
 
                 {/* Custom discharge points */}
                 <div className="space-y-3">
-                  <p className="text-sm font-medium text-gray-700">Additional discharge points</p>
+                  <p className="text-sm font-medium text-gray-200">Additional discharge points</p>
                   {state.customDischargePoints.length > 0 && (
                     <div className="space-y-2">
                       {state.customDischargePoints.map((p) => (
@@ -4857,8 +4857,8 @@ export default function WasteEntry() {
                           className="flex items-center justify-between p-3 bg-blue-50 rounded-lg text-sm"
                         >
                           <div>
-                            <span className="font-medium text-gray-800">{p.label}</span>
-                            <span className="text-gray-500 ml-2">
+                            <span className="font-medium text-gray-100">{p.label}</span>
+                            <span className="text-gray-400 ml-2">
                               {p.value} {p.unit}
                             </span>
                             {p.notes && (
@@ -4909,14 +4909,14 @@ export default function WasteEntry() {
             ══════════════════════════════════════════════════════════════════ */}
             <div
               id="water-systems"
-              className="bg-white rounded-2xl border border-blue-200 overflow-hidden shadow-sm"
+              className="bg-black/40 backdrop-blur-md rounded-2xl border border-blue-200 overflow-hidden shadow-sm"
             >
               {/* Section header */}
               <div className="px-6 py-5 border-b border-blue-100 bg-blue-50">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     <Waves className="w-5 h-5 text-blue-600" />
-                    <h2 className="text-base font-semibold text-gray-900">Water systems</h2>
+                    <h2 className="text-base font-semibold text-white">Water systems</h2>
                   </div>
                   <button
                     type="button"
@@ -4931,7 +4931,7 @@ export default function WasteEntry() {
                     {state.showWaterSection ? 'Collapse' : 'Expand'}
                   </button>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-400">
                   Water treatment and distribution consume electricity. Enter campus water system
                   details for a complete Scope 2 picture.
                 </p>
@@ -4939,11 +4939,11 @@ export default function WasteEntry() {
                   <span className="px-2 py-0.5 bg-blue-600 text-white rounded-full font-medium">
                     Scope 2
                   </span>
-                  <span className="text-gray-600">Water treatment operations (campus-owned)</span>
-                  <span className="px-2 py-0.5 bg-gray-200 text-gray-600 rounded-full font-medium ml-2">
+                  <span className="text-gray-300">Water treatment operations (campus-owned)</span>
+                  <span className="px-2 py-0.5 bg-gray-200 text-gray-300 rounded-full font-medium ml-2">
                     Scope 3
                   </span>
-                  <span className="text-gray-600">Municipal supply treatment (reported only)</span>
+                  <span className="text-gray-300">Municipal supply treatment (reported only)</span>
                 </div>
               </div>
 
@@ -4966,34 +4966,34 @@ export default function WasteEntry() {
 
                   {/* ── 3A: WATER DEMAND ─────────────────────────────────────── */}
                   <div>
-                    <h3 className="text-sm font-semibold text-gray-900 mb-1">Water demand</h3>
-                    <p className="text-xs text-gray-500 mb-4">
+                    <h3 className="text-sm font-semibold text-white mb-1">Water demand</h3>
+                    <p className="text-xs text-gray-400 mb-4">
                       Record water demand by use category. Three time horizons help with
                       infrastructure planning.
                     </p>
 
                     <div className="overflow-x-auto">
-                      <table className="min-w-full text-xs border border-gray-200 rounded-lg overflow-hidden">
-                        <thead className="bg-gray-50">
+                      <table className="min-w-full text-xs border border-white/10 rounded-lg overflow-hidden">
+                        <thead className="bg-white/5">
                           <tr>
-                            <th className="px-3 py-2 text-left font-semibold text-gray-500 w-48">
+                            <th className="px-3 py-2 text-left font-semibold text-gray-400 w-48">
                               Category
                             </th>
-                            <th className="px-3 py-2 text-left font-semibold text-gray-500 w-20">
+                            <th className="px-3 py-2 text-left font-semibold text-gray-400 w-20">
                               Unit
                             </th>
-                            <th className="px-3 py-2 text-center font-semibold text-gray-500 w-28">
+                            <th className="px-3 py-2 text-center font-semibold text-gray-400 w-28">
                               Current
                             </th>
-                            <th className="px-3 py-2 text-center font-semibold text-gray-500 w-28">
+                            <th className="px-3 py-2 text-center font-semibold text-gray-400 w-28">
                               In 5 years
                             </th>
-                            <th className="px-3 py-2 text-center font-semibold text-gray-500 w-28">
+                            <th className="px-3 py-2 text-center font-semibold text-gray-400 w-28">
                               In 10 years
                             </th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-100 bg-white">
+                        <tbody className="divide-y divide-gray-100 bg-black/40 backdrop-blur-md">
                           {/* Residential group */}
                           <tr className="bg-blue-50">
                             <td
@@ -5025,8 +5025,8 @@ export default function WasteEntry() {
                               unit: 'KLD',
                             },
                           ].map(({ label, field, unit }) => (
-                            <tr key={field} className="hover:bg-gray-50">
-                              <td className="px-3 py-2 text-gray-700">{label}</td>
+                            <tr key={field} className="hover:bg-white/5">
+                              <td className="px-3 py-2 text-gray-200">{label}</td>
                               <td className="px-3 py-2 text-gray-400">{unit}</td>
                               {(['current', 'inFiveYears', 'inTenYears'] as const).map((h) => (
                                 <td key={h} className="px-2 py-1.5">
@@ -5047,7 +5047,7 @@ export default function WasteEntry() {
                                       })
                                     }
                                     placeholder="—"
-                                    className="w-full text-center text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                    className="w-full text-center text-xs border border-white/10 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
                                   />
                                 </td>
                               ))}
@@ -5079,8 +5079,8 @@ export default function WasteEntry() {
                               unit: 'KLD',
                             },
                           ].map(({ label, field, unit }) => (
-                            <tr key={field} className="hover:bg-gray-50">
-                              <td className="px-3 py-2 text-gray-700">{label}</td>
+                            <tr key={field} className="hover:bg-white/5">
+                              <td className="px-3 py-2 text-gray-200">{label}</td>
                               <td className="px-3 py-2 text-gray-400">{unit}</td>
                               {(['current', 'inFiveYears', 'inTenYears'] as const).map((h) => (
                                 <td key={h} className="px-2 py-1.5">
@@ -5101,17 +5101,17 @@ export default function WasteEntry() {
                                       })
                                     }
                                     placeholder="—"
-                                    className="w-full text-center text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                    className="w-full text-center text-xs border border-white/10 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
                                   />
                                 </td>
                               ))}
                             </tr>
                           ))}
                           {/* Other uses */}
-                          <tr className="bg-gray-50">
+                          <tr className="bg-white/5">
                             <td
                               colSpan={5}
-                              className="px-3 py-1.5 text-xs font-semibold text-gray-600 uppercase tracking-wide"
+                              className="px-3 py-1.5 text-xs font-semibold text-gray-300 uppercase tracking-wide"
                             >
                               Other uses
                             </td>
@@ -5168,8 +5168,8 @@ export default function WasteEntry() {
                               unit: 'KLD',
                             },
                           ].map(({ label, field, unit }) => (
-                            <tr key={field} className="hover:bg-gray-50">
-                              <td className="px-3 py-2 text-gray-700">{label}</td>
+                            <tr key={field} className="hover:bg-white/5">
+                              <td className="px-3 py-2 text-gray-200">{label}</td>
                               <td className="px-3 py-2 text-gray-400">{unit}</td>
                               {(['current', 'inFiveYears', 'inTenYears'] as const).map((h) => (
                                 <td key={h} className="px-2 py-1.5">
@@ -5190,7 +5190,7 @@ export default function WasteEntry() {
                                       })
                                     }
                                     placeholder="—"
-                                    className="w-full text-center text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                    className="w-full text-center text-xs border border-white/10 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
                                   />
                                 </td>
                               ))}
@@ -5202,7 +5202,7 @@ export default function WasteEntry() {
 
                     {/* Special uses description */}
                     <div className="mt-3">
-                      <label className="text-xs text-gray-500 block mb-1">
+                      <label className="text-xs text-gray-400 block mb-1">
                         Describe special uses (pool, fountains, etc.)
                       </label>
                       <input
@@ -5215,7 +5215,7 @@ export default function WasteEntry() {
                           })
                         }
                         placeholder="e.g. Olympic swimming pool, decorative fountains"
-                        className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                        className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                       />
                     </div>
 
@@ -5257,17 +5257,17 @@ export default function WasteEntry() {
 
                   {/* ── 3B: WATER SUPPLY & STORAGE ───────────────────────────── */}
                   <div>
-                    <h3 className="text-sm font-semibold text-gray-900 mb-1">
+                    <h3 className="text-sm font-semibold text-white mb-1">
                       Water supply sources &amp; storage
                     </h3>
-                    <p className="text-xs text-gray-500 mb-4">
+                    <p className="text-xs text-gray-400 mb-4">
                       Record where campus water comes from and storage capacity. Groundwater pumping
                       contributes to Scope 2 carbon.
                     </p>
 
                     {/* Supply sources */}
                     <div className="space-y-3 mb-6">
-                      <p className="text-sm font-medium text-gray-700">Supply sources</p>
+                      <p className="text-sm font-medium text-gray-200">Supply sources</p>
                       {(
                         [
                           'municipal',
@@ -5284,11 +5284,11 @@ export default function WasteEntry() {
                         return (
                           <div
                             key={sourceType}
-                            className="border border-gray-200 rounded-xl overflow-hidden"
+                            className="border border-white/10 rounded-xl overflow-hidden"
                           >
-                            <div className="flex items-center justify-between px-4 py-3 bg-gray-50">
+                            <div className="flex items-center justify-between px-4 py-3 bg-white/5">
                               <div className="flex items-center gap-2">
-                                <span className="text-sm font-medium text-gray-800">
+                                <span className="text-sm font-medium text-gray-100">
                                   {SOURCE_LABELS[sourceType]}
                                 </span>
                                 <span
@@ -5302,7 +5302,7 @@ export default function WasteEntry() {
                               </div>
                               <div className="flex items-center gap-3">
                                 {existing?.currentKld && (
-                                  <span className="text-xs text-gray-500 font-mono">
+                                  <span className="text-xs text-gray-400 font-mono">
                                     Current: {existing.currentKld} KLD
                                   </span>
                                 )}
@@ -5367,7 +5367,7 @@ export default function WasteEntry() {
                                         })
                                       }
                                       placeholder="0"
-                                      className="w-full text-sm border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                      className="w-full text-sm border border-white/10 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
                                     />
                                   </div>
                                 ))}
@@ -5399,34 +5399,34 @@ export default function WasteEntry() {
 
                     {/* Storage tanks */}
                     <div className="space-y-4">
-                      <p className="text-sm font-medium text-gray-700">Storage capacity</p>
+                      <p className="text-sm font-medium text-gray-200">Storage capacity</p>
                       {(['overhead', 'underground'] as const).map((cat) => {
                         const tanks = state.waterSupply.storageTanks.filter(
                           (t) => t.tankCategory === cat
                         );
                         return (
                           <div key={cat}>
-                            <p className="text-xs font-semibold text-gray-600 mb-2 capitalize">
+                            <p className="text-xs font-semibold text-gray-300 mb-2 capitalize">
                               {cat} tanks
                             </p>
                             {tanks.length > 0 && (
-                              <table className="min-w-full text-xs border border-gray-200 rounded-lg overflow-hidden mb-2">
-                                <thead className="bg-gray-50">
+                              <table className="min-w-full text-xs border border-white/10 rounded-lg overflow-hidden mb-2">
+                                <thead className="bg-white/5">
                                   <tr>
-                                    <th className="px-3 py-2 text-left text-gray-500">Label</th>
-                                    <th className="px-3 py-2 text-center text-gray-500">
+                                    <th className="px-3 py-2 text-left text-gray-400">Label</th>
+                                    <th className="px-3 py-2 text-center text-gray-400">
                                       Capacity (KL)
                                     </th>
-                                    <th className="px-3 py-2 text-center text-gray-500">
+                                    <th className="px-3 py-2 text-center text-gray-400">
                                       Quantity
                                     </th>
-                                    <th className="px-3 py-2 text-center text-gray-500">
+                                    <th className="px-3 py-2 text-center text-gray-400">
                                       Total (KL)
                                     </th>
                                     <th className="px-2 py-2"></th>
                                   </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-100 bg-white">
+                                <tbody className="divide-y divide-gray-100 bg-black/40 backdrop-blur-md">
                                   {tanks.map((tank) => (
                                     <tr key={tank.id}>
                                       <td className="px-2 py-1">
@@ -5443,7 +5443,7 @@ export default function WasteEntry() {
                                             })
                                           }
                                           placeholder="Type I"
-                                          className="w-full text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                          className="w-full text-xs border border-white/10 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
                                         />
                                       </td>
                                       <td className="px-2 py-1">
@@ -5463,7 +5463,7 @@ export default function WasteEntry() {
                                               },
                                             })
                                           }
-                                          className="w-full text-center text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                          className="w-full text-center text-xs border border-white/10 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
                                         />
                                       </td>
                                       <td className="px-2 py-1">
@@ -5483,10 +5483,10 @@ export default function WasteEntry() {
                                               },
                                             })
                                           }
-                                          className="w-full text-center text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                          className="w-full text-center text-xs border border-white/10 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
                                         />
                                       </td>
-                                      <td className="px-3 py-1 text-center font-mono text-gray-600">
+                                      <td className="px-3 py-1 text-center font-mono text-gray-300">
                                         {(tank.capacityKl * tank.quantity).toFixed(1)}
                                       </td>
                                       <td className="px-2 py-1">
@@ -5531,17 +5531,17 @@ export default function WasteEntry() {
 
                       {/* Storage summary */}
                       {storageSummary.totalCap > 0 && (
-                        <div className="bg-gray-50 rounded-xl p-4 text-sm space-y-1">
-                          <p className="font-semibold text-gray-700">Storage summary</p>
-                          <p className="text-gray-600">
+                        <div className="bg-white/5 rounded-xl p-4 text-sm space-y-1">
+                          <p className="font-semibold text-gray-200">Storage summary</p>
+                          <p className="text-gray-300">
                             Overhead:{' '}
                             <span className="font-mono">{storageSummary.ohCap.toFixed(1)} KL</span>
                           </p>
-                          <p className="text-gray-600">
+                          <p className="text-gray-300">
                             Underground:{' '}
                             <span className="font-mono">{storageSummary.ugCap.toFixed(1)} KL</span>
                           </p>
-                          <p className="text-gray-800 font-medium">
+                          <p className="text-gray-100 font-medium">
                             Total:{' '}
                             <span className="font-mono">
                               {storageSummary.totalCap.toFixed(1)} KL
@@ -5569,10 +5569,10 @@ export default function WasteEntry() {
 
                   {/* ── 3C: WATER TREATMENT PLANTS ───────────────────────────── */}
                   <div>
-                    <h3 className="text-sm font-semibold text-gray-900 mb-1">
+                    <h3 className="text-sm font-semibold text-white mb-1">
                       Conventional water treatment plants
                     </h3>
-                    <p className="text-xs text-gray-500 mb-2">
+                    <p className="text-xs text-gray-400 mb-2">
                       Campus-owned WTPs consume electricity for pumping, aeration, and dosing.
                     </p>
 
@@ -5616,14 +5616,14 @@ export default function WasteEntry() {
                         return (
                           <div
                             key={wtp.id}
-                            className="border border-gray-200 rounded-xl overflow-hidden"
+                            className="border border-white/10 rounded-xl overflow-hidden"
                           >
-                            <div className="px-4 py-3 bg-gray-50 flex items-center justify-between">
-                              <span className="text-sm font-medium text-gray-800">
+                            <div className="px-4 py-3 bg-white/5 flex items-center justify-between">
+                              <span className="text-sm font-medium text-gray-100">
                                 Plant {idx + 1}
                                 {wtp.sourceOfWater ? ` — ${wtp.sourceOfWater}` : ''}
                                 {wtp.plantCapacityMld > 0 && (
-                                  <span className="ml-2 text-xs text-gray-500">
+                                  <span className="ml-2 text-xs text-gray-400">
                                     {wtp.plantCapacityMld} MLD
                                   </span>
                                 )}
@@ -5645,7 +5645,7 @@ export default function WasteEntry() {
                             </div>
                             <div className="p-4 grid grid-cols-2 gap-4">
                               <div>
-                                <label className="text-xs text-gray-500 block mb-1">
+                                <label className="text-xs text-gray-400 block mb-1">
                                   Source of water *
                                 </label>
                                 <input
@@ -5661,11 +5661,11 @@ export default function WasteEntry() {
                                     })
                                   }
                                   placeholder="Municipal supply intake, Reservoir"
-                                  className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                  className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                                 />
                               </div>
                               <div>
-                                <label className="text-xs text-gray-500 block mb-1">
+                                <label className="text-xs text-gray-400 block mb-1">
                                   Plant capacity (MLD) *
                                 </label>
                                 <input
@@ -5685,7 +5685,7 @@ export default function WasteEntry() {
                                     })
                                   }
                                   placeholder="e.g. 1.5"
-                                  className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                  className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                                 />
                                 {wtp.plantCapacityMld > 0 && (
                                   <p className="text-xs text-gray-400 mt-0.5">
@@ -5694,7 +5694,7 @@ export default function WasteEntry() {
                                 )}
                               </div>
                               <div>
-                                <label className="text-xs text-gray-500 block mb-1">
+                                <label className="text-xs text-gray-400 block mb-1">
                                   Actual treatment (MLD)
                                 </label>
                                 <input
@@ -5715,11 +5715,11 @@ export default function WasteEntry() {
                                     })
                                   }
                                   placeholder="Same as capacity"
-                                  className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                  className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                                 />
                               </div>
                               <div>
-                                <label className="text-xs text-gray-500 block mb-1">
+                                <label className="text-xs text-gray-400 block mb-1">
                                   Direct energy (kWh/m³)
                                 </label>
                                 <input
@@ -5744,14 +5744,14 @@ export default function WasteEntry() {
                                     'w-full text-sm border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20',
                                     wtp.energyConsumptionKwhPerM3
                                       ? 'border-green-400 bg-green-50'
-                                      : 'border-gray-200'
+                                      : 'border-white/10'
                                   )}
                                 />
                               </div>
 
                               {/* Treatment stages */}
                               <div className="col-span-2">
-                                <label className="text-xs text-gray-500 block mb-2">
+                                <label className="text-xs text-gray-400 block mb-2">
                                   Treatment stages
                                 </label>
                                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -5802,10 +5802,10 @@ export default function WasteEntry() {
                                         'p-3 rounded-xl text-left border-2 transition-colors',
                                         wtp.treatmentMethods[key]
                                           ? 'border-blue-500 bg-blue-50'
-                                          : 'border-gray-200 bg-white hover:border-gray-300'
+                                          : 'border-white/10 bg-black/40 backdrop-blur-md hover:border-white/20'
                                       )}
                                     >
-                                      <p className="text-xs font-semibold text-gray-800">{label}</p>
+                                      <p className="text-xs font-semibold text-gray-100">{label}</p>
                                       <p className="text-xs text-gray-400">{desc}</p>
                                       <p className="text-xs font-mono text-blue-600 mt-1">
                                         {ef} kWh/m³
@@ -5839,7 +5839,7 @@ export default function WasteEntry() {
                               )}
 
                               <div className="col-span-2">
-                                <label className="text-xs text-gray-500 block mb-1">Remarks</label>
+                                <label className="text-xs text-gray-400 block mb-1">Remarks</label>
                                 <input
                                   type="text"
                                   maxLength={200}
@@ -5850,7 +5850,7 @@ export default function WasteEntry() {
                                       payload: { id: wtp.id, updates: { remarks: e.target.value } },
                                     })
                                   }
-                                  className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                  className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                                 />
                               </div>
                             </div>
@@ -5880,11 +5880,11 @@ export default function WasteEntry() {
 
                     {/* WTP summary */}
                     {state.treatmentPlants.length > 0 && (
-                      <div className="mt-3 bg-gray-50 rounded-xl p-4 text-sm space-y-1">
-                        <p className="font-semibold text-gray-700">
+                      <div className="mt-3 bg-white/5 rounded-xl p-4 text-sm space-y-1">
+                        <p className="font-semibold text-gray-200">
                           {state.treatmentPlants.length} treatment plant(s)
                         </p>
-                        <p className="text-gray-600">
+                        <p className="text-gray-300">
                           Total capacity:{' '}
                           <span className="font-mono">
                             {state.treatmentPlants
@@ -5905,10 +5905,10 @@ export default function WasteEntry() {
 
                   {/* ── 3D: RO PLANTS ────────────────────────────────────────── */}
                   <div>
-                    <h3 className="text-sm font-semibold text-gray-900 mb-1">
+                    <h3 className="text-sm font-semibold text-white mb-1">
                       RO water treatment plants
                     </h3>
-                    <p className="text-xs text-gray-500 mb-2">
+                    <p className="text-xs text-gray-400 mb-2">
                       RO is significantly more energy-intensive than conventional treatment.
                     </p>
 
@@ -5953,14 +5953,14 @@ export default function WasteEntry() {
                         return (
                           <div
                             key={ro.id}
-                            className="border border-gray-200 rounded-xl overflow-hidden"
+                            className="border border-white/10 rounded-xl overflow-hidden"
                           >
-                            <div className="px-4 py-3 bg-gray-50 flex items-center justify-between">
-                              <span className="text-sm font-medium text-gray-800">
+                            <div className="px-4 py-3 bg-white/5 flex items-center justify-between">
+                              <span className="text-sm font-medium text-gray-100">
                                 RO Plant {idx + 1}
                                 {ro.sourceOfWater ? ` — ${ro.sourceOfWater}` : ''}
                                 {ro.plantCapacityMld > 0 && (
-                                  <span className="ml-2 text-xs text-gray-500">
+                                  <span className="ml-2 text-xs text-gray-400">
                                     {ro.plantCapacityMld} MLD
                                   </span>
                                 )}
@@ -5984,7 +5984,7 @@ export default function WasteEntry() {
                             </div>
                             <div className="p-4 grid grid-cols-2 gap-4">
                               <div>
-                                <label className="text-xs text-gray-500 block mb-1">
+                                <label className="text-xs text-gray-400 block mb-1">
                                   Source of water *
                                 </label>
                                 <input
@@ -6000,11 +6000,11 @@ export default function WasteEntry() {
                                     })
                                   }
                                   placeholder="Borewell, Municipal supply"
-                                  className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                                  className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
                                 />
                               </div>
                               <div>
-                                <label className="text-xs text-gray-500 block mb-1">
+                                <label className="text-xs text-gray-400 block mb-1">
                                   Plant capacity (MLD) *
                                 </label>
                                 <input
@@ -6023,11 +6023,11 @@ export default function WasteEntry() {
                                       },
                                     })
                                   }
-                                  className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                                  className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
                                 />
                               </div>
                               <div>
-                                <label className="text-xs text-gray-500 block mb-1">
+                                <label className="text-xs text-gray-400 block mb-1">
                                   RO technology type
                                 </label>
                                 <select
@@ -6044,7 +6044,7 @@ export default function WasteEntry() {
                                       },
                                     })
                                   }
-                                  className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                                  className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
                                 >
                                   <option value="">Select technology</option>
                                   {(
@@ -6057,7 +6057,7 @@ export default function WasteEntry() {
                                 </select>
                               </div>
                               <div>
-                                <label className="text-xs text-gray-500 block mb-1">
+                                <label className="text-xs text-gray-400 block mb-1">
                                   Inlet flow rate (MLD)
                                 </label>
                                 <input
@@ -6076,11 +6076,11 @@ export default function WasteEntry() {
                                       },
                                     })
                                   }
-                                  className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                                  className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
                                 />
                               </div>
                               <div>
-                                <label className="text-xs text-gray-500 block mb-1">
+                                <label className="text-xs text-gray-400 block mb-1">
                                   Treated water output (MLD)
                                 </label>
                                 <input
@@ -6100,7 +6100,7 @@ export default function WasteEntry() {
                                       },
                                     })
                                   }
-                                  className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                                  className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
                                 />
                                 {recovery !== null && (
                                   <p
@@ -6118,7 +6118,7 @@ export default function WasteEntry() {
                                 )}
                               </div>
                               <div>
-                                <label className="text-xs text-gray-500 block mb-1">
+                                <label className="text-xs text-gray-400 block mb-1">
                                   Reject water flow (MLD)
                                 </label>
                                 <input
@@ -6142,7 +6142,7 @@ export default function WasteEntry() {
                                     'w-full text-sm border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20',
                                     rejectMismatch
                                       ? 'border-amber-400 bg-amber-50'
-                                      : 'border-gray-200'
+                                      : 'border-white/10'
                                   )}
                                 />
                                 {rejectExpected !== null && (
@@ -6157,7 +6157,7 @@ export default function WasteEntry() {
                                 )}
                               </div>
                               <div>
-                                <label className="text-xs text-gray-500 block mb-1">
+                                <label className="text-xs text-gray-400 block mb-1">
                                   Rejection rate (%)
                                 </label>
                                 <input
@@ -6178,11 +6178,11 @@ export default function WasteEntry() {
                                       },
                                     })
                                   }
-                                  className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                                  className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
                                 />
                               </div>
                               <div>
-                                <label className="text-xs text-gray-500 block mb-1">
+                                <label className="text-xs text-gray-400 block mb-1">
                                   Direct energy (kWh/m³ product)
                                 </label>
                                 <input
@@ -6206,7 +6206,7 @@ export default function WasteEntry() {
                                     'w-full text-sm border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/20',
                                     ro.energyConsumptionKwhPerM3
                                       ? 'border-green-400 bg-green-50'
-                                      : 'border-gray-200'
+                                      : 'border-white/10'
                                   )}
                                 />
                               </div>
@@ -6254,8 +6254,8 @@ export default function WasteEntry() {
 
                     {/* RO summary */}
                     {state.roPlants.length > 0 && (
-                      <div className="mt-3 bg-gray-50 rounded-xl p-4 text-sm space-y-1">
-                        <p className="font-semibold text-gray-700">
+                      <div className="mt-3 bg-white/5 rounded-xl p-4 text-sm space-y-1">
+                        <p className="font-semibold text-gray-200">
                           {state.roPlants.length} RO plant(s)
                         </p>
                         <p className="text-purple-700 font-semibold">
@@ -6270,16 +6270,16 @@ export default function WasteEntry() {
 
                   {/* ── 3E: WATER QUALITY MONITORING ─────────────────────────── */}
                   <div>
-                    <h3 className="text-sm font-semibold text-gray-900 mb-1">
+                    <h3 className="text-sm font-semibold text-white mb-1">
                       Water quality parameters
                     </h3>
-                    <p className="text-xs text-gray-500 mb-2">
+                    <p className="text-xs text-gray-400 mb-2">
                       Monthly monitoring per IS 10500:2012. This is for compliance tracking and does
                       not affect carbon calculations.
                     </p>
 
-                    <div className="mb-3 p-3 bg-gray-50 rounded-lg text-xs text-gray-600">
-                      <p className="font-semibold text-gray-700">
+                    <div className="mb-3 p-3 bg-white/5 rounded-lg text-xs text-gray-300">
+                      <p className="font-semibold text-gray-200">
                         IS 10500:2012 — Indian Standard for Drinking Water Specifications
                       </p>
                       <p className="mt-0.5">
@@ -6288,35 +6288,35 @@ export default function WasteEntry() {
                     </div>
 
                     <div className="overflow-x-auto">
-                      <table className="min-w-full text-xs border border-gray-200 rounded-lg overflow-hidden">
-                        <thead className="bg-gray-50">
+                      <table className="min-w-full text-xs border border-white/10 rounded-lg overflow-hidden">
+                        <thead className="bg-white/5">
                           <tr>
-                            <th className="px-3 py-2 text-left font-semibold text-gray-500 w-40 sticky left-0 bg-gray-50">
+                            <th className="px-3 py-2 text-left font-semibold text-gray-400 w-40 sticky left-0 bg-white/5">
                               Parameter
                             </th>
-                            <th className="px-2 py-2 text-center font-semibold text-gray-500 w-16">
+                            <th className="px-2 py-2 text-center font-semibold text-gray-400 w-16">
                               Unit
                             </th>
                             {MONTH_LABELS.map((m) => (
                               <th
                                 key={m}
-                                className="px-2 py-2 text-center font-semibold text-gray-500 w-14"
+                                className="px-2 py-2 text-center font-semibold text-gray-400 w-14"
                               >
                                 {m}
                               </th>
                             ))}
-                            <th className="px-2 py-2 text-center font-semibold text-gray-500 w-24">
+                            <th className="px-2 py-2 text-center font-semibold text-gray-400 w-24">
                               IS Limit
                             </th>
                             <th className="px-2 py-2 w-8"></th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-100 bg-white">
+                        <tbody className="divide-y divide-gray-100 bg-black/40 backdrop-blur-md">
                           {state.qualityRecords.map((rec) => {
                             const isCustom = rec.parameter === 'custom';
                             return (
-                              <tr key={rec.id} className="hover:bg-gray-50">
-                                <td className="px-3 py-1.5 sticky left-0 bg-white font-medium text-gray-700">
+                              <tr key={rec.id} className="hover:bg-white/5">
+                                <td className="px-3 py-1.5 sticky left-0 bg-black/40 backdrop-blur-md font-medium text-gray-200">
                                   {isCustom ? (
                                     <input
                                       type="text"
@@ -6331,7 +6331,7 @@ export default function WasteEntry() {
                                         })
                                       }
                                       placeholder="Parameter name"
-                                      className="w-full text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                      className="w-full text-xs border border-white/10 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
                                     />
                                   ) : (
                                     (QUALITY_PARAM_LABELS[rec.parameter] ?? rec.parameter)
@@ -6352,7 +6352,7 @@ export default function WasteEntry() {
                                         })
                                       }
                                       placeholder="unit"
-                                      className="w-12 text-center text-xs border border-gray-200 rounded px-1 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
+                                      className="w-12 text-center text-xs border border-white/10 rounded px-1 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400"
                                     />
                                   ) : (
                                     rec.unit
@@ -6411,7 +6411,7 @@ export default function WasteEntry() {
                                           })
                                         }
                                         placeholder="—"
-                                        className="w-12 text-center text-xs border border-gray-200 rounded px-1 py-0.5 focus:outline-none focus:ring-1 focus:ring-blue-400 bg-transparent"
+                                        className="w-12 text-center text-xs border border-white/10 rounded px-1 py-0.5 focus:outline-none focus:ring-1 focus:ring-blue-400 bg-transparent"
                                       />
                                     </td>
                                   );
@@ -6451,7 +6451,7 @@ export default function WasteEntry() {
                           },
                         })
                       }
-                      className="mt-3 flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-800 font-medium"
+                      className="mt-3 flex items-center gap-1.5 text-sm text-gray-300 hover:text-gray-100 font-medium"
                     >
                       <Plus className="w-4 h-4" />
                       Add custom parameter
@@ -6500,23 +6500,23 @@ export default function WasteEntry() {
 
             {/* ── LIVE WASTE CARBON SUMMARY ─────────────────────────────────── */}
             {showLiveSummary && (
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 space-y-3 sticky bottom-4">
-                <p className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+              <div className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 shadow-sm p-5 space-y-3 sticky bottom-4">
+                <p className="text-sm font-semibold text-gray-200 flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-green-500" />
                   Waste carbon estimate
                 </p>
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
-                    <p className="text-lg font-bold text-gray-900 font-mono">
+                    <p className="text-lg font-bold text-white font-mono">
                       {solidCO2.toFixed(2)}
                     </p>
-                    <p className="text-xs text-gray-500">Solid waste tCO₂e/yr</p>
+                    <p className="text-xs text-gray-400">Solid waste tCO₂e/yr</p>
                   </div>
                   <div>
-                    <p className="text-lg font-bold text-gray-900 font-mono">
+                    <p className="text-lg font-bold text-white font-mono">
                       {liquidCO2.toFixed(2)}
                     </p>
-                    <p className="text-xs text-gray-500">Liquid waste tCO₂e/yr</p>
+                    <p className="text-xs text-gray-400">Liquid waste tCO₂e/yr</p>
                   </div>
                   <div className="bg-rose-50 rounded-xl p-2">
                     <p className="text-xl font-bold text-rose-700 font-mono">

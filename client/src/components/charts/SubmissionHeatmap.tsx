@@ -11,7 +11,7 @@ interface Props {
 }
 
 function cellColor(count: number): string {
-  if (count === 0) return 'bg-gray-100';
+  if (count === 0) return 'bg-white/10';
   if (count <= 2) return 'bg-green-200';
   if (count <= 5) return 'bg-green-400';
   return 'bg-green-600';
@@ -93,9 +93,9 @@ export default function SubmissionHeatmap({ data }: Props) {
         ))}
       </div>
       {/* Legend */}
-      <div className="flex items-center gap-1.5 mt-3 text-[10px] text-gray-500">
+      <div className="flex items-center gap-1.5 mt-3 text-[10px] text-gray-400">
         <span>Less</span>
-        <div className="w-4 h-4 rounded-sm bg-gray-100" />
+        <div className="w-4 h-4 rounded-sm bg-white/10" />
         <div className="w-4 h-4 rounded-sm bg-green-200" />
         <div className="w-4 h-4 rounded-sm bg-green-400" />
         <div className="w-4 h-4 rounded-sm bg-green-600" />

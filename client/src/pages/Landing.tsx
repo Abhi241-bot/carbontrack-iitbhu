@@ -21,6 +21,7 @@ import {
   Leaf,
   Zap,
   MapPin,
+  ArrowRight,
 } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -28,6 +29,8 @@ import Card from '@/components/common/Card';
 import Skeleton from '@/components/common/Skeleton';
 import { useInView } from '@/hooks/useInView';
 import apiClient from '@/lib/axios';
+import Particles from '@/components/common/Particles';
+import { useAuthStore } from '@/features/auth/authStore';
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -86,7 +89,7 @@ const chartData = [
 
 function CampusMapSVG() {
   return (
-    <div className="rounded-2xl overflow-hidden border border-forest-light">
+    <div className="rounded-2xl overflow-hidden border border-white/20-light">
       <svg
         viewBox="0 0 400 300"
         style={{ width: '100%', height: 'auto', display: 'block' }}
@@ -361,6 +364,7 @@ function CampusMapSVG() {
 // ─── Landing Page ─────────────────────────────────────────────────────────────
 
 export default function Landing() {
+  const isAuthenticated = !!useAuthStore((s) => s.user);
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Section 2 stats animation refs
@@ -400,23 +404,51 @@ export default function Landing() {
   const fmt = (n: number | undefined) => (n !== undefined ? n.toLocaleString() : '—');
 
   return (
-    <>
-      <Navbar />
-      <main>
-        {/* ─────────────────────────────────────────────────────────────────── */}
+    <div className="relative min-h-screen overflow-hidden">
+      {/* Particles Background - Global for Landing Page */}
+      <div className="fixed inset-0 z-0 pointer-events-none opacity-50">
+        <Particles
+          particleCount={200}
+          particleSpread={10}
+          speed={0.1}
+          particleColors={["#ffffff", "#ffffff", "#ffffff"]}
+          moveParticlesOnHover={true}
+          particleHoverFactor={2}
+          alphaParticles={true}
+          particleBaseSize={160}
+          sizeRandomness={1.5}
+          cameraDistance={20}
+          disableRotation={false}
+          className="w-full h-full"
+        />
+      </div>
+
+      <div className="relative z-10 flex flex-col min-h-screen w-full">
+        <Navbar />
+        <main>
+          {/* ─────────────────────────────────────────────────────────────────── */}
         {/* SECTION 1 — HERO                                                   */}
         {/* ─────────────────────────────────────────────────────────────────── */}
         <section
           id="hero"
           className="relative min-h-screen bg-forest flex items-center justify-center px-4 overflow-hidden"
-          style={{
-            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px)',
-            backgroundSize: '32px 32px',
-          }}
         >
-          <div className="text-center max-w-3xl mx-auto">
-            {/* Pill badge */}
-            <div className="inline-flex items-center gap-2 bg-forest-light text-green-200 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+          {/* Video Background */}
+          <div className="absolute inset-0 z-0 opacity-40">
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="w-full h-full object-cover"
+            >
+              <source src="/hero-video.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          <div className="relative z-10 text-center max-w-3xl mx-auto">
+            {/* Pill badge - Glassmorphism */}
+            <div className="inline-flex items-center gap-2 bg-black/20 backdrop-blur-md border border-white/10/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium px-4 py-1.5 rounded-full mb-6 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
               <Leaf size={14} />
               Multi-Campus Sustainability Platform
             </div>
@@ -436,15 +468,16 @@ export default function Landing() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
               <Link
                 to="/campus"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold border-2 border-white text-white hover:bg-white hover:text-forest transition-all duration-200 no-underline"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold bg-black/20 backdrop-blur-md border border-white/10/10 backdrop-blur-md border border-white/20 text-white hover:bg-black/20 backdrop-blur-md border border-white/10/20 shadow-[0_4px_30px_rgba(0,0,0,0.1)] transition-all duration-300 no-underline"
               >
                 Explore Campuses
+                <ArrowRight size={18} />
               </Link>
               <Link
-                to="/register"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold bg-iitbhu text-white hover:bg-iitbhu-dark transition-all duration-200 no-underline"
+                to={isAuthenticated ? "/dashboard" : "/register"}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold bg-black/20 backdrop-blur-md border border-white/10/10 backdrop-blur-md border border-white/20 text-white hover:bg-black/20 backdrop-blur-md border border-white/10/20 shadow-[0_4px_30px_rgba(0,0,0,0.1)] transition-all duration-300 no-underline"
               >
-                Register as Member
+                {isAuthenticated ? "Go to Dashboard" : "Register as Member"}
               </Link>
             </div>
 
@@ -477,16 +510,16 @@ export default function Landing() {
         {/* ─────────────────────────────────────────────────────────────────── */}
         {/* SECTION 2 — EXPLAINER CARDS                                        */}
         {/* ─────────────────────────────────────────────────────────────────── */}
-        <section id="about" className="bg-[#f8f6f0] py-20 px-4">
+        <section id="about" className="bg-black/50 backdrop-blur-sm py-20 px-4">
           <div className="max-w-5xl mx-auto">
             {/* Header */}
-            <p className="text-center text-xs font-semibold uppercase tracking-widest text-iitbhu mb-2">
+            <p className="text-center text-xs font-semibold uppercase tracking-widest text-white mb-2">
               Carbon 101
             </p>
-            <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">
+            <h2 className="text-3xl font-bold text-white mb-4 text-center">
               Understanding Carbon Footprint
             </h2>
-            <p className="text-gray-600 text-center max-w-xl mx-auto mb-12">
+            <p className="text-gray-300 text-center max-w-xl mx-auto mb-12">
               Buildings are responsible for nearly 40% of global carbon emissions. Understanding
               what drives those emissions is the first step to reducing them.
             </p>
@@ -494,8 +527,8 @@ export default function Landing() {
             {/* Two explainer cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
               {/* Embodied Carbon */}
-              <Card className="border-l-4 border-iitbhu" padding="lg">
-                <div className="text-iitbhu mb-4">
+              <Card className="border-l-4 border-white/20" padding="lg">
+                <div className="text-white mb-4">
                   <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
                     <rect
                       x="6"
@@ -529,8 +562,8 @@ export default function Landing() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Embodied Carbon</h3>
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                <h3 className="text-xl font-semibold text-white mb-2">Embodied Carbon</h3>
+                <p className="text-gray-300 text-sm leading-relaxed mb-4">
                   The carbon emitted during the manufacture, transport, and construction of building
                   materials — released before a building is ever occupied.
                 </p>
@@ -541,8 +574,8 @@ export default function Landing() {
                     'Construction machinery fuel',
                     'Renovation and demolition',
                   ].map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-gray-600">
-                      <CheckCircle size={14} className="text-iitbhu flex-shrink-0" />
+                    <li key={item} className="flex items-center gap-2 text-sm text-gray-300">
+                      <CheckCircle size={14} className="text-white flex-shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -550,12 +583,12 @@ export default function Landing() {
               </Card>
 
               {/* Operational Carbon */}
-              <Card className="border-l-4 border-forest" padding="lg">
-                <div className="text-forest mb-4">
+              <Card className="border-l-4 border-white/20" padding="lg">
+                <div className="text-white mb-4">
                   <Zap size={36} />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Operational Carbon</h3>
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                <h3 className="text-xl font-semibold text-white mb-2">Operational Carbon</h3>
+                <p className="text-gray-300 text-sm leading-relaxed mb-4">
                   The carbon emitted from running a building day-to-day — energy used for heating,
                   cooling, lighting, and equipment over the building's lifetime.
                 </p>
@@ -566,8 +599,8 @@ export default function Landing() {
                     'Air conditioning',
                     'Lighting & equipment',
                   ].map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-gray-600">
-                      <CheckCircle size={14} className="text-forest flex-shrink-0" />
+                    <li key={item} className="flex items-center gap-2 text-sm text-gray-300">
+                      <CheckCircle size={14} className="text-white flex-shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -578,26 +611,26 @@ export default function Landing() {
             {/* Stats bar */}
             <div
               ref={statsRef}
-              className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8"
+              className="bg-black/20 backdrop-blur-md border border-white/10 rounded-2xl shadow-sm border border-white/10 p-8"
             >
               <div className="flex flex-col sm:flex-row justify-around items-center gap-8 sm:divide-x sm:divide-gray-100">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-iitbhu">
+                  <p className="text-3xl font-bold text-white">
                     ~{prefersReduced ? 40 : embShare}%
                   </p>
-                  <p className="text-sm text-gray-500 mt-1">Embodied carbon share</p>
+                  <p className="text-sm text-gray-400 mt-1">Embodied carbon share</p>
                 </div>
                 <div className="text-center sm:pl-8">
-                  <p className="text-3xl font-bold text-iitbhu">
+                  <p className="text-3xl font-bold text-white">
                     ~{prefersReduced ? 60 : opShare}%
                   </p>
-                  <p className="text-sm text-gray-500 mt-1">Operational carbon share</p>
+                  <p className="text-sm text-gray-400 mt-1">Operational carbon share</p>
                 </div>
                 <div className="text-center sm:pl-8">
-                  <p className="text-3xl font-bold text-iitbhu">
+                  <p className="text-3xl font-bold text-white">
                     {prefersReduced ? 50 : lifecycle} years
                   </p>
-                  <p className="text-sm text-gray-500 mt-1">Typical building lifecycle</p>
+                  <p className="text-sm text-gray-400 mt-1">Typical building lifecycle</p>
                 </div>
               </div>
             </div>
@@ -607,7 +640,7 @@ export default function Landing() {
         {/* ─────────────────────────────────────────────────────────────────── */}
         {/* SECTION 3 — WHY IT MATTERS                                         */}
         {/* ─────────────────────────────────────────────────────────────────── */}
-        <section className="bg-forest text-white py-20 px-4">
+        <section className="bg-black/30 backdrop-blur-md border-y border-white/10 text-white py-20 px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
             {/* Left — Campus map */}
             <CampusMapSVG />
@@ -658,22 +691,22 @@ export default function Landing() {
         {/* ─────────────────────────────────────────────────────────────────── */}
         {/* SECTION 4 — DASHBOARD PREVIEW TEASER                               */}
         {/* ─────────────────────────────────────────────────────────────────── */}
-        <section className="bg-white py-20 px-4">
+        <section className="bg-black/20 backdrop-blur-md border border-white/10 py-20 px-4">
           <div className="max-w-5xl mx-auto">
             {/* Header */}
-            <h2 className="text-3xl font-bold text-gray-900 text-center mb-3">
+            <h2 className="text-3xl font-bold text-white text-center mb-3">
               Live Campus Statistics
             </h2>
-            <p className="text-gray-500 text-center mb-10">
+            <p className="text-gray-400 text-center mb-10">
               Real-time carbon data from every building on campus
             </p>
 
             {/* Blurred chart preview */}
-            <div className="relative overflow-hidden rounded-2xl border border-gray-200 mb-10">
+            <div className="relative overflow-hidden rounded-2xl border border-white/10 mb-10">
               {/* Chart (blurred) */}
               <div
                 style={{ filter: 'blur(6px)', pointerEvents: 'none' }}
-                className="p-6 bg-gray-50"
+                className="p-6 bg-black/40 backdrop-blur-md"
               >
                 <ResponsiveContainer width="100%" height={280}>
                   <BarChart data={chartData} margin={{ top: 10, right: 20, left: 0, bottom: 5 }}>
@@ -697,25 +730,43 @@ export default function Landing() {
               </div>
 
               {/* Overlay */}
-              <div className="absolute inset-0 flex items-center justify-center backdrop-blur-sm bg-white/30 z-10">
-                <div className="bg-white shadow-xl rounded-2xl p-8 text-center max-w-sm mx-4">
-                  <LockKeyhole size={32} className="text-iitbhu mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">Login to view live campus data</h3>
-                  <p className="text-gray-500 text-sm mb-6">
-                    Real-time carbon tracking across all tracked buildings and campuses
-                  </p>
-                  <Link
-                    to="/register"
-                    className="inline-flex items-center justify-center w-full px-6 py-2.5 rounded-lg bg-iitbhu text-white font-medium hover:bg-iitbhu-dark transition-colors no-underline mb-3"
-                  >
-                    Register Now
-                  </Link>
-                  <Link
-                    to="/login"
-                    className="text-sm text-iitbhu hover:text-iitbhu-dark transition-colors no-underline"
-                  >
-                    Already have an account? Login
-                  </Link>
+              <div className="absolute inset-0 flex items-center justify-center backdrop-blur-sm bg-black/20 backdrop-blur-md border border-white/10/30 z-10">
+                <div className="bg-black/20 backdrop-blur-md border border-white/10 shadow-xl rounded-2xl p-8 text-center max-w-sm mx-4">
+                  {isAuthenticated ? (
+                    <>
+                      <BarChart2 size={32} className="text-white mx-auto mb-4" />
+                      <h3 className="text-xl font-semibold mb-2">View live campus data</h3>
+                      <p className="text-gray-400 text-sm mb-6">
+                        Real-time carbon tracking across all tracked buildings and campuses
+                      </p>
+                      <Link
+                        to="/dashboard"
+                        className="inline-flex items-center justify-center w-full px-6 py-2.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-white font-medium hover:bg-black/40 backdrop-blur-md border border-white/10-dark transition-colors no-underline mb-3"
+                      >
+                        Go to Dashboard
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <LockKeyhole size={32} className="text-white mx-auto mb-4" />
+                      <h3 className="text-xl font-semibold mb-2">Login to view live campus data</h3>
+                      <p className="text-gray-400 text-sm mb-6">
+                        Real-time carbon tracking across all tracked buildings and campuses
+                      </p>
+                      <Link
+                        to="/register"
+                        className="inline-flex items-center justify-center w-full px-6 py-2.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-white font-medium hover:bg-black/40 backdrop-blur-md border border-white/10-dark transition-colors no-underline mb-3"
+                      >
+                        Register Now
+                      </Link>
+                      <Link
+                        to="/login"
+                        className="text-sm text-white hover:text-white-dark transition-colors no-underline"
+                      >
+                        Already have an account? Login
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -748,11 +799,11 @@ export default function Landing() {
                 ].map(({ Icon, value, label }) => (
                   <div
                     key={label}
-                    className="bg-white border border-gray-100 rounded-xl p-6 text-center shadow-sm"
+                    className="bg-black/20 backdrop-blur-md border border-white/10 border border-white/10 rounded-xl p-6 text-center shadow-sm"
                   >
-                    <Icon size={24} className="text-iitbhu mx-auto mb-3" />
-                    <p className="text-3xl font-bold text-gray-900">{value}</p>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <Icon size={24} className="text-white mx-auto mb-3" />
+                    <p className="text-3xl font-bold text-white">{value}</p>
+                    <p className="text-sm text-gray-400 mt-1">
                       {value === '—' ? 'Be the first to contribute' : label}
                     </p>
                   </div>
@@ -765,10 +816,10 @@ export default function Landing() {
         {/* ─────────────────────────────────────────────────────────────────── */}
         {/* SECTION 5 — HOW IT WORKS                                           */}
         {/* ─────────────────────────────────────────────────────────────────── */}
-        <section className="bg-gray-50 py-20 px-4">
+        <section className="bg-black/40 backdrop-blur-md py-20 px-4">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-900 text-center mb-4">How It Works</h2>
-            <p className="text-center text-gray-500 mb-12 max-w-xl mx-auto">
+            <h2 className="text-3xl font-bold text-white text-center mb-4">How It Works</h2>
+            <p className="text-center text-gray-400 mb-12 max-w-xl mx-auto">
               Two parallel tracks for capturing a campus's full carbon picture —
               building-by-building and campus infrastructure.
             </p>
@@ -779,14 +830,14 @@ export default function Landing() {
               className={`transition-all duration-500 mb-8 ${prefersReduced || card1Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
             >
               <Card padding="lg" className="relative overflow-hidden">
-                <span className="absolute top-2 right-4 text-8xl font-black text-gray-100 select-none leading-none">
+                <span className="absolute top-2 right-4 text-8xl font-black text-white/10 select-none leading-none">
                   1
                 </span>
-                <UserCheck size={40} className="text-iitbhu mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                <UserCheck size={40} className="text-white mb-4" />
+                <h3 className="text-lg font-semibold text-white mb-2">
                   Register with your institution email
                 </h3>
-                <p className="text-gray-500 text-sm">
+                <p className="text-gray-400 text-sm">
                   Sign up with your institutional email address and select your campus. Verified
                   instantly.
                 </p>
@@ -806,21 +857,21 @@ export default function Landing() {
               >
                 <Card
                   padding="lg"
-                  className="relative overflow-hidden h-full border-l-4 border-iitbhu"
+                  className="relative overflow-hidden h-full border-l-4 border-white/20"
                 >
-                  <span className="absolute top-2 right-4 text-7xl font-black text-gray-100 select-none leading-none">
+                  <span className="absolute top-2 right-4 text-7xl font-black text-white/10 select-none leading-none">
                     2
                   </span>
-                  <Building2 size={36} className="text-iitbhu mb-3" />
-                  <h3 className="text-base font-bold text-gray-900 mb-3">Building data</h3>
+                  <Building2 size={36} className="text-white mb-3" />
+                  <h3 className="text-base font-bold text-white mb-3">Building data</h3>
                   <ol className="space-y-2">
                     {[
                       'Select your building',
                       'Fill guided sections (civil, electrical, waste)',
                       'Get building carbon report',
                     ].map((step, i) => (
-                      <li key={step} className="flex items-start gap-2 text-sm text-gray-600">
-                        <span className="w-5 h-5 rounded-full bg-iitbhu/10 text-iitbhu text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <li key={step} className="flex items-start gap-2 text-sm text-gray-300">
+                        <span className="w-5 h-5 rounded-full bg-black/40 backdrop-blur-md border border-white/10/10 text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
                           {i + 1}
                         </span>
                         {step}
@@ -834,18 +885,18 @@ export default function Landing() {
               <div style={{ transitionDelay: prefersReduced ? '0ms' : '150ms' }}>
                 <Card
                   padding="lg"
-                  className="relative overflow-hidden h-full border-l-4 border-forest"
+                  className="relative overflow-hidden h-full border-l-4 border-white/20"
                 >
-                  <span className="absolute top-2 right-4 text-7xl font-black text-gray-100 select-none leading-none">
+                  <span className="absolute top-2 right-4 text-7xl font-black text-white/10 select-none leading-none">
                     2
                   </span>
-                  <div className="flex items-start justify-between mb-3">
-                    <MapPin size={36} className="text-forest" />
-                    <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full font-medium">
+                  <div className="flex items-start justify-between mb-3 relative z-10">
+                    <MapPin size={36} className="text-white" />
+                    <span className="text-xs bg-white/10 text-white border border-white/20 px-2 py-0.5 rounded-full font-medium backdrop-blur-sm">
                       Admin/Reviewer access
                     </span>
                   </div>
-                  <h3 className="text-base font-bold text-gray-900 mb-3">Campus data</h3>
+                  <h3 className="text-base font-bold text-white mb-3">Campus data</h3>
                   <ol className="space-y-2">
                     {[
                       'Navigate to Campus tab',
@@ -853,8 +904,8 @@ export default function Landing() {
                       'Submit for admin review',
                       'Campus carbon calculated',
                     ].map((step, i) => (
-                      <li key={step} className="flex items-start gap-2 text-sm text-gray-600">
-                        <span className="w-5 h-5 rounded-full bg-forest/10 text-forest text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <li key={step} className="flex items-start gap-2 text-sm text-gray-300">
+                        <span className="w-5 h-5 rounded-full bg-forest/10 text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
                           {i + 1}
                         </span>
                         {step}
@@ -867,10 +918,10 @@ export default function Landing() {
 
             {/* Step 3 — shared result */}
             <div className="mt-8 flex justify-center">
-              <div className="flex items-center gap-3 text-sm text-gray-500">
+              <div className="flex items-center gap-3 text-sm text-gray-400">
                 <ChevronRight size={18} className="text-gray-300" />
                 <span>Both tracks feed into the</span>
-                <Link to="/campus" className="text-iitbhu font-medium hover:underline">
+                <Link to="/campus" className="text-white font-medium hover:underline">
                   campus portal
                 </Link>
                 <ChevronRight size={18} className="text-gray-300" />
@@ -882,7 +933,7 @@ export default function Landing() {
         {/* ─────────────────────────────────────────────────────────────────── */}
         {/* SECTION 6 — CTA BANNER                                             */}
         {/* ─────────────────────────────────────────────────────────────────── */}
-        <section className="bg-iitbhu py-16 px-4 text-center">
+        <section className="bg-black/40 backdrop-blur-md border border-white/10 py-16 px-4 text-center">
           <h2 className="text-white text-3xl font-bold mb-4">
             Ready to contribute to your campus's sustainability mission?
           </h2>
@@ -892,14 +943,14 @@ export default function Landing() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
-              to="/register"
-              className="inline-flex items-center justify-center px-8 py-3 rounded-lg bg-white text-iitbhu font-semibold hover:bg-gray-50 transition-colors no-underline"
+              to={isAuthenticated ? "/dashboard" : "/register"}
+              className="inline-flex items-center justify-center px-8 py-3 rounded-lg bg-black/20 backdrop-blur-md border border-white/10 text-white font-semibold hover:bg-black/40 backdrop-blur-md transition-colors no-underline"
             >
-              Register Now
+              {isAuthenticated ? "Go to Dashboard" : "Register Now"}
             </Link>
             <a
               href="#about"
-              className="inline-flex items-center justify-center px-8 py-3 rounded-lg border-2 border-white text-white hover:bg-iitbhu-dark transition-colors no-underline"
+              className="inline-flex items-center justify-center px-8 py-3 rounded-lg border-2 border-white text-white hover:bg-black/40 backdrop-blur-md border border-white/10-dark transition-colors no-underline"
             >
               Learn More
             </a>
@@ -907,6 +958,7 @@ export default function Landing() {
         </section>
       </main>
       <Footer />
-    </>
+    </div>
+    </div>
   );
 }

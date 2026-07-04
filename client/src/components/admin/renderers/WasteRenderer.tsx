@@ -36,7 +36,7 @@ function WasteCarbonContribution({ carbonResults }: { carbonResults: any }) {
       label: 'Landfill CH₄',
       scope: 1,
       details: (
-        <div className="text-xs text-gray-500 space-y-0.5 mt-1 pl-2">
+        <div className="text-xs text-gray-400 space-y-0.5 mt-1 pl-2">
           {meta.landfillTonnesTotalYr > 0 && (
             <div>
               ↳ Total to landfill: {Math.round(meta.landfillTonnesTotalYr).toLocaleString()}{' '}
@@ -56,7 +56,7 @@ function WasteCarbonContribution({ carbonResults }: { carbonResults: any }) {
       label: 'Waste Incineration',
       scope: 1,
       details: (
-        <div className="text-xs text-gray-500 mt-1 pl-2">
+        <div className="text-xs text-gray-400 mt-1 pl-2">
           <div>↳ Formula: CC×FCF×BOE×(44/12) = 0.6×0.25×0.95×3.667</div>
         </div>
       ),
@@ -71,7 +71,7 @@ function WasteCarbonContribution({ carbonResults }: { carbonResults: any }) {
         label: 'Wastewater CH₄',
         scope: 1,
         details: (
-          <div className="text-xs text-gray-500 space-y-0.5 mt-1 pl-2">
+          <div className="text-xs text-gray-400 space-y-0.5 mt-1 pl-2">
             {meta.bodLoadKgYr > 0 && (
               <div>↳ BOD load: {Math.round(meta.bodLoadKgYr).toLocaleString()} kg BOD/yr</div>
             )}
@@ -88,7 +88,7 @@ function WasteCarbonContribution({ carbonResults }: { carbonResults: any }) {
         scope: 1,
         details:
           meta.n2oKgYr > 0 ? (
-            <div className="text-xs text-gray-500 mt-1 pl-2">
+            <div className="text-xs text-gray-400 mt-1 pl-2">
               <div>↳ N₂O: {fmt(meta.n2oKgYr)} kg/yr · GWP_N₂O=265</div>
             </div>
           ) : null,
@@ -128,11 +128,11 @@ function WasteCarbonContribution({ carbonResults }: { carbonResults: any }) {
         </div>
         <div className="space-y-1">
           {visible.map((row) => (
-            <div key={row.key} className="border border-gray-100 rounded-lg overflow-hidden">
-              <div className="flex items-center gap-2 px-3 py-2 bg-gray-50/40">
-                <span className="flex-1 text-xs font-medium text-gray-700">{row.label}</span>
+            <div key={row.key} className="border border-white/5 rounded-lg overflow-hidden">
+              <div className="flex items-center gap-2 px-3 py-2 bg-white/5/40">
+                <span className="flex-1 text-xs font-medium text-gray-200">{row.label}</span>
                 <ScopePill scope={row.scope} />
-                <span className="text-xs font-bold text-gray-900 w-24 text-right">
+                <span className="text-xs font-bold text-white w-24 text-right">
                   {fmt(bc[row.key])} tCO₂e/yr
                 </span>
               </div>
@@ -147,7 +147,7 @@ function WasteCarbonContribution({ carbonResults }: { carbonResults: any }) {
   return (
     <div className="mt-8 border-t-2 border-dashed border-blue-100 pt-6">
       <div className="flex items-center gap-2 mb-4">
-        <h4 className="text-sm font-semibold text-gray-900">Carbon Contribution from Waste Data</h4>
+        <h4 className="text-sm font-semibold text-white">Carbon Contribution from Waste Data</h4>
         <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">
           calculated
         </span>
@@ -158,12 +158,12 @@ function WasteCarbonContribution({ carbonResults }: { carbonResults: any }) {
         {wwVisible.length > 0 && <RowGroup rows={wwRows} title="Wastewater" />}
       </div>
 
-      <div className="border-t border-gray-200 pt-3 space-y-1">
+      <div className="border-t border-white/10 pt-3 space-y-1">
         <div className="flex items-center justify-between text-xs px-1">
-          <span className="font-bold text-gray-900">WASTE TOTAL</span>
-          <span className="font-bold text-gray-900">{fmt(wasteTotal)} tCO₂e/yr</span>
+          <span className="font-bold text-white">WASTE TOTAL</span>
+          <span className="font-bold text-white">{fmt(wasteTotal)} tCO₂e/yr</span>
         </div>
-        <div className="flex items-center gap-4 text-xs text-gray-500 px-1 flex-wrap">
+        <div className="flex items-center gap-4 text-xs text-gray-400 px-1 flex-wrap">
           {scope1Total > 0 && (
             <span>
               Scope 1: <strong className="text-red-700">{fmt(scope1Total)}</strong>
@@ -364,7 +364,7 @@ function WasteContent({ data, activeSubSection }: { data: any; activeSubSection:
                       source="measured"
                       highlight
                     />
-                    <div className="mt-2 px-2 py-1 bg-gray-50 rounded text-xs text-gray-500">
+                    <div className="mt-2 px-2 py-1 bg-white/5 rounded text-xs text-gray-400">
                       MCF applied: {mcf[site.landfillType] ?? 1.0} (
                       {site.landfillType?.replace(/_/g, ' ')})
                     </div>
@@ -465,13 +465,13 @@ function WasteContent({ data, activeSubSection }: { data: any; activeSubSection:
                     source={plant.energyConsumptionKwhPerTonne ? 'measured' : 'estimated'}
                   />
                   <div className="mt-3">
-                    <div className="text-xs font-medium text-gray-600 mb-1.5">
+                    <div className="text-xs font-medium text-gray-300 mb-1.5">
                       Sieve fractions (8 particle-size bands)
                     </div>
                     <div className="overflow-x-auto">
                       <table className="w-full text-xs">
                         <thead>
-                          <tr className="bg-gray-50 text-gray-500">
+                          <tr className="bg-white/5 text-gray-400">
                             <th className="text-left py-1.5 px-2">Sieve</th>
                             <th className="text-left py-1.5 px-2">Waste type</th>
                             <th className="text-left py-1.5 px-2">End product</th>
@@ -482,10 +482,10 @@ function WasteContent({ data, activeSubSection }: { data: any; activeSubSection:
                         <tbody className="divide-y divide-gray-50">
                           {(plant.sieveFractions ?? []).map((fr: any, fi: number) => (
                             <tr key={fi}>
-                              <td className="py-1.5 px-2 font-medium text-gray-700">
+                              <td className="py-1.5 px-2 font-medium text-gray-200">
                                 {fr.sieveSize?.replace(/_/g, ' ')}
                               </td>
-                              <td className="py-1.5 px-2 text-gray-600">
+                              <td className="py-1.5 px-2 text-gray-300">
                                 {fr.typeOfWasteSegregated ?? '—'}
                               </td>
                               <td className="py-1.5 px-2">
@@ -496,7 +496,7 @@ function WasteContent({ data, activeSubSection }: { data: any; activeSubSection:
                                         ? 'bg-green-100 text-green-700'
                                         : fr.endProduct.toLowerCase().includes('rdf')
                                           ? 'bg-amber-100 text-amber-700'
-                                          : 'bg-gray-100 text-gray-600'
+                                          : 'bg-white/10 text-gray-300'
                                     }`}
                                   >
                                     {fr.endProduct}
@@ -509,7 +509,7 @@ function WasteContent({ data, activeSubSection }: { data: any; activeSubSection:
                                 {fr.percentOfTotalWaste ?? '—'}
                                 {fr.percentOfTotalWaste ? '%' : ''}
                               </td>
-                              <td className="py-1.5 px-2 text-right text-gray-500">
+                              <td className="py-1.5 px-2 text-right text-gray-400">
                                 {fr.percentRemainingWaste ?? '—'}
                                 {fr.percentRemainingWaste ? '%' : ''}
                               </td>
@@ -594,7 +594,7 @@ function WasteContent({ data, activeSubSection }: { data: any; activeSubSection:
       return (
         <div>
           <DataSection title="IS 3025 wastewater characteristics — monthly values">
-            <p className="text-xs text-gray-500 mb-4">
+            <p className="text-xs text-gray-400 mb-4">
               BOD and TKN drive the IPCC Tier 1 methane and nitrous oxide calculations. Cells in red
               exceed CPCB discharge standards.
             </p>
@@ -774,7 +774,7 @@ function WasteContent({ data, activeSubSection }: { data: any; activeSubSection:
                       key={label}
                       className="grid grid-cols-4 gap-1 py-2 border-b border-gray-50 text-sm"
                     >
-                      <span className="col-span-2 text-gray-600">{label}</span>
+                      <span className="col-span-2 text-gray-300">{label}</span>
                       <span className="text-center font-medium">
                         {val?.current ?? '—'}
                         <span className="text-gray-400 text-xs ml-1">{unit}</span>
@@ -963,7 +963,7 @@ function WasteContent({ data, activeSubSection }: { data: any; activeSubSection:
       return (
         <div>
           <DataSection title="IS 10500:2012 water quality parameters">
-            <p className="text-xs text-gray-500 mb-4">
+            <p className="text-xs text-gray-400 mb-4">
               Compliance tracking — does not affect carbon calculations. Red cells exceed IS 10500
               permissible limits.
             </p>

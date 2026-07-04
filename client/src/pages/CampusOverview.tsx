@@ -91,16 +91,16 @@ function SummaryCard({
   items: Array<{ label: string; value: string | number }>;
 }) {
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-5">
+    <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-5">
       <div className="flex items-center gap-2 mb-4">
         <Icon size={18} className="text-iitbhu" />
-        <h3 className="font-semibold text-gray-800">{title}</h3>
+        <h3 className="font-semibold text-gray-100">{title}</h3>
       </div>
       <ul className="space-y-2">
         {items.map(({ label, value }) => (
           <li key={label} className="flex justify-between text-sm">
-            <span className="text-gray-500">{label}</span>
-            <span className="font-medium text-gray-800">{value}</span>
+            <span className="text-gray-400">{label}</span>
+            <span className="font-medium text-gray-100">{value}</span>
           </li>
         ))}
       </ul>
@@ -194,18 +194,18 @@ export default function CampusOverview() {
     <PageWrapper title="Campus Data">
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
         {/* ── TOP CARD ───────────────────────────────────────────────────── */}
-        <div className="bg-white border border-gray-200 rounded-xl p-6">
+        <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-6">
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-xl bg-forest/10 flex items-center justify-center flex-shrink-0">
                 <MapPin size={24} className="text-forest" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">
-                  {record?.campusName ?? 'IIT BHU Campus'}
+                <h1 className="text-xl font-bold text-white">
+                  {record?.campusName ?? 'Campus Overview'}
                 </h1>
-                <p className="text-sm text-gray-500">
-                  {record?.institution ?? 'IIT (BHU) Varanasi'}
+                <p className="text-sm text-gray-400">
+                  {record?.institution ?? 'Institution'}
                   {record?.totalCampusAreaAcres ? ` · ${record.totalCampusAreaAcres} acres` : ''}
                 </p>
                 {record?.version && record.version > 1 && (
@@ -218,7 +218,7 @@ export default function CampusOverview() {
             </div>
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1.5">
-                <StatusIcon size={14} className={isVerified ? 'text-green-600' : 'text-gray-500'} />
+                <StatusIcon size={14} className={isVerified ? 'text-green-600' : 'text-gray-400'} />
                 <Badge variant={statusCfg.variant} label={statusCfg.label} />
               </div>
             </div>
@@ -278,7 +278,7 @@ export default function CampusOverview() {
               <button
                 onClick={() => newVersionMutation.mutate()}
                 disabled={newVersionMutation.isPending}
-                className="flex items-center gap-1.5 text-sm font-medium border border-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+                className="flex items-center gap-1.5 text-sm font-medium border border-white/10 text-gray-200 px-4 py-2 rounded-lg hover:bg-white/5 transition-colors disabled:opacity-50"
               >
                 <RotateCcw size={14} />
                 Update data
@@ -327,8 +327,8 @@ export default function CampusOverview() {
 
         {/* ── CARBON RESULTS (verified only) ─────────────────────────────── */}
         {isVerified && record?.carbonResults && (
-          <div className="bg-white border border-gray-200 rounded-xl p-6">
-            <h2 className="text-base font-semibold text-gray-800 mb-4">
+          <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-6">
+            <h2 className="text-base font-semibold text-gray-100 mb-4">
               Verified campus carbon results
             </h2>
             <div className="space-y-3">
@@ -337,7 +337,7 @@ export default function CampusOverview() {
                   label: 'Road embodied carbon (one-time construction)',
                   value: `+${record.carbonResults.roadsEmbodiedCarbon.toFixed(1)}`,
                   unit: 'tCO₂e',
-                  color: 'text-gray-700',
+                  color: 'text-gray-200',
                 },
                 {
                   label: 'Annual road lighting',
@@ -354,16 +354,16 @@ export default function CampusOverview() {
               ].map(({ label, value, unit, color }) => (
                 <div
                   key={label}
-                  className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0"
+                  className="flex justify-between items-center py-2 border-b border-white/5 last:border-0"
                 >
-                  <span className="text-sm text-gray-600">{label}</span>
+                  <span className="text-sm text-gray-300">{label}</span>
                   <span className={`font-semibold ${color}`}>
                     {value} <span className="text-xs font-normal text-gray-400">{unit}</span>
                   </span>
                 </div>
               ))}
               <div className="flex justify-between items-center pt-2">
-                <span className="text-sm font-semibold text-gray-800">
+                <span className="text-sm font-semibold text-gray-100">
                   Net annual campus impact
                 </span>
                 <span
@@ -380,11 +380,11 @@ export default function CampusOverview() {
             </div>
             {/* Confidence */}
             <div className="mt-4">
-              <div className="flex justify-between text-xs text-gray-500 mb-1">
+              <div className="flex justify-between text-xs text-gray-400 mb-1">
                 <span>Data confidence</span>
                 <span>{record.carbonResults.confidenceScore}%</span>
               </div>
-              <div className="w-full bg-gray-100 rounded-full h-2">
+              <div className="w-full bg-white/10 rounded-full h-2">
                 <div
                   className="bg-iitbhu h-2 rounded-full transition-all"
                   style={{ width: `${record.carbonResults.confidenceScore}%` }}
@@ -440,9 +440,9 @@ export default function CampusOverview() {
 
         {/* ── EMPTY STATE ─────────────────────────────────────────────────── */}
         {!hasData && !isPrivileged && (
-          <div className="bg-gray-50 border border-gray-200 rounded-xl p-8 text-center">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
             <MapPin size={32} className="text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-600 font-medium mb-1">Campus data is being collected</p>
+            <p className="text-gray-300 font-medium mb-1">Campus data is being collected</p>
             <p className="text-sm text-gray-400">
               Outdoor infrastructure data (roads, vegetation, water bodies) will appear here once
               submitted by campus administrators.

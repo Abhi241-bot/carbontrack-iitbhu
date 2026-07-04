@@ -47,7 +47,7 @@ export default function EmbodiedOperationalSplit({ data }: Props) {
             onMouseEnter={() => setHoveredType(d.type)}
             onMouseLeave={() => setHoveredType(null)}
           >
-            <span className="w-24 text-xs text-gray-600 truncate flex-shrink-0">
+            <span className="w-24 text-xs text-gray-300 truncate flex-shrink-0">
               {capitalize(d.type)}
             </span>
             <div className="flex-1 flex h-8 rounded overflow-hidden relative cursor-default">
@@ -67,19 +67,19 @@ export default function EmbodiedOperationalSplit({ data }: Props) {
               </div>
               {isHovered && (
                 <div className="absolute inset-0 bg-black/5 flex items-center justify-center">
-                  <div className="bg-white border border-gray-200 rounded shadow-md px-2 py-1 text-[10px] text-gray-700 whitespace-nowrap">
+                  <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded shadow-md px-2 py-1 text-[10px] text-gray-200 whitespace-nowrap">
                     E: {d.embodiedCarbon.toFixed(1)} | O: {d.operationalCarbon.toFixed(1)} tCO₂e
                   </div>
                 </div>
               )}
             </div>
-            <span className="w-16 text-xs text-gray-500 text-right flex-shrink-0">
+            <span className="w-16 text-xs text-gray-400 text-right flex-shrink-0">
               {d.totalCarbon.toFixed(1)} t
             </span>
           </div>
         );
       })}
-      <div className="flex gap-4 mt-3 text-xs text-gray-500">
+      <div className="flex gap-4 mt-3 text-xs text-gray-400">
         <span className="flex items-center gap-1.5">
           <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: MAROON }} />
           Embodied

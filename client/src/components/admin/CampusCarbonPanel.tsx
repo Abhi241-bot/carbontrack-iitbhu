@@ -25,8 +25,8 @@ function TitleRow({
     <div
       className={`flex items-center justify-between py-2 border-b border-gray-50 ${highlight ? 'bg-blue-50/30' : ''}`}
     >
-      <span className="text-sm text-gray-600">{label}</span>
-      <span className={`text-sm font-semibold ${highlight ? 'text-blue-700' : 'text-gray-800'}`}>
+      <span className="text-sm text-gray-300">{label}</span>
+      <span className={`text-sm font-semibold ${highlight ? 'text-blue-700' : 'text-gray-100'}`}>
         {value}
         {unit && <span className="ml-1 text-xs font-normal text-gray-400">{unit}</span>}
       </span>
@@ -51,25 +51,25 @@ function RoadsTable({ carbonResults }: { carbonResults: any }) {
 
   return (
     <div className="mt-4">
-      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+      <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
         Road infrastructure
       </h4>
-      <div className="border border-gray-100 rounded-xl overflow-hidden">
-        <div className="flex items-center justify-between px-4 py-2.5 bg-gray-50 text-xs font-medium text-gray-500 border-b border-gray-100">
+      <div className="border border-white/5 rounded-xl overflow-hidden">
+        <div className="flex items-center justify-between px-4 py-2.5 bg-white/5 text-xs font-medium text-gray-400 border-b border-white/5">
           <span>Source</span>
           <span>tCO₂e/yr</span>
         </div>
         {bd.roadConstruction != null && (
           <div className="flex items-center justify-between px-4 py-2 border-b border-gray-50">
-            <span className="text-sm text-gray-600 flex items-center gap-2">
+            <span className="text-sm text-gray-300 flex items-center gap-2">
               <ScopeBadge scope={1} /> Road construction (amortised)
             </span>
-            <span className="text-sm font-semibold text-gray-800">{fmt(bd.roadConstruction)}</span>
+            <span className="text-sm font-semibold text-gray-100">{fmt(bd.roadConstruction)}</span>
           </div>
         )}
         {bd.roadLighting != null && (
           <div className="flex items-center justify-between px-4 py-2 border-b border-gray-50">
-            <span className="text-sm text-gray-600 flex items-center gap-2">
+            <span className="text-sm text-gray-300 flex items-center gap-2">
               <ScopeBadge scope={2} /> Road lighting (electricity)
             </span>
             <span className="text-sm font-semibold text-amber-700">{fmt(bd.roadLighting)}</span>
@@ -77,9 +77,9 @@ function RoadsTable({ carbonResults }: { carbonResults: any }) {
         )}
         {(carbonResults.roadsEmbodiedCarbon != null ||
           carbonResults.roadLightingCarbonPerYear != null) && (
-          <div className="flex items-center justify-between px-4 py-2 bg-gray-50">
-            <span className="text-sm font-semibold text-gray-700">Roads subtotal</span>
-            <span className="text-sm font-bold text-gray-800">
+          <div className="flex items-center justify-between px-4 py-2 bg-white/5">
+            <span className="text-sm font-semibold text-gray-200">Roads subtotal</span>
+            <span className="text-sm font-bold text-gray-100">
               {fmt((bd.roadConstruction ?? 0) + (bd.roadLighting ?? 0))}
             </span>
           </div>
@@ -95,12 +95,12 @@ function VegetationTable({ carbonResults }: { carbonResults: any }) {
 
   return (
     <div className="mt-4">
-      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+      <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
         Vegetation sequestration
       </h4>
-      <div className="border border-gray-100 rounded-xl overflow-hidden">
+      <div className="border border-white/5 rounded-xl overflow-hidden">
         <div className="flex items-center justify-between px-4 py-2 bg-green-50">
-          <span className="text-sm text-gray-600">Annual sequestration</span>
+          <span className="text-sm text-gray-300">Annual sequestration</span>
           <span className="text-sm font-bold text-green-700">{fmt(bd.vegetation)} tCO₂e/yr</span>
         </div>
       </div>
@@ -134,11 +134,11 @@ function Scope3Table({ carbonResults }: { carbonResults: any }) {
 
   return (
     <div className="mt-4">
-      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+      <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
         Scope 3 activities
       </h4>
-      <div className="border border-gray-100 rounded-xl overflow-hidden">
-        <div className="flex items-center justify-between px-4 py-2.5 bg-gray-50 text-xs font-medium text-gray-500 border-b border-gray-100">
+      <div className="border border-white/5 rounded-xl overflow-hidden">
+        <div className="flex items-center justify-between px-4 py-2.5 bg-white/5 text-xs font-medium text-gray-400 border-b border-white/5">
           <span>Source</span>
           <span>tCO₂e/yr</span>
         </div>
@@ -147,14 +147,14 @@ function Scope3Table({ carbonResults }: { carbonResults: any }) {
             key={key}
             className="flex items-center justify-between px-4 py-2 border-b border-gray-50"
           >
-            <span className="text-sm text-gray-600 flex items-center gap-2">
+            <span className="text-sm text-gray-300 flex items-center gap-2">
               <ScopeBadge scope={3} /> {label}
             </span>
             <span className="text-sm font-semibold text-blue-700">{fmt(val)}</span>
           </div>
         ))}
-        <div className="flex items-center justify-between px-4 py-2 bg-gray-50">
-          <span className="text-sm font-semibold text-gray-700">Scope 3 subtotal</span>
+        <div className="flex items-center justify-between px-4 py-2 bg-white/5">
+          <span className="text-sm font-semibold text-gray-200">Scope 3 subtotal</span>
           <span className="text-sm font-bold text-blue-800">
             {fmt(rows.reduce((a, r) => a + (r.val ?? 0), 0))}
           </span>
@@ -192,7 +192,7 @@ export function CampusCarbonPanel({ slug }: { slug: string }) {
     return (
       <div className="space-y-3 py-4">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="h-12 bg-gray-100 rounded-xl animate-pulse" />
+          <div key={i} className="h-12 bg-white/10 rounded-xl animate-pulse" />
         ))}
       </div>
     );
@@ -202,7 +202,7 @@ export function CampusCarbonPanel({ slug }: { slug: string }) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
         <AlertTriangle size={24} className="text-gray-400 mb-3" />
-        <p className="text-sm font-medium text-gray-600">No carbon data available</p>
+        <p className="text-sm font-medium text-gray-300">No carbon data available</p>
         <p className="text-xs text-gray-400 mt-1">
           Infrastructure must be submitted and verified before carbon results are available.
         </p>
@@ -234,7 +234,7 @@ export function CampusCarbonPanel({ slug }: { slug: string }) {
           <button
             onClick={() => recalcMutation.mutate()}
             disabled={recalcMutation.isPending}
-            className="flex items-center gap-1.5 text-xs text-gray-500 border border-gray-200 bg-white px-3 py-1.5 rounded-lg hover:bg-gray-50 disabled:opacity-50"
+            className="flex items-center gap-1.5 text-xs text-gray-400 border border-white/10 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg hover:bg-white/5 disabled:opacity-50"
           >
             <RefreshCw size={12} className={recalcMutation.isPending ? 'animate-spin' : ''} />
             Recalculate
@@ -255,8 +255,8 @@ export function CampusCarbonPanel({ slug }: { slug: string }) {
       )}
 
       {/* Key figures */}
-      <div className="bg-white border border-gray-100 rounded-xl p-4 mt-2">
-        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+      <div className="bg-black/40 backdrop-blur-md border border-white/5 rounded-xl p-4 mt-2">
+        <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
           Summary
         </h4>
         <TitleRow
@@ -302,8 +302,8 @@ export function CampusCarbonPanel({ slug }: { slug: string }) {
 
       {/* Confidence */}
       {cr?.confidenceScore != null && (
-        <div className="bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 mt-2 flex items-center justify-between">
-          <span className="text-xs text-gray-500">Data confidence score</span>
+        <div className="bg-white/5 border border-white/5 rounded-xl px-4 py-3 mt-2 flex items-center justify-between">
+          <span className="text-xs text-gray-400">Data confidence score</span>
           <span
             className={`text-xs font-semibold ${
               cr.confidenceScore >= 0.8

@@ -109,15 +109,15 @@ export default function ResetPassword() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-        <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-8 w-full max-w-md text-center">
+      <div className="min-h-screen bg-white/5 flex items-center justify-center px-4">
+        <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-md border border-white/5 p-8 w-full max-w-md text-center">
           <div className="flex items-center justify-center gap-2 mb-8">
             <IITBHULogo />
             <span className="text-sm font-semibold text-iitbhu">Carbon Portal</span>
           </div>
           <CheckCircle2 size={56} className="text-green-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Password Reset!</h2>
-          <p className="text-gray-600 text-sm mb-4">
+          <h2 className="text-2xl font-bold text-white mb-2">Password Reset!</h2>
+          <p className="text-gray-300 text-sm mb-4">
             Your password has been updated. Redirecting you to login…
           </p>
           <Link to="/login" className="text-sm text-iitbhu font-medium hover:underline">
@@ -129,15 +129,15 @@ export default function ResetPassword() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-8 w-full max-w-md">
+    <div className="min-h-screen bg-white/5 flex items-center justify-center px-4">
+      <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-md border border-white/5 p-8 w-full max-w-md">
         <div className="flex items-center gap-2 mb-6">
           <IITBHULogo />
           <span className="text-sm font-semibold text-iitbhu">Carbon Portal</span>
         </div>
 
-        <h2 className="text-2xl font-bold text-gray-900 mb-1">Reset your password</h2>
-        <p className="text-sm text-gray-500 mb-6">Choose a strong new password for your account.</p>
+        <h2 className="text-2xl font-bold text-white mb-1">Reset your password</h2>
+        <p className="text-sm text-gray-400 mb-6">Choose a strong new password for your account.</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
           <div>
@@ -151,7 +151,7 @@ export default function ResetPassword() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((s) => !s)}
-                  className="text-gray-400 hover:text-gray-600 focus:outline-none"
+                  className="text-gray-400 hover:text-gray-300 focus:outline-none"
                   tabIndex={-1}
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
@@ -172,7 +172,7 @@ export default function ResetPassword() {
               <button
                 type="button"
                 onClick={() => setShowConfirm((s) => !s)}
-                className="text-gray-400 hover:text-gray-600 focus:outline-none"
+                className="text-gray-400 hover:text-gray-300 focus:outline-none"
                 tabIndex={-1}
                 aria-label={showConfirm ? 'Hide password' : 'Show password'}
               >

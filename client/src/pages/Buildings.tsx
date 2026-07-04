@@ -114,11 +114,11 @@ export default function Buildings() {
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-white">
               {assignedOnly ? 'My Buildings' : 'Campus Buildings'}
             </h1>
             {assignedOnly && (
-              <p className="text-sm text-gray-500 mt-0.5">Showing buildings assigned to you</p>
+              <p className="text-sm text-gray-400 mt-0.5">Showing buildings assigned to you</p>
             )}
           </div>
           <div className="flex items-center gap-3">
@@ -128,7 +128,7 @@ export default function Buildings() {
                 className={`flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-lg border transition-colors ${
                   assignedOnly
                     ? 'bg-iitbhu text-white border-iitbhu'
-                    : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+                    : 'border-white/10 text-gray-300 hover:bg-white/5'
                 }`}
               >
                 <BookMarked size={14} />
@@ -153,14 +153,14 @@ export default function Buildings() {
                 setSearch(e.target.value);
                 setPage(1);
               }}
-              className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu focus:border-transparent"
+              className="w-full pl-9 pr-3 py-2 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu focus:border-transparent"
             />
           </div>
 
           <select
             value={type}
             onChange={handleFilterChange(setType)}
-            className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+            className="border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
           >
             {TYPE_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>
@@ -172,7 +172,7 @@ export default function Buildings() {
           <select
             value={status}
             onChange={handleFilterChange(setStatus)}
-            className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+            className="border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
           >
             {STATUS_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>
@@ -214,7 +214,7 @@ export default function Buildings() {
             <button
               disabled={page === 1}
               onClick={() => setPage((p) => p - 1)}
-              className="px-3 py-1.5 rounded-lg border border-gray-200 text-sm disabled:opacity-40 hover:bg-gray-50"
+              className="px-3 py-1.5 rounded-lg border border-white/10 text-sm disabled:opacity-40 hover:bg-white/5"
             >
               ← Prev
             </button>
@@ -225,7 +225,7 @@ export default function Buildings() {
                 className={`px-3 py-1.5 rounded-lg border text-sm ${
                   n === page
                     ? 'bg-iitbhu text-white border-iitbhu'
-                    : 'border-gray-200 hover:bg-gray-50'
+                    : 'border-white/10 hover:bg-white/5'
                 }`}
               >
                 {n}
@@ -234,7 +234,7 @@ export default function Buildings() {
             <button
               disabled={page === totalPages}
               onClick={() => setPage((p) => p + 1)}
-              className="px-3 py-1.5 rounded-lg border border-gray-200 text-sm disabled:opacity-40 hover:bg-gray-50"
+              className="px-3 py-1.5 rounded-lg border border-white/10 text-sm disabled:opacity-40 hover:bg-white/5"
             >
               Next →
             </button>

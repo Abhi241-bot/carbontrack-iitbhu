@@ -54,10 +54,10 @@ function SolidLiquidTooltip({
 }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-md p-3 text-sm">
-      <p className="font-semibold text-gray-900 mb-1">{label}</p>
+    <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-lg shadow-md p-3 text-sm">
+      <p className="font-semibold text-white mb-1">{label}</p>
       {payload.map((p) => (
-        <p key={p.name} className="text-gray-600">
+        <p key={p.name} className="text-gray-300">
           {p.name}: {p.value.toFixed(3)} tCO₂e/yr
         </p>
       ))}
@@ -89,7 +89,7 @@ export default function WastewaterBar({
     <div className="space-y-6">
       {/* Solid vs Liquid split */}
       <div>
-        <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">
+        <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-3">
           Solid vs Liquid Waste Carbon (tCO₂e/yr)
         </p>
         <ResponsiveContainer width="100%" height={140}>
@@ -115,7 +115,7 @@ export default function WastewaterBar({
       {/* Treatment distribution by type */}
       {treatmentData.length > 0 && (
         <div>
-          <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">
+          <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-3">
             Treatment Method by Building Type (building count)
           </p>
           <ResponsiveContainer width="100%" height={Math.max(120, treatmentData.length * 36)}>
@@ -157,7 +157,7 @@ export default function WastewaterBar({
           </ResponsiveContainer>
           <div className="flex flex-wrap gap-3 mt-2">
             {Object.entries(TREATMENT_LABELS).map(([key, label]) => (
-              <span key={key} className="flex items-center gap-1.5 text-[11px] text-gray-600">
+              <span key={key} className="flex items-center gap-1.5 text-[11px] text-gray-300">
                 <span
                   className="inline-block h-2 w-2 rounded-full"
                   style={{ background: TREATMENT_COLORS[key] }}

@@ -30,11 +30,14 @@ import Skeleton from '@/components/common/Skeleton';
 import Modal from '@/components/common/Modal';
 import { adminApi } from '@/features/admin/adminApi';
 import { buildingsApi } from '@/features/buildings/buildingsApi';
+import { campusApi } from '@/features/campus/campusApi';
 import { useAuthStore } from '@/features/auth/authStore';
 import { useToast } from '@/hooks/useToast';
 import { DataReviewPanel } from '@/components/admin/DataReviewPanel';
 import { EmissionFactorsPanel } from '@/components/admin/EmissionFactorsPanel';
 import { CampusCarbonPanel } from '@/components/admin/CampusCarbonPanel';
+import { CampusInfraReviewPanel } from '@/components/admin/CampusInfraReviewPanel';
+
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -168,12 +171,12 @@ function statusBadge(status: string) {
     submitted: 'bg-blue-100 text-blue-700',
     under_review: 'bg-purple-100 text-purple-700',
     revision_requested: 'bg-amber-100 text-amber-700',
-    draft: 'bg-gray-100 text-gray-600',
-    not_started: 'bg-gray-100 text-gray-500',
+    draft: 'bg-white/10 text-gray-300',
+    not_started: 'bg-white/10 text-gray-400',
   };
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${map[status] ?? 'bg-gray-100 text-gray-600'}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${map[status] ?? 'bg-white/10 text-gray-300'}`}
     >
       {status.replace(/_/g, ' ')}
     </span>
@@ -185,11 +188,11 @@ function roleBadge(role: UserRole) {
     [UserRole.ADMIN]: 'bg-red-100 text-red-700',
     [UserRole.REVIEWER]: 'bg-purple-100 text-purple-700',
     [UserRole.MEMBER]: 'bg-blue-100 text-blue-700',
-    [UserRole.VIEWER]: 'bg-gray-100 text-gray-600',
+    [UserRole.VIEWER]: 'bg-white/10 text-gray-300',
   };
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium capitalize ${map[role] ?? 'bg-gray-100 text-gray-600'}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium capitalize ${map[role] ?? 'bg-white/10 text-gray-300'}`}
     >
       {role}
     </span>
@@ -211,10 +214,10 @@ function StatCard({
 }) {
   return (
     <div
-      className={`bg-white rounded-xl border p-4 ${highlight ? 'border-amber-300 bg-amber-50/40' : 'border-gray-100'}`}
+      className={`bg-black/40 backdrop-blur-md rounded-xl border p-4 ${highlight ? 'border-amber-300 bg-amber-50/40' : 'border-white/5'}`}
     >
-      <div className="text-xs font-medium text-gray-500 mb-1">{label}</div>
-      <div className={`text-2xl font-bold ${highlight ? 'text-amber-700' : 'text-gray-900'}`}>
+      <div className="text-xs font-medium text-gray-400 mb-1">{label}</div>
+      <div className={`text-2xl font-bold ${highlight ? 'text-amber-700' : 'text-white'}`}>
         {value}
       </div>
       {sub && <div className="text-xs text-gray-400 mt-0.5">{sub}</div>}
@@ -225,7 +228,7 @@ function StatCard({
 // ── Section status colours ────────────────────────────────────────────────────
 
 const CELL_COLORS: Record<string, string> = {
-  not_started: 'bg-gray-100 text-gray-400',
+  not_started: 'bg-white/10 text-gray-400',
   draft: 'bg-blue-100 text-blue-600',
   submitted: 'bg-amber-100 text-amber-700 ring-1 ring-amber-300',
   verified: 'bg-green-100 text-green-700',
@@ -444,11 +447,11 @@ export default function AdminPanel() {
     <PageWrapper title="Admin Panel">
       <div className="flex" style={{ height: 'calc(100vh - 4rem)' }}>
         {/* ── CAMPUS SIDEBAR ──────────────────────────────────────────────── */}
-        <aside className="w-60 flex-shrink-0 border-r border-gray-100 flex flex-col h-full bg-white overflow-y-auto">
+        <aside className="w-60 flex-shrink-0 border-r border-white/5 flex flex-col h-full bg-black/40 backdrop-blur-md overflow-y-auto">
           {/* Brand */}
-          <div className="p-4 border-b border-gray-100 flex-shrink-0">
-            <h2 className="text-sm font-semibold text-gray-900">Admin panel</h2>
-            <p className="text-xs text-gray-500 mt-0.5">CarbonTrack IIT BHU</p>
+          <div className="p-4 border-b border-white/5 flex-shrink-0">
+            <h2 className="text-sm font-semibold text-white">Admin panel</h2>
+            <p className="text-xs text-gray-400 mt-0.5">CarbonTrack</p>
           </div>
 
           {/* Campus nav */}
@@ -463,7 +466,7 @@ export default function AdminPanel() {
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors text-sm ${
                 viewMode === 'all_campuses'
                   ? 'bg-blue-50 text-blue-700 font-medium'
-                  : 'text-gray-600 hover:bg-gray-50'
+                  : 'text-gray-300 hover:bg-white/5'
               }`}
             >
               <Globe size={15} className="flex-shrink-0" />
@@ -483,7 +486,7 @@ export default function AdminPanel() {
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors text-sm ${
                   selectedCampusId === campus._id
                     ? 'bg-blue-50 text-blue-700 font-medium'
-                    : 'text-gray-600 hover:bg-gray-50'
+                    : 'text-gray-300 hover:bg-white/5'
                 }`}
               >
                 <Building2 size={15} className="flex-shrink-0" />
@@ -504,13 +507,13 @@ export default function AdminPanel() {
             {/* Add campus */}
             <button
               onClick={() => navigate('/campus')}
-              className="w-full flex items-center gap-2 px-3 py-2 mt-2 text-sm text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
+              className="w-full flex items-center gap-2 px-3 py-2 mt-2 text-sm text-gray-400 hover:text-gray-300 hover:bg-white/5 rounded-lg transition-colors"
             >
               <Plus size={14} /> Manage campuses
             </button>
 
             {/* System section */}
-            <div className="mt-4 pt-3 border-t border-gray-100">
+            <div className="mt-4 pt-3 border-t border-white/5">
               <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2 px-2">
                 System
               </p>
@@ -529,8 +532,8 @@ export default function AdminPanel() {
                   onClick={() => selectSystem(id)}
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors text-sm ${
                     viewMode === 'system' && systemTab === id
-                      ? 'bg-gray-100 text-gray-900 font-medium'
-                      : 'text-gray-600 hover:bg-gray-50'
+                      ? 'bg-white/10 text-white font-medium'
+                      : 'text-gray-300 hover:bg-white/5'
                   }`}
                 >
                   <Icon size={14} className="flex-shrink-0" />
@@ -541,14 +544,14 @@ export default function AdminPanel() {
           </div>
 
           {/* User info */}
-          <div className="p-3 border-t border-gray-100 flex-shrink-0">
-            <div className="text-xs font-medium text-gray-700 truncate">{user?.email}</div>
+          <div className="p-3 border-t border-white/5 flex-shrink-0">
+            <div className="text-xs font-medium text-gray-200 truncate">{user?.email}</div>
             <div className="text-xs text-gray-400 mt-0.5 capitalize">{user?.role}</div>
           </div>
         </aside>
 
         {/* ── MAIN CONTENT ────────────────────────────────────────────────── */}
-        <div className="flex-1 overflow-y-auto bg-gray-50">
+        <div className="flex-1 overflow-y-auto bg-white/5">
           {viewMode === 'all_campuses' && (
             <AllCampusesView campuses={campuses} onSelectCampus={selectCampus} />
           )}
@@ -597,23 +600,23 @@ export default function AdminPanel() {
         <div className="space-y-4">
           {/* Campus field */}
           {newBuildingForm.campusId ? (
-            <div className="p-3 bg-gray-50 rounded-lg text-sm">
-              <span className="text-gray-500">Campus:</span>
-              <span className="font-medium text-gray-900 ml-1.5">
+            <div className="p-3 bg-white/5 rounded-lg text-sm">
+              <span className="text-gray-400">Campus:</span>
+              <span className="font-medium text-white ml-1.5">
                 {campuses.find((c) => c._id === newBuildingForm.campusId)?.name ?? '—'}
               </span>
               <span className="text-xs text-gray-400 ml-1">(from current view)</span>
             </div>
           ) : (
             <div>
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
+              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
                 Campus <span className="text-red-500">*</span>
               </label>
               <select
                 value={newBuildingForm.campusId}
                 onChange={(e) => setNewBuildingForm((f) => ({ ...f, campusId: e.target.value }))}
                 required
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
+                className="w-full border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
               >
                 <option value="">Select a campus…</option>
                 {campuses.map((c) => (
@@ -627,7 +630,7 @@ export default function AdminPanel() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
+              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
                 Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -635,11 +638,11 @@ export default function AdminPanel() {
                 value={newBuildingForm.name}
                 onChange={(e) => setNewBuildingForm((f) => ({ ...f, name: e.target.value }))}
                 placeholder="e.g. Lecture Hall Complex"
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+                className="w-full px-3 py-2 text-sm border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
+              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
                 Short Name
               </label>
               <input
@@ -647,17 +650,17 @@ export default function AdminPanel() {
                 value={newBuildingForm.shortName}
                 onChange={(e) => setNewBuildingForm((f) => ({ ...f, shortName: e.target.value }))}
                 placeholder="e.g. LHC"
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+                className="w-full px-3 py-2 text-sm border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
+              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
                 Type <span className="text-red-500">*</span>
               </label>
               <select
                 value={newBuildingForm.type}
                 onChange={(e) => setNewBuildingForm((f) => ({ ...f, type: e.target.value }))}
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+                className="w-full px-3 py-2 text-sm border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
               >
                 {Object.values(BuildingType).map((t) => (
                   <option key={t} value={t}>
@@ -667,7 +670,7 @@ export default function AdminPanel() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
+              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
                 Floors <span className="text-red-500">*</span>
               </label>
               <input
@@ -675,11 +678,11 @@ export default function AdminPanel() {
                 min={1}
                 value={newBuildingForm.floors}
                 onChange={(e) => setNewBuildingForm((f) => ({ ...f, floors: e.target.value }))}
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+                className="w-full px-3 py-2 text-sm border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
+              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
                 Total Area (sqm)
               </label>
               <input
@@ -688,11 +691,11 @@ export default function AdminPanel() {
                 value={newBuildingForm.totalArea}
                 onChange={(e) => setNewBuildingForm((f) => ({ ...f, totalArea: e.target.value }))}
                 placeholder="e.g. 5000"
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+                className="w-full px-3 py-2 text-sm border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
+              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
                 Year Built
               </label>
               <input
@@ -702,7 +705,7 @@ export default function AdminPanel() {
                 value={newBuildingForm.yearBuilt}
                 onChange={(e) => setNewBuildingForm((f) => ({ ...f, yearBuilt: e.target.value }))}
                 placeholder="e.g. 1998"
-                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+                className="w-full px-3 py-2 text-sm border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
               />
             </div>
           </div>
@@ -738,9 +741,9 @@ export default function AdminPanel() {
         title="Delete building?"
         size="sm"
       >
-        <p className="text-sm text-gray-600 mb-5">
+        <p className="text-sm text-gray-300 mb-5">
           This will permanently delete{' '}
-          <strong className="text-gray-900">{buildingToDelete?.name}</strong> and all its associated
+          <strong className="text-white">{buildingToDelete?.name}</strong> and all its associated
           submissions. This action cannot be undone.
         </p>
         <div className="flex gap-3">
@@ -780,8 +783,8 @@ function AllCampusesView({
   return (
     <div className="p-6">
       <div className="mb-6">
-        <h2 className="text-lg font-semibold text-gray-900">All campuses</h2>
-        <p className="text-sm text-gray-500 mt-0.5">
+        <h2 className="text-lg font-semibold text-white">All campuses</h2>
+        <p className="text-sm text-gray-400 mt-0.5">
           Select a campus to view buildings, pending reviews, and carbon stats
         </p>
       </div>
@@ -797,7 +800,7 @@ function AllCampusesView({
             <button
               key={campus._id}
               onClick={() => onSelectCampus(campus._id)}
-              className="bg-white rounded-xl border border-gray-100 p-5 text-left hover:border-blue-200 hover:shadow-sm transition-all"
+              className="bg-black/40 backdrop-blur-md rounded-xl border border-white/5 p-5 text-left hover:border-blue-200 hover:shadow-sm transition-all"
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
@@ -809,11 +812,11 @@ function AllCampusesView({
                   </span>
                 )}
               </div>
-              <div className="font-semibold text-gray-900 text-sm">{campus.name}</div>
+              <div className="font-semibold text-white text-sm">{campus.name}</div>
               <div className="text-xs text-gray-400 mt-0.5">
                 {campus.city}, {campus.country}
               </div>
-              <div className="mt-3 flex items-center gap-3 text-xs text-gray-500">
+              <div className="mt-3 flex items-center gap-3 text-xs text-gray-400">
                 <span>{campus.buildingCount} buildings</span>
               </div>
             </button>
@@ -858,10 +861,10 @@ function CampusView({
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="bg-white border-b border-gray-100 px-6 pt-5 pb-0">
+      <div className="bg-black/40 backdrop-blur-md border-b border-white/5 px-6 pt-5 pb-0">
         <div className="mb-3">
-          <h2 className="text-base font-semibold text-gray-900">{campus.name}</h2>
-          <p className="text-xs text-gray-500">
+          <h2 className="text-base font-semibold text-white">{campus.name}</h2>
+          <p className="text-xs text-gray-400">
             {campus.city}, {campus.country}
           </p>
         </div>
@@ -875,7 +878,7 @@ function CampusView({
               className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors capitalize -mb-px ${
                 activeTab === tab
                   ? 'border-blue-500 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
+                  : 'border-transparent text-gray-400 hover:text-gray-200'
               }`}
             >
               {tab === 'carbon' ? 'Carbon' : tab}
@@ -965,10 +968,10 @@ function CampusOverviewTab({
       </div>
 
       {/* Section completion matrix */}
-      <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
-        <div className="px-5 py-4 border-b border-gray-100">
-          <h3 className="text-sm font-semibold text-gray-900">Section completion matrix</h3>
-          <p className="text-xs text-gray-500 mt-0.5">Click any cell to review that section</p>
+      <div className="bg-black/40 backdrop-blur-md rounded-xl border border-white/5 overflow-hidden">
+        <div className="px-5 py-4 border-b border-white/5">
+          <h3 className="text-sm font-semibold text-white">Section completion matrix</h3>
+          <p className="text-xs text-gray-400 mt-0.5">Click any cell to review that section</p>
         </div>
         {buildings.length === 0 ? (
           <div className="text-center py-10 text-gray-400 text-sm">
@@ -978,23 +981,23 @@ function CampusOverviewTab({
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-gray-50 text-left">
-                  <th className="px-5 py-3 text-xs font-medium text-gray-500">Building</th>
+                <tr className="bg-white/5 text-left">
+                  <th className="px-5 py-3 text-xs font-medium text-gray-400">Building</th>
                   {['Overview', 'Civil', 'Electrical', 'Waste'].map((s) => (
-                    <th key={s} className="px-3 py-3 text-xs font-medium text-gray-500 text-center">
+                    <th key={s} className="px-3 py-3 text-xs font-medium text-gray-400 text-center">
                       {s}
                     </th>
                   ))}
-                  <th className="px-3 py-3 text-xs font-medium text-gray-500 text-center">
+                  <th className="px-3 py-3 text-xs font-medium text-gray-400 text-center">
                     Carbon
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
                 {buildings.map((building) => (
-                  <tr key={building._id} className="hover:bg-gray-50/50 transition-colors">
+                  <tr key={building._id} className="hover:bg-white/5/50 transition-colors">
                     <td className="px-5 py-3">
-                      <div className="font-medium text-gray-900">{building.name}</div>
+                      <div className="font-medium text-white">{building.name}</div>
                       <div className="text-xs text-gray-400 mt-0.5">
                         {building.type} · {building.floors} floors
                       </div>
@@ -1064,7 +1067,7 @@ function CampusBuildingsTab({
     waste: 'WST',
   };
   const CHIP_COLORS: Record<string, string> = {
-    not_started: 'bg-gray-100 text-gray-400',
+    not_started: 'bg-white/10 text-gray-400',
     draft: 'bg-blue-100 text-blue-600',
     submitted: 'bg-amber-100 text-amber-700 ring-1 ring-amber-300',
     verified: 'bg-green-100 text-green-700',
@@ -1082,7 +1085,7 @@ function CampusBuildingsTab({
             placeholder="Search buildings..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
+            className="w-full pl-9 pr-4 py-2 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
           />
         </div>
         <button
@@ -1100,12 +1103,12 @@ function CampusBuildingsTab({
           {buildings.map((building) => (
             <div
               key={building._id}
-              className="bg-white rounded-xl border border-gray-100 p-4 mb-3 hover:border-gray-200 transition-colors"
+              className="bg-black/40 backdrop-blur-md rounded-xl border border-white/5 p-4 mb-3 hover:border-white/10 transition-colors"
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <div className="font-medium text-gray-900">{building.name}</div>
-                  <div className="text-sm text-gray-500 mt-0.5">
+                  <div className="font-medium text-white">{building.name}</div>
+                  <div className="text-sm text-gray-400 mt-0.5">
                     {building.type} · {building.floors} floors
                     {building.totalArea ? ` · ${building.totalArea} m²` : ''}
                   </div>
@@ -1176,20 +1179,20 @@ function CampusPendingTab({
         return (
           <div
             key={submission._id}
-            className="bg-white rounded-xl border border-amber-200 p-4 hover:border-amber-300 transition-colors"
+            className="bg-black/40 backdrop-blur-md rounded-xl border border-amber-200 p-4 hover:border-amber-300 transition-colors"
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="font-medium text-gray-900 truncate">
+                  <span className="font-medium text-white truncate">
                     {submission.buildingId?.name ?? '—'}
                   </span>
-                  <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full capitalize flex-shrink-0">
+                  <span className="text-xs bg-white/10 text-gray-400 px-2 py-0.5 rounded-full capitalize flex-shrink-0">
                     {submission.section}
                   </span>
                   <span className="text-xs text-gray-400 flex-shrink-0">v{submission.version}</span>
                 </div>
-                <div className="text-sm text-gray-500 mt-1">
+                <div className="text-sm text-gray-400 mt-1">
                   Submitted {formatDistanceToNow(new Date(submittedDate))} ago
                 </div>
                 <div className="mt-2 flex items-center gap-3 text-xs text-gray-400">
@@ -1270,8 +1273,8 @@ function SectionMatrixCell({ status }: { status: string }) {
     submitted: 'bg-blue-100 text-blue-700',
     under_review: 'bg-purple-100 text-purple-700',
     revision_requested: 'bg-amber-100 text-amber-700',
-    draft: 'bg-gray-100 text-gray-600',
-    not_started: 'bg-gray-50 text-gray-400',
+    draft: 'bg-white/10 text-gray-300',
+    not_started: 'bg-white/5 text-gray-400',
   };
   const short: Record<string, string> = {
     verified: '✓',
@@ -1283,7 +1286,7 @@ function SectionMatrixCell({ status }: { status: string }) {
   };
   return (
     <span
-      className={`inline-flex items-center justify-center w-10 h-6 rounded text-xs font-medium ${map[status] ?? 'bg-gray-50 text-gray-400'}`}
+      className={`inline-flex items-center justify-center w-10 h-6 rounded text-xs font-medium ${map[status] ?? 'bg-white/5 text-gray-400'}`}
     >
       {short[status] ?? '—'}
     </span>
@@ -1325,17 +1328,17 @@ function OverviewTab() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-base font-semibold text-gray-900">System overview</h2>
+      <h2 className="text-base font-semibold text-white">System overview</h2>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {statCards.map(({ label, value, color }) => (
           <Card key={label} padding="md">
             <div>
-              <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">{label}</p>
+              <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">{label}</p>
               {isLoading ? (
                 <Skeleton className="h-8 w-16 mt-1" />
               ) : (
-                <p className="text-3xl font-bold text-gray-900 mt-1">{value}</p>
+                <p className="text-3xl font-bold text-white mt-1">{value}</p>
               )}
               <div
                 className={`mt-1 w-8 h-8 rounded-lg ${color} flex items-center justify-center`}
@@ -1347,12 +1350,12 @@ function OverviewTab() {
 
       {stats?.submissionsByStatus && (
         <Card padding="md">
-          <h3 className="text-sm font-semibold text-gray-700 mb-3">Submissions by Status</h3>
+          <h3 className="text-sm font-semibold text-gray-200 mb-3">Submissions by Status</h3>
           <div className="flex flex-wrap gap-3">
             {Object.entries(stats.submissionsByStatus).map(([s, count]) => (
               <div key={s} className="flex items-center gap-2">
                 {statusBadge(s)}
-                <span className="text-sm font-semibold text-gray-700">{count}</span>
+                <span className="text-sm font-semibold text-gray-200">{count}</span>
               </div>
             ))}
           </div>
@@ -1361,28 +1364,28 @@ function OverviewTab() {
 
       {allBuildings.length > 0 && (
         <Card padding="none" className="overflow-hidden">
-          <div className="px-4 py-3 border-b border-gray-100">
-            <h3 className="text-sm font-semibold text-gray-700">Section Completion Matrix</h3>
+          <div className="px-4 py-3 border-b border-white/5">
+            <h3 className="text-sm font-semibold text-gray-200">Section Completion Matrix</h3>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full text-xs">
-              <thead className="bg-gray-50">
+              <thead className="bg-white/5">
                 <tr>
                   {['Building', 'Overview', 'Civil', 'Electrical', 'Waste', 'Combined'].map((h) => (
                     <th
                       key={h}
-                      className="px-3 py-2 text-left font-semibold text-gray-500 uppercase tracking-wide whitespace-nowrap"
+                      className="px-3 py-2 text-left font-semibold text-gray-400 uppercase tracking-wide whitespace-nowrap"
                     >
                       {h}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50 bg-white">
+              <tbody className="divide-y divide-gray-50 bg-black/40 backdrop-blur-md">
                 {allBuildings.map((b) => (
-                  <tr key={b._id} className="hover:bg-gray-50 transition-colors">
+                  <tr key={b._id} className="hover:bg-white/5 transition-colors">
                     <td className="px-3 py-2">
-                      <p className="font-medium text-gray-800">{b.name}</p>
+                      <p className="font-medium text-gray-100">{b.name}</p>
                       {b.shortName && <p className="text-gray-400">{b.shortName}</p>}
                     </td>
                     <td className="px-3 py-2">
@@ -1415,7 +1418,7 @@ function OverviewTab() {
       )}
 
       <Card padding="md">
-        <h3 className="text-sm font-semibold text-gray-700 mb-3">Recent Activity</h3>
+        <h3 className="text-sm font-semibold text-gray-200 mb-3">Recent Activity</h3>
         {isLoading ? (
           <div className="space-y-2">
             {Array.from({ length: 5 }).map((_, i) => (
@@ -1429,7 +1432,7 @@ function OverviewTab() {
             {stats!.recentLogs.map((log) => (
               <div key={log._id} className="py-2.5 flex items-start justify-between gap-4">
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-gray-800">
+                  <p className="text-sm font-medium text-gray-100">
                     {log.action.replace(/\./g, ' › ')}
                   </p>
                   <p className="text-xs text-gray-400 mt-0.5">
@@ -1493,13 +1496,13 @@ function RequestsTab({
 
   return (
     <div className="space-y-4">
-      <h2 className="text-base font-semibold text-gray-900">Membership Requests</h2>
+      <h2 className="text-base font-semibold text-white">Membership Requests</h2>
       <div className="flex items-center gap-3">
-        <label className="text-sm font-medium text-gray-700">Filter:</label>
+        <label className="text-sm font-medium text-gray-200">Filter:</label>
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          className="text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
         >
           <option value="">All</option>
           <option value="pending">Pending</option>
@@ -1511,19 +1514,19 @@ function RequestsTab({
       <Card padding="none" className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-100">
-            <thead className="bg-gray-50">
+            <thead className="bg-white/5">
               <tr>
                 {['User', 'Target', 'Message', 'Date', 'Status', 'Actions'].map((h) => (
                   <th
                     key={h}
-                    className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                    className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wide"
                   >
                     {h}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50 bg-white">
+            <tbody className="divide-y divide-gray-50 bg-black/40 backdrop-blur-md">
               {isLoading ? (
                 Array.from({ length: 5 }).map((_, i) => (
                   <tr key={i}>
@@ -1542,15 +1545,15 @@ function RequestsTab({
                 </tr>
               ) : (
                 requests.map((r) => (
-                  <tr key={r._id} className="hover:bg-gray-50 transition-colors">
+                  <tr key={r._id} className="hover:bg-white/5 transition-colors">
                     <td className="px-4 py-3">
-                      <p className="text-sm font-medium text-gray-900">{r.userId?.name ?? '—'}</p>
+                      <p className="text-sm font-medium text-white">{r.userId?.name ?? '—'}</p>
                       <p className="text-xs text-gray-400">{r.userId?.email}</p>
                     </td>
                     <td className="px-4 py-3">
                       {r.targetType === 'campus_infrastructure' ? (
                         <>
-                          <p className="text-sm font-medium text-gray-900">
+                          <p className="text-sm font-medium text-white">
                             {r.campusId?.name ?? '—'}
                           </p>
                           <span className="inline-flex items-center text-xs px-1.5 py-0.5 rounded bg-green-50 text-green-700 font-medium mt-0.5">
@@ -1558,17 +1561,17 @@ function RequestsTab({
                           </span>
                         </>
                       ) : (
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-medium text-white">
                           {r.buildingId?.name ?? '—'}
                         </p>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-500 max-w-xs">
+                    <td className="px-4 py-3 text-sm text-gray-400 max-w-xs">
                       <span className="line-clamp-2">
                         {r.message || <span className="italic text-gray-300">No message</span>}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-500 whitespace-nowrap">
+                    <td className="px-4 py-3 text-sm text-gray-400 whitespace-nowrap">
                       {new Date(r.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-4 py-3">
@@ -1677,11 +1680,11 @@ function SubmissionsTab({
       {/* Filters */}
       <div className="flex items-center gap-4 flex-wrap">
         <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-gray-700">Status:</label>
+          <label className="text-sm font-medium text-gray-200">Status:</label>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-iitbhu/20 focus:border-iitbhu"
+            className="text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-iitbhu/20 focus:border-iitbhu"
           >
             <option value="">All</option>
             <option value="draft">Draft</option>
@@ -1692,11 +1695,11 @@ function SubmissionsTab({
           </select>
         </div>
         <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-gray-700">Section:</label>
+          <label className="text-sm font-medium text-gray-200">Section:</label>
           <select
             value={sectionFilter}
             onChange={(e) => setSectionFilter(e.target.value)}
-            className="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-iitbhu/20 focus:border-iitbhu"
+            className="text-sm border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-iitbhu/20 focus:border-iitbhu"
           >
             <option value="">All</option>
             <option value="overview">Overview</option>
@@ -1710,7 +1713,7 @@ function SubmissionsTab({
       <Card padding="none" className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-100">
-            <thead className="bg-gray-50">
+            <thead className="bg-white/5">
               <tr>
                 {[
                   'Building',
@@ -1723,14 +1726,14 @@ function SubmissionsTab({
                 ].map((h) => (
                   <th
                     key={h}
-                    className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                    className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wide"
                   >
                     {h}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50 bg-white">
+            <tbody className="divide-y divide-gray-50 bg-black/40 backdrop-blur-md">
               {isLoading
                 ? Array.from({ length: 6 }).map((_, i) => (
                     <tr key={i}>
@@ -1742,8 +1745,8 @@ function SubmissionsTab({
                     </tr>
                   ))
                 : submissions.map((s) => (
-                    <tr key={s._id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-4 py-3 text-sm font-medium text-gray-900">
+                    <tr key={s._id} className="hover:bg-white/5 transition-colors">
+                      <td className="px-4 py-3 text-sm font-medium text-white">
                         {s.buildingId?.name ?? '—'}
                         {s.buildingId?.shortName && (
                           <p className="text-xs text-gray-400">{s.buildingId.shortName}</p>
@@ -1760,30 +1763,32 @@ function SubmissionsTab({
                         )}
                       </td>
                       <td className="px-4 py-3">
-                        <p className="text-sm text-gray-700">{s.submittedBy?.name ?? '—'}</p>
+                        <p className="text-sm text-gray-200">{s.submittedBy?.name ?? '—'}</p>
                         <p className="text-xs text-gray-400">{s.submittedBy?.email}</p>
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-500">
+                      <td className="px-4 py-3 text-sm text-gray-400">
                         {new Date(s.updatedAt).toLocaleDateString()}
                       </td>
                       <td className="px-4 py-3">{statusBadge(s.status)}</td>
-                      <td className="px-4 py-3 text-sm text-gray-700">
+                      <td className="px-4 py-3 text-sm text-gray-200">
                         {s.confidenceScore != null ? `${Math.round(s.confidenceScore)}%` : '—'}
                       </td>
                       <td className="px-4 py-3">
-                        <div className="flex items-center gap-2 flex-wrap">
+                        <div className="flex items-center gap-2 flex-nowrap">
                           {s.buildingId && (
-                            <button
+                            <Button
+                              size="sm"
+                              variant="outline"
                               onClick={() =>
                                 navigate(
                                   `/buildings/${s.buildingId!._id}/results?submission=${s._id}`
                                 )
                               }
-                              className="inline-flex items-center gap-1 text-xs text-iitbhu hover:underline"
+                              className="!border-blue-400 !text-blue-600 hover:!bg-blue-50 whitespace-nowrap"
                             >
-                              <ExternalLink className="w-3 h-3" />
-                              View Results
-                            </button>
+                              <ExternalLink className="w-3 h-3 mr-1" />
+                              View data
+                            </Button>
                           )}
                           {s.status === 'submitted' && (
                             <>
@@ -1792,14 +1797,14 @@ function SubmissionsTab({
                                 variant="secondary"
                                 isLoading={approveMutation.isPending}
                                 onClick={() => approveMutation.mutate(s._id)}
-                                className="!bg-green-600 hover:!bg-green-700"
+                                className="!bg-green-600 hover:!bg-green-700 whitespace-nowrap text-white"
                               >
                                 Approve
                               </Button>
                               <Button
                                 size="sm"
                                 variant="outline"
-                                className="!border-amber-400 !text-amber-600 hover:!bg-amber-50"
+                                className="!border-amber-400 !text-amber-600 hover:!bg-amber-50 whitespace-nowrap"
                                 onClick={() =>
                                   setRevisionModal({
                                     id: s._id,
@@ -1831,7 +1836,7 @@ function SubmissionsTab({
         size="md"
       >
         <div className="space-y-4">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-300">
             Provide notes explaining what needs to be corrected.
           </p>
           <textarea
@@ -1839,7 +1844,7 @@ function SubmissionsTab({
             value={revisionNotes}
             onChange={(e) => setRevisionNotes(e.target.value)}
             placeholder="Describe the required changes…"
-            className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-iitbhu/20 focus:border-iitbhu"
+            className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-iitbhu/20 focus:border-iitbhu"
           />
           <div className="flex justify-end gap-3">
             <Button
@@ -1866,9 +1871,207 @@ function SubmissionsTab({
           </div>
         </div>
       </Modal>
+
+      {/* ── Campus Infrastructure Submissions ─────────────────────────── */}
+      <CampusInfraSubmissionsSection showToast={showToast} qc={qc} />
     </div>
   );
 }
+
+// ── Campus Infrastructure sub-section (inside SubmissionsTab) ────────────────
+function CampusInfraSubmissionsSection({
+  showToast,
+  qc,
+}: {
+  showToast: ReturnType<typeof useToast>['showToast'];
+  qc: ReturnType<typeof useQueryClient>;
+}) {
+  const [infraRevisionModal, setInfraRevisionModal] = useState<{
+    slug: string;
+    name: string;
+  } | null>(null);
+  const [infraRevisionNotes, setInfraRevisionNotes] = useState('');
+  const [reviewInfraCampus, setReviewInfraCampus] = useState<{ slug: string; name: string } | null>(null);
+
+  const { data: campusesRes, isLoading } = useQuery({
+    queryKey: ['admin', 'campus-infra-submissions'],
+    queryFn: () => campusApi.getAll(),
+    staleTime: 5_000,
+  });
+
+  const campuses: Array<{
+    _id: string;
+    slug: string;
+    name: string;
+    institution: string;
+    infrastructureStatus: string;
+    infrastructureVersion: number;
+  }> = campusesRes?.data?.data ?? [];
+
+  const submitted = campuses.filter((c) => c.infrastructureStatus === 'submitted');
+
+  const approveMutation = useMutation({
+    mutationFn: (slug: string) => campusApi.approveInfrastructure(slug),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['admin', 'campus-infra-submissions'] });
+      qc.invalidateQueries({ queryKey: ['campus'] });
+      showToast({ type: 'success', message: 'Campus infrastructure approved' });
+    },
+    onError: () => showToast({ type: 'error', message: 'Failed to approve' }),
+  });
+
+  const revisionMutation = useMutation({
+    mutationFn: ({ slug, notes }: { slug: string; notes: string }) =>
+      campusApi.requestInfrastructureRevision(slug, notes),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['admin', 'campus-infra-submissions'] });
+      showToast({ type: 'success', message: 'Revision requested' });
+      setInfraRevisionModal(null);
+      setInfraRevisionNotes('');
+    },
+    onError: () => showToast({ type: 'error', message: 'Failed to request revision' }),
+  });
+
+  if (isLoading) return null;
+
+  return (
+    <div className="mt-8">
+      <h3 className="text-sm font-semibold text-gray-200 mb-3 flex items-center gap-2">
+        <span className="inline-block w-2 h-2 rounded-full bg-blue-500" />
+        Campus Infrastructure Submissions
+        {submitted.length > 0 && (
+          <span className="ml-1 px-2 py-0.5 text-xs bg-blue-100 text-blue-700 rounded-full font-medium">
+            {submitted.length} awaiting review
+          </span>
+        )}
+      </h3>
+
+      {submitted.length === 0 ? (
+        <p className="text-sm text-gray-400 py-4 text-center border border-dashed border-white/10 rounded-xl">
+          No campus infrastructure submissions awaiting review.
+        </p>
+      ) : (
+        <Card padding="none" className="overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-100">
+              <thead className="bg-white/5">
+                <tr>
+                  {['Campus', 'Institution', 'Version', 'Status', 'Actions'].map((h) => (
+                    <th
+                      key={h}
+                      className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider"
+                    >
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {submitted.map((c) => (
+                  <tr key={c._id} className="hover:bg-white/5 transition-colors">
+                    <td className="px-4 py-3 text-sm font-medium text-white">{c.name}</td>
+                    <td className="px-4 py-3 text-sm text-gray-400">{c.institution}</td>
+                    <td className="px-4 py-3 text-sm text-gray-400">v{c.infrastructureVersion}</td>
+                    <td className="px-4 py-3">{statusBadge(c.infrastructureStatus)}</td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-1.5 flex-nowrap">
+                        <button
+                          type="button"
+                          onClick={() => setReviewInfraCampus({ slug: c.slug, name: c.name })}
+                          className="inline-flex items-center gap-1 h-8 px-3 text-xs font-medium rounded-lg border border-white/20 bg-black/40 backdrop-blur-md text-gray-200 hover:bg-white/5 transition-colors whitespace-nowrap"
+                        >
+                          <Search size={13} />
+                          View Data
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => approveMutation.mutate(c.slug)}
+                          disabled={approveMutation.isPending}
+                          className="inline-flex items-center h-8 px-3 text-xs font-medium rounded-lg bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 transition-colors whitespace-nowrap"
+                        >
+                          Approve
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setInfraRevisionModal({ slug: c.slug, name: c.name })}
+                          className="inline-flex items-center h-8 px-3 text-xs font-medium rounded-lg border border-amber-400 text-amber-600 hover:bg-amber-50 transition-colors whitespace-nowrap"
+                        >
+                          Request Revision
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+      )}
+
+      {/* Revision modal */}
+      <Modal
+        isOpen={!!infraRevisionModal}
+        onClose={() => {
+          setInfraRevisionModal(null);
+          setInfraRevisionNotes('');
+        }}
+        title={`Request Revision — ${infraRevisionModal?.name} Infrastructure`}
+        size="md"
+      >
+        <div className="space-y-4">
+          <p className="text-sm text-gray-300">
+            Provide notes explaining what needs to be corrected in the campus infrastructure data.
+          </p>
+          <textarea
+            rows={4}
+            value={infraRevisionNotes}
+            onChange={(e) => setInfraRevisionNotes(e.target.value)}
+            placeholder="Describe the required changes…"
+            className="w-full text-sm border border-white/10 rounded-lg px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-iitbhu/20 focus:border-iitbhu"
+          />
+          <div className="flex justify-end gap-3">
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setInfraRevisionModal(null);
+                setInfraRevisionNotes('');
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="outline"
+              className="!border-amber-400 !text-amber-600 hover:!bg-amber-50"
+              isLoading={revisionMutation.isPending}
+              disabled={!infraRevisionNotes.trim()}
+              onClick={() =>
+                infraRevisionModal &&
+                revisionMutation.mutate({
+                  slug: infraRevisionModal.slug,
+                  notes: infraRevisionNotes,
+                })
+              }
+            >
+              Send Request
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      {reviewInfraCampus && (
+        <CampusInfraReviewPanel
+          slug={reviewInfraCampus.slug}
+          name={reviewInfraCampus.name}
+          onClose={() => setReviewInfraCampus(null)}
+          onActionComplete={() => {
+            qc.invalidateQueries({ queryKey: ['admin', 'campus-infra-submissions'] });
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
 
 // ══════════════════════════════════════════════════════════════════════════════
 // System — Users
@@ -1920,13 +2123,13 @@ function UsersTab({
 
   return (
     <div className="space-y-4">
-      <h2 className="text-base font-semibold text-gray-900">Users</h2>
+      <h2 className="text-base font-semibold text-white">Users</h2>
       <div className="flex items-center gap-3">
-        <label className="text-sm font-medium text-gray-700">Filter by role:</label>
+        <label className="text-sm font-medium text-gray-200">Filter by role:</label>
         <select
           value={roleFilter}
           onChange={(e) => setRoleFilter(e.target.value)}
-          className="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
+          className="text-sm bg-black text-white border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">All</option>
           {Object.values(UserRole).map((r) => (
@@ -1940,13 +2143,13 @@ function UsersTab({
       <Card padding="none" className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-100">
-            <thead className="bg-gray-50">
+            <thead className="bg-white/5">
               <tr>
                 {['Name', 'Email', 'Role', 'Department', 'Joined', 'Buildings', 'Actions'].map(
                   (h) => (
                     <th
                       key={h}
-                      className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                      className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wide"
                     >
                       {h}
                     </th>
@@ -1954,7 +2157,7 @@ function UsersTab({
                 )}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50 bg-white">
+            <tbody className="divide-y divide-gray-50 bg-black/40 backdrop-blur-md">
               {isLoading
                 ? Array.from({ length: 8 }).map((_, i) => (
                     <tr key={i}>
@@ -1966,19 +2169,19 @@ function UsersTab({
                     </tr>
                   ))
                 : users.map((u) => (
-                    <tr key={u._id} className="hover:bg-gray-50 transition-colors">
+                    <tr key={u._id} className="hover:bg-white/5 transition-colors">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
                           <div className="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center text-xs font-semibold text-blue-700">
                             {u.name.charAt(0).toUpperCase()}
                           </div>
-                          <span className="text-sm font-medium text-gray-900">{u.name}</span>
+                          <span className="text-sm font-medium text-white">{u.name}</span>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-500">{u.email}</td>
+                      <td className="px-4 py-3 text-sm text-gray-400">{u.email}</td>
                       <td className="px-4 py-3">{roleBadge(u.role)}</td>
-                      <td className="px-4 py-3 text-sm text-gray-500">{u.department ?? '—'}</td>
-                      <td className="px-4 py-3 text-sm text-gray-500">
+                      <td className="px-4 py-3 text-sm text-gray-400">{u.department ?? '—'}</td>
+                      <td className="px-4 py-3 text-sm text-gray-400">
                         {new Date(u.createdAt).toLocaleDateString()}
                       </td>
                       <td className="px-4 py-3">
@@ -1997,7 +2200,7 @@ function UsersTab({
                             onChange={(e) =>
                               roleMutation.mutate({ userId: u._id, role: e.target.value })
                             }
-                            className="text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-300"
+                            className="text-xs bg-black text-white border border-white/20 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
                           >
                             {Object.values(UserRole).map((r) => (
                               <option key={r} value={r} className="capitalize">
@@ -2029,10 +2232,10 @@ function UsersTab({
                 {userBuildings(buildingsModal).map((b) => (
                   <div
                     key={b._id}
-                    className="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-lg"
+                    className="flex items-center justify-between py-2 px-3 bg-white/5 rounded-lg"
                   >
                     <div>
-                      <p className="text-sm font-medium text-gray-800">{b.name}</p>
+                      <p className="text-sm font-medium text-gray-100">{b.name}</p>
                       <p className="text-xs text-gray-400 capitalize">{b.type}</p>
                     </div>
                     {statusBadge(b.submissionStatus)}
@@ -2088,7 +2291,7 @@ function StaticLocksTab({
 
   return (
     <div className="space-y-4">
-      <h2 className="text-base font-semibold text-gray-900">Static Section Locks</h2>
+      <h2 className="text-base font-semibold text-white">Static Section Locks</h2>
       <div className="flex items-start gap-3 p-4 bg-blue-50 border border-blue-100 rounded-lg">
         <Lock className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
         <p className="text-sm text-blue-700">
@@ -2112,23 +2315,23 @@ function StaticLocksTab({
         <Card padding="none" className="overflow-hidden">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-100">
-              <thead className="bg-gray-50">
+              <thead className="bg-white/5">
                 <tr>
                   {['Building', 'Civil Status', 'Action'].map((h) => (
                     <th
                       key={h}
-                      className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                      className="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wide"
                     >
                       {h}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50 bg-white">
+              <tbody className="divide-y divide-gray-50 bg-black/40 backdrop-blur-md">
                 {lockedBuildings.map((b) => (
-                  <tr key={b._id} className="hover:bg-gray-50 transition-colors">
+                  <tr key={b._id} className="hover:bg-white/5 transition-colors">
                     <td className="px-4 py-3">
-                      <p className="text-sm font-medium text-gray-900">{b.name}</p>
+                      <p className="text-sm font-medium text-white">{b.name}</p>
                       {b.shortName && <p className="text-xs text-gray-400">{b.shortName}</p>}
                       <p className="text-xs text-gray-400 capitalize">{b.type}</p>
                     </td>
@@ -2146,7 +2349,7 @@ function StaticLocksTab({
                             value={unlockReason}
                             onChange={(e) => setUnlockReason(e.target.value)}
                             placeholder="Reason for unlock…"
-                            className="w-full text-xs border border-gray-200 rounded px-2 py-1 resize-none focus:outline-none focus:ring-1 focus:ring-amber-400"
+                            className="w-full text-xs border border-white/10 rounded px-2 py-1 resize-none focus:outline-none focus:ring-1 focus:ring-amber-400"
                           />
                           <div className="flex gap-1">
                             <button
@@ -2166,7 +2369,7 @@ function StaticLocksTab({
                                 setUnlockId(null);
                                 setUnlockReason('');
                               }}
-                              className="text-xs text-gray-500 hover:text-gray-700 px-2 py-1 rounded hover:bg-gray-100 transition-colors"
+                              className="text-xs text-gray-400 hover:text-gray-200 px-2 py-1 rounded hover:bg-white/10 transition-colors"
                             >
                               Cancel
                             </button>

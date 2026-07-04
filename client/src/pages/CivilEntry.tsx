@@ -232,14 +232,14 @@ function ProgressRing({ pct }: { pct: number }) {
           style={{ transition: 'stroke-dashoffset 0.4s ease' }}
         />
       </svg>
-      <span className="absolute text-xs font-semibold text-gray-700">{pct}%</span>
+      <span className="absolute text-xs font-semibold text-gray-200">{pct}%</span>
     </div>
   );
 }
 
 function SectionCard({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <div id={id} className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+    <div id={id} className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-sm">
       {children}
     </div>
   );
@@ -255,9 +255,9 @@ function SectionHeader({
   locked?: boolean;
 }) {
   return (
-    <div className="px-6 py-5 border-b border-gray-100 bg-gray-50">
+    <div className="px-6 py-5 border-b border-white/5 bg-white/5">
       <div className="flex items-center gap-2">
-        <h2 className="text-base font-semibold text-gray-900">{title}</h2>
+        <h2 className="text-base font-semibold text-white">{title}</h2>
         {locked && (
           <div className="relative group">
             <Lock className="w-3.5 h-3.5 text-gray-400" />
@@ -267,7 +267,7 @@ function SectionHeader({
           </div>
         )}
       </div>
-      {subtitle && <p className="mt-1 text-sm text-gray-500">{subtitle}</p>}
+      {subtitle && <p className="mt-1 text-sm text-gray-400">{subtitle}</p>}
     </div>
   );
 }
@@ -283,7 +283,7 @@ function FieldGroup({
 }) {
   return (
     <div className="space-y-1.5">
-      <label className="block text-sm font-medium text-gray-700">{label}</label>
+      <label className="block text-sm font-medium text-gray-200">{label}</label>
       {children}
       {hint && <p className="text-xs text-gray-400">{hint}</p>}
     </div>
@@ -642,13 +642,13 @@ export default function CivilEntry() {
 
   return (
     <PageWrapper title={`Structural and Construction — ${building?.name ?? 'Building'}`}>
-      <div className="bg-gray-50 min-h-[calc(100vh-4rem)]">
+      <div className="bg-white/5 min-h-[calc(100vh-4rem)]">
         <div className="max-w-7xl mx-auto px-4 py-8 lg:flex lg:gap-8">
           {/* ── SIDEBAR ──────────────────────────────────────────────────── */}
           <aside className="hidden lg:block w-72 shrink-0">
             <div className="sticky top-20 space-y-4">
-              <div className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
-                <p className="text-sm font-semibold text-gray-900 truncate">
+              <div className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-4 shadow-sm">
+                <p className="text-sm font-semibold text-white truncate">
                   {building?.name ?? '—'}
                 </p>
                 <div className="mt-1.5 flex items-center gap-2">
@@ -663,9 +663,9 @@ export default function CivilEntry() {
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                <div className="px-4 py-3 border-b border-gray-100">
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+              <div className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 shadow-sm overflow-hidden">
+                <div className="px-4 py-3 border-b border-white/5">
+                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
                     Contents
                   </p>
                 </div>
@@ -679,7 +679,7 @@ export default function CivilEntry() {
                         'w-full text-left px-3 py-1.5 rounded-lg text-xs transition-colors flex items-center gap-2',
                         state.activeSection === id
                           ? 'bg-blue-50 text-iitbhu font-medium'
-                          : 'text-gray-600 hover:bg-gray-50'
+                          : 'text-gray-300 hover:bg-white/5'
                       )}
                     >
                       <ChevronRight
@@ -694,12 +694,12 @@ export default function CivilEntry() {
                 </nav>
               </div>
 
-              <div className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
+              <div className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-4 shadow-sm">
                 <div className="flex items-center justify-between mb-3">
                   <ProgressRing pct={completenessScore} />
                   <div className="text-right">
-                    <p className="text-xs text-gray-500">Completeness</p>
-                    <p className="text-sm font-semibold text-gray-700">{completenessScore}% done</p>
+                    <p className="text-xs text-gray-400">Completeness</p>
+                    <p className="text-sm font-semibold text-gray-200">{completenessScore}% done</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-gray-400">
@@ -730,7 +730,7 @@ export default function CivilEntry() {
                   disabled={!state.isDirty}
                   isLoading={state.isSaving}
                   onClick={() => saveRef.current?.()}
-                  className="gap-2 border border-gray-200"
+                  className="gap-2 border border-white/10"
                 >
                   <Save className="w-4 h-4" /> Save as draft
                 </Button>
@@ -940,17 +940,17 @@ export default function CivilEntry() {
                       'p-4 rounded-xl border-2 text-left transition-all',
                       state.entryMode === EntryMode.CUMULATIVE
                         ? 'border-iitbhu bg-blue-50'
-                        : 'border-gray-200 hover:border-gray-300'
+                        : 'border-white/10 hover:border-white/20'
                     )}
                   >
                     <div className="flex items-center gap-2 mb-1">
                       <Layers className="w-4 h-4 text-iitbhu" />
-                      <span className="text-sm font-semibold text-gray-800">Building total</span>
+                      <span className="text-sm font-semibold text-gray-100">Building total</span>
                       {state.entryMode === EntryMode.CUMULATIVE && (
                         <CheckCircle2 className="w-4 h-4 text-iitbhu ml-auto" />
                       )}
                     </div>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-gray-400">
                       Enter combined totals for the whole building
                     </p>
                   </button>
@@ -963,17 +963,17 @@ export default function CivilEntry() {
                       'p-4 rounded-xl border-2 text-left transition-all',
                       state.entryMode === EntryMode.ROOM_LEVEL
                         ? 'border-iitbhu bg-blue-50'
-                        : 'border-gray-200 hover:border-gray-300'
+                        : 'border-white/10 hover:border-white/20'
                     )}
                   >
                     <div className="flex items-center gap-2 mb-1">
                       <Grid className="w-4 h-4 text-iitbhu" />
-                      <span className="text-sm font-semibold text-gray-800">Room by room</span>
+                      <span className="text-sm font-semibold text-gray-100">Room by room</span>
                       {state.entryMode === EntryMode.ROOM_LEVEL && (
                         <CheckCircle2 className="w-4 h-4 text-iitbhu ml-auto" />
                       )}
                     </div>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-gray-400">
                       Specify each room type with detailed area and furniture
                     </p>
                   </button>
@@ -1013,7 +1013,7 @@ export default function CivilEntry() {
                       </FieldGroup>
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-gray-700 mb-1">
+                      <p className="text-sm font-semibold text-gray-200 mb-1">
                         Room type breakdown{' '}
                         <span className="font-normal text-gray-400">(optional)</span>
                       </p>
@@ -1028,12 +1028,12 @@ export default function CivilEntry() {
                               key={key}
                               className={cn(
                                 'border rounded-xl p-3 transition-colors',
-                                count > 0 ? 'border-blue-200 bg-blue-50' : 'border-gray-200'
+                                count > 0 ? 'border-blue-200 bg-blue-50' : 'border-white/10'
                               )}
                             >
                               <div className="flex items-center justify-between mb-1">
                                 <div>
-                                  <p className="text-sm font-medium text-gray-800">{label}</p>
+                                  <p className="text-sm font-medium text-gray-100">{label}</p>
                                   <p className="text-xs text-gray-400">{desc}</p>
                                 </div>
                                 <div className="flex items-center gap-2">
@@ -1041,17 +1041,17 @@ export default function CivilEntry() {
                                     type="button"
                                     onClick={() => setRoomCount(key, count - 1)}
                                     disabled={count === 0}
-                                    className="w-7 h-7 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-gray-100 disabled:opacity-40"
+                                    className="w-7 h-7 rounded-lg border border-white/10 flex items-center justify-center hover:bg-white/10 disabled:opacity-40"
                                   >
                                     <Minus className="w-3 h-3" />
                                   </button>
-                                  <span className="w-6 text-center text-sm font-semibold text-gray-700">
+                                  <span className="w-6 text-center text-sm font-semibold text-gray-200">
                                     {count}
                                   </span>
                                   <button
                                     type="button"
                                     onClick={() => setRoomCount(key, count + 1)}
-                                    className="w-7 h-7 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-gray-100"
+                                    className="w-7 h-7 rounded-lg border border-white/10 flex items-center justify-center hover:bg-white/10"
                                   >
                                     <Plus className="w-3 h-3" />
                                   </button>
@@ -1059,7 +1059,7 @@ export default function CivilEntry() {
                               </div>
                               {count > 0 && (
                                 <div className="flex items-center gap-2 mt-2 pt-2 border-t border-blue-100">
-                                  <label className="text-xs text-gray-500 whitespace-nowrap">
+                                  <label className="text-xs text-gray-400 whitespace-nowrap">
                                     Avg size (sqm):
                                   </label>
                                   <input
@@ -1069,7 +1069,7 @@ export default function CivilEntry() {
                                     onChange={(e) =>
                                       setRoomAvgSize(key, Number(e.target.value) || 0)
                                     }
-                                    className="w-20 rounded border border-gray-200 px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-iitbhu"
+                                    className="w-20 rounded border border-white/10 px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-iitbhu"
                                   />
                                 </div>
                               )}
@@ -1078,14 +1078,14 @@ export default function CivilEntry() {
                         })}
                       </div>
                       {totalRoomsSummary > 0 && (
-                        <div className="mt-3 px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-500 flex gap-4">
+                        <div className="mt-3 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-xs text-gray-400 flex gap-4">
                           <span>
-                            Rooms: <strong className="text-gray-700">{totalRoomsSummary}</strong>
+                            Rooms: <strong className="text-gray-200">{totalRoomsSummary}</strong>
                           </span>
                           {estimatedAreaSummary > 0 && (
                             <span>
                               Est. area:{' '}
-                              <strong className="text-gray-700">
+                              <strong className="text-gray-200">
                                 {estimatedAreaSummary.toFixed(0)} sqm
                               </strong>
                             </span>
@@ -1096,10 +1096,10 @@ export default function CivilEntry() {
                     {(state.structureData.rooms?.filter((r) => r.isCustomType) ?? []).map((r) => (
                       <div
                         key={r.id}
-                        className="flex items-center justify-between px-4 py-3 border border-dashed border-gray-300 rounded-xl bg-gray-50"
+                        className="flex items-center justify-between px-4 py-3 border border-dashed border-white/20 rounded-xl bg-white/5"
                       >
                         <div>
-                          <p className="text-sm font-medium text-gray-700">{r.customTypeLabel}</p>
+                          <p className="text-sm font-medium text-gray-200">{r.customTypeLabel}</p>
                           <p className="text-xs text-gray-400">
                             {r.count} room{r.count !== 1 ? 's' : ''}
                             {r.avgSizeSqm ? ` · avg ${r.avgSizeSqm} sqm` : ''}
@@ -1125,7 +1125,7 @@ export default function CivilEntry() {
                       </button>
                     ) : (
                       <div className="border border-dashed border-blue-300 rounded-xl p-4 bg-blue-50 space-y-3">
-                        <p className="text-sm font-semibold text-gray-700">Custom room type</p>
+                        <p className="text-sm font-semibold text-gray-200">Custom room type</p>
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                           <div className="col-span-2">
                             <Input
@@ -1202,7 +1202,7 @@ export default function CivilEntry() {
                 {state.entryMode === EntryMode.ROOM_LEVEL && (
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-400">
                         Fill area, usage and furniture per room type below.
                       </p>
                       <button
@@ -1220,7 +1220,7 @@ export default function CivilEntry() {
                       </button>
                     </div>
                     {showTemplates && (
-                      <div className="grid grid-cols-2 gap-3 p-4 bg-gray-50 border border-gray-200 rounded-xl">
+                      <div className="grid grid-cols-2 gap-3 p-4 bg-white/5 border border-white/10 rounded-xl">
                         {Object.entries(BUILDING_TEMPLATES).map(([key, tpl]) => (
                           <button
                             key={key}
@@ -1250,9 +1250,9 @@ export default function CivilEntry() {
                               });
                               setShowTemplates(false);
                             }}
-                            className="p-3 rounded-xl border border-gray-200 bg-white hover:border-iitbhu hover:bg-blue-50 text-left transition-all"
+                            className="p-3 rounded-xl border border-white/10 bg-black/40 backdrop-blur-md hover:border-iitbhu hover:bg-blue-50 text-left transition-all"
                           >
-                            <p className="text-sm font-medium text-gray-800">{tpl.label}</p>
+                            <p className="text-sm font-medium text-gray-100">{tpl.label}</p>
                             <p className="text-xs text-gray-400 mt-0.5">
                               {tpl.roomDistribution.reduce((s, r) => s + r.count, 0)} rooms ·{' '}
                               {tpl.roomDistribution.length} types
@@ -1263,26 +1263,26 @@ export default function CivilEntry() {
                     )}
                     {(state.structureData.rooms?.length ?? 0) > 0 && (
                       <div className="space-y-2">
-                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
                           Room dimensions & usage
                         </p>
-                        <div className="overflow-x-auto rounded-xl border border-gray-200">
+                        <div className="overflow-x-auto rounded-xl border border-white/10">
                           <table className="w-full text-sm">
                             <thead>
-                              <tr className="bg-gray-50 border-b border-gray-200">
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+                              <tr className="bg-white/5 border-b border-white/10">
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-300">
                                   Room type
                                 </th>
-                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-600 w-20">
+                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-300 w-20">
                                   Count
                                 </th>
-                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-600 w-28">
+                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-300 w-28">
                                   Avg area (sqm)
                                 </th>
-                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-600 w-28">
+                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-300 w-28">
                                   Usage (h/day)
                                 </th>
-                                <th className="px-3 py-3 text-right text-xs font-semibold text-gray-600 w-24">
+                                <th className="px-3 py-3 text-right text-xs font-semibold text-gray-300 w-24">
                                   Est. area
                                 </th>
                                 <th className="w-10" />
@@ -1296,8 +1296,8 @@ export default function CivilEntry() {
                                     room.type);
                                 const estArea = (room.count ?? 0) * (room.avgSizeSqm ?? 0);
                                 return (
-                                  <tr key={room.id} className="hover:bg-gray-50/50">
-                                    <td className="px-4 py-3 font-medium text-gray-800 whitespace-nowrap">
+                                  <tr key={room.id} className="hover:bg-white/5/50">
+                                    <td className="px-4 py-3 font-medium text-gray-100 whitespace-nowrap">
                                       {label}
                                     </td>
                                     <td className="px-3 py-3">
@@ -1314,7 +1314,7 @@ export default function CivilEntry() {
                                             },
                                           })
                                         }
-                                        className="w-16 text-center rounded border border-gray-200 px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-iitbhu"
+                                        className="w-16 text-center rounded border border-white/10 px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-iitbhu"
                                       />
                                     </td>
                                     <td className="px-3 py-3">
@@ -1336,7 +1336,7 @@ export default function CivilEntry() {
                                             },
                                           })
                                         }
-                                        className="w-20 text-center rounded border border-gray-200 px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-iitbhu"
+                                        className="w-20 text-center rounded border border-white/10 px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-iitbhu"
                                       />
                                     </td>
                                     <td className="px-3 py-3">
@@ -1360,10 +1360,10 @@ export default function CivilEntry() {
                                             },
                                           })
                                         }
-                                        className="w-20 text-center rounded border border-gray-200 px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-iitbhu"
+                                        className="w-20 text-center rounded border border-white/10 px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-iitbhu"
                                       />
                                     </td>
-                                    <td className="px-3 py-3 text-right text-xs text-gray-500 whitespace-nowrap">
+                                    <td className="px-3 py-3 text-right text-xs text-gray-400 whitespace-nowrap">
                                       {estArea > 0 ? `${estArea.toFixed(0)} sqm` : '—'}
                                     </td>
                                     <td className="px-2 py-3">
@@ -1384,15 +1384,15 @@ export default function CivilEntry() {
                           </table>
                         </div>
                         {totalRoomsSummary > 0 && (
-                          <div className="px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-500 flex gap-4">
+                          <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-xs text-gray-400 flex gap-4">
                             <span>
                               Total rooms:{' '}
-                              <strong className="text-gray-700">{totalRoomsSummary}</strong>
+                              <strong className="text-gray-200">{totalRoomsSummary}</strong>
                             </span>
                             {estimatedAreaSummary > 0 && (
                               <span>
                                 Total area:{' '}
-                                <strong className="text-gray-700">
+                                <strong className="text-gray-200">
                                   {estimatedAreaSummary.toFixed(0)} sqm
                                 </strong>
                               </span>
@@ -1413,7 +1413,7 @@ export default function CivilEntry() {
                       </Button>
                     ) : (
                       <div className="border border-dashed border-blue-300 rounded-xl p-4 bg-blue-50 space-y-3">
-                        <p className="text-sm font-semibold text-gray-700">Add room type</p>
+                        <p className="text-sm font-semibold text-gray-200">Add room type</p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                           <FieldGroup label="Room type">
                             <select
@@ -1428,7 +1428,7 @@ export default function CivilEntry() {
                                   setNewRoomType(val);
                                 }
                               }}
-                              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+                              className="w-full rounded-lg border border-white/20 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
                             >
                               <option value="">Select room type…</option>
                               {ROOM_TYPE_CATALOG.map((rt) => (
@@ -1519,7 +1519,7 @@ export default function CivilEntry() {
                             payload: { roofMaterials: e.target.value },
                           })
                         }
-                        className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu resize-none"
+                        className="w-full rounded-lg border border-white/20 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu resize-none"
                       />
                     </FieldGroup>
                   </div>
@@ -1568,7 +1568,7 @@ export default function CivilEntry() {
                     'inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full border',
                     state.entryMode === EntryMode.ROOM_LEVEL
                       ? 'bg-blue-50 text-iitbhu border-blue-100'
-                      : 'bg-gray-50 text-gray-600 border-gray-200'
+                      : 'bg-white/5 text-gray-300 border-white/10'
                   )}
                 >
                   {state.entryMode === EntryMode.ROOM_LEVEL ? (
@@ -1624,7 +1624,7 @@ export default function CivilEntry() {
                         if (entries.length === 0) return null;
                         return (
                           <div className="flex flex-wrap items-center gap-2 pb-1">
-                            <span className="text-xs font-medium text-gray-500">
+                            <span className="text-xs font-medium text-gray-400">
                               Building totals:
                             </span>
                             {entries.map(([label, count]) => (
@@ -1652,19 +1652,19 @@ export default function CivilEntry() {
                         return (
                           <div
                             key={room.id}
-                            className="border border-gray-200 rounded-xl overflow-hidden"
+                            className="border border-white/10 rounded-xl overflow-hidden"
                           >
                             {/* Row header */}
                             <button
                               type="button"
                               onClick={() => toggleRoomCard(room.id)}
-                              className="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors"
+                              className="w-full flex items-center justify-between px-4 py-3 hover:bg-white/5 transition-colors"
                             >
                               <div className="flex items-center gap-3 min-w-0">
-                                <span className="text-sm font-semibold text-gray-800">
+                                <span className="text-sm font-semibold text-gray-100">
                                   {roomLabel}
                                 </span>
-                                <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full shrink-0">
+                                <span className="text-xs bg-white/10 text-gray-400 px-2 py-0.5 rounded-full shrink-0">
                                   × {room.count} room{(room.count ?? 1) !== 1 ? 's' : ''}
                                 </span>
                                 {hasData && (
@@ -1688,12 +1688,12 @@ export default function CivilEntry() {
                             </button>
 
                             {isExpanded && (
-                              <div className="border-t border-gray-100 px-4 pb-5 pt-4 space-y-4">
+                              <div className="border-t border-white/5 px-4 pb-5 pt-4 space-y-4">
                                 {/* Opening type grid */}
                                 <div className="overflow-x-auto -mx-1">
                                   <table className="w-full text-sm min-w-[420px]">
                                     <thead>
-                                      <tr className="text-xs text-gray-400 border-b border-gray-100">
+                                      <tr className="text-xs text-gray-400 border-b border-white/5">
                                         <th className="text-left font-medium pb-2 pr-4 w-40">
                                           Opening type
                                         </th>
@@ -1711,7 +1711,7 @@ export default function CivilEntry() {
                                         const el = roomOpenings.find((e) => e.id === def.id) ?? def;
                                         return (
                                           <tr key={def.id}>
-                                            <td className="py-2 pr-4 text-gray-700 font-medium">
+                                            <td className="py-2 pr-4 text-gray-200 font-medium">
                                               {ELEMENT_LABELS[def.elementType]}
                                             </td>
                                             <td className="py-2 pr-3">
@@ -1811,7 +1811,7 @@ export default function CivilEntry() {
                                 {(room.count ?? 1) > 1 &&
                                   roomOpenings.some((e) => (e.count ?? 0) > 0) && (
                                     <p className="text-xs text-gray-400">
-                                      <span className="font-medium text-gray-500">
+                                      <span className="font-medium text-gray-400">
                                         Total across all {room.count} {roomLabel.toLowerCase()}{' '}
                                         rooms:{' '}
                                       </span>
@@ -1853,7 +1853,7 @@ export default function CivilEntry() {
                       return (
                         <div
                           key={el.id}
-                          className="border border-gray-200 rounded-xl overflow-hidden"
+                          className="border border-white/10 rounded-xl overflow-hidden"
                         >
                           <button
                             type="button"
@@ -1864,14 +1864,14 @@ export default function CivilEntry() {
                                 return next;
                               })
                             }
-                            className="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors"
+                            className="w-full flex items-center justify-between px-4 py-3 hover:bg-white/5 transition-colors"
                           >
                             <div className="flex items-center gap-3 min-w-0">
-                              <span className="text-sm font-semibold text-gray-800 shrink-0">
+                              <span className="text-sm font-semibold text-gray-100 shrink-0">
                                 {typeLabel}
                               </span>
                               {(el.count ?? 0) > 0 && (
-                                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full shrink-0">
+                                <span className="text-xs text-gray-400 bg-white/10 px-2 py-0.5 rounded-full shrink-0">
                                   Count: {el.count}
                                 </span>
                               )}
@@ -1902,7 +1902,7 @@ export default function CivilEntry() {
                           </button>
 
                           {isExpanded && (
-                            <div className="px-4 pb-4 pt-1 border-t border-gray-100 space-y-4">
+                            <div className="px-4 pb-4 pt-1 border-t border-white/5 space-y-4">
                               {el.elementType === 'custom' && (
                                 <FieldGroup label="Element type label">
                                   <Input
@@ -2057,16 +2057,16 @@ export default function CivilEntry() {
                           'p-4 rounded-xl border-2 text-left transition-all',
                           state.constructionData.constructionType === val
                             ? 'border-iitbhu bg-blue-50'
-                            : 'border-gray-200 hover:border-gray-300'
+                            : 'border-white/10 hover:border-white/20'
                         )}
                       >
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-semibold text-gray-800">{label}</span>
+                          <span className="text-sm font-semibold text-gray-100">{label}</span>
                           {state.constructionData.constructionType === val && (
                             <CheckCircle2 className="w-4 h-4 text-iitbhu ml-auto shrink-0" />
                           )}
                         </div>
-                        <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
+                        <p className="text-xs text-gray-400 mt-0.5">{desc}</p>
                       </button>
                     ))}
                   </div>
@@ -2086,9 +2086,9 @@ export default function CivilEntry() {
                   )}
                 </FieldGroup>
 
-                <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-xl">
+                <div className="flex items-center justify-between py-3 px-4 border border-white/10 rounded-xl">
                   <div>
-                    <p className="text-sm font-medium text-gray-700">
+                    <p className="text-sm font-medium text-gray-200">
                       Local construction practices followed?
                     </p>
                     <p className="text-xs text-gray-400">
@@ -2115,7 +2115,7 @@ export default function CivilEntry() {
                   >
                     <span
                       className={cn(
-                        'absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform',
+                        'absolute top-1 w-4 h-4 bg-black/40 backdrop-blur-md rounded-full shadow transition-transform',
                         state.constructionData.localConstructionPractices ? 'left-6' : 'left-1'
                       )}
                     />
@@ -2124,7 +2124,7 @@ export default function CivilEntry() {
 
                 {state.constructionData.localConstructionPractices && (
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-200">
                       Percentage of local materials:{' '}
                       <span className="text-iitbhu font-bold">
                         {state.constructionData.localMaterialsPercent ?? 0}%
@@ -2166,7 +2166,7 @@ export default function CivilEntry() {
                         payload: { materialSourceDistance: e.target.value },
                       })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu resize-none"
+                    className="w-full rounded-lg border border-white/20 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu resize-none"
                   />
                 </FieldGroup>
 
@@ -2196,39 +2196,39 @@ export default function CivilEntry() {
                 {state.entryMode === EntryMode.ROOM_LEVEL && (
                   <div className="space-y-5">
                     {(state.structureData.rooms?.length ?? 0) === 0 ? (
-                      <div className="flex items-center gap-2 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-500">
+                      <div className="flex items-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-gray-400">
                         <Info className="w-4 h-4 shrink-0" />
                         Add rooms in the section above to enter per-room furniture data.
                       </div>
                     ) : (
                       <div className="space-y-3">
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-400">
                           Select a density preset to auto-fill estimated kg values, or enter them
                           manually.
                         </p>
-                        <div className="overflow-x-auto rounded-xl border border-gray-200">
+                        <div className="overflow-x-auto rounded-xl border border-white/10">
                           <table className="w-full text-sm">
                             <thead>
-                              <tr className="bg-gray-50 border-b border-gray-200">
-                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+                              <tr className="bg-white/5 border-b border-white/10">
+                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-300">
                                   Room type
                                 </th>
-                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-600">
+                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-300">
                                   Density → auto-fill
                                 </th>
-                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-600 w-24">
+                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-300 w-24">
                                   Wood (kg)
                                 </th>
-                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-600 w-24">
+                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-300 w-24">
                                   Steel (kg)
                                 </th>
-                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-600 w-24">
+                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-300 w-24">
                                   Plastic (kg)
                                 </th>
-                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-600 w-24">
+                                <th className="px-3 py-3 text-center text-xs font-semibold text-gray-300 w-24">
                                   Glass (kg)
                                 </th>
-                                <th className="px-3 py-3 text-right text-xs font-semibold text-gray-600 w-24">
+                                <th className="px-3 py-3 text-right text-xs font-semibold text-gray-300 w-24">
                                   Total (kg)
                                 </th>
                               </tr>
@@ -2246,8 +2246,8 @@ export default function CivilEntry() {
                                   (room.glassKg ?? 0);
                                 const canAutoFill = !!(room.avgSizeSqm && room.avgSizeSqm > 0);
                                 return (
-                                  <tr key={room.id} className="hover:bg-gray-50/50">
-                                    <td className="px-4 py-3 font-medium text-gray-800 whitespace-nowrap">
+                                  <tr key={room.id} className="hover:bg-white/5/50">
+                                    <td className="px-4 py-3 font-medium text-gray-100 whitespace-nowrap">
                                       <p>{label}</p>
                                       <p className="text-xs text-gray-400 font-normal">
                                         ×{room.count}
@@ -2256,7 +2256,7 @@ export default function CivilEntry() {
                                     </td>
                                     <td className="px-3 py-3">
                                       <div className="flex flex-col items-center gap-1">
-                                        <div className="inline-flex rounded-lg border border-gray-200 overflow-hidden">
+                                        <div className="inline-flex rounded-lg border border-white/10 overflow-hidden">
                                           {DENSITY_OPTIONS.map((d) => (
                                             <button
                                               key={d.value}
@@ -2271,7 +2271,7 @@ export default function CivilEntry() {
                                                 'px-2.5 py-1 text-xs font-medium transition-colors',
                                                 room.furnitureDensity === d.value
                                                   ? 'bg-iitbhu text-white'
-                                                  : 'bg-white text-gray-600 hover:bg-gray-50'
+                                                  : 'bg-black/40 backdrop-blur-md text-gray-300 hover:bg-white/5'
                                               )}
                                             >
                                               {d.label}
@@ -2312,11 +2312,11 @@ export default function CivilEntry() {
                                               },
                                             })
                                           }
-                                          className="w-20 text-center rounded border border-gray-200 px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-iitbhu"
+                                          className="w-20 text-center rounded border border-white/10 px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-iitbhu"
                                         />
                                       </td>
                                     ))}
-                                    <td className="px-3 py-3 text-right text-xs font-medium text-gray-600 whitespace-nowrap">
+                                    <td className="px-3 py-3 text-right text-xs font-medium text-gray-300 whitespace-nowrap">
                                       {totalKg > 0 ? `${totalKg.toLocaleString()} kg` : '—'}
                                     </td>
                                   </tr>
@@ -2329,7 +2329,7 @@ export default function CivilEntry() {
                               totalFurnitureSummary.glass >
                               0 && (
                               <tfoot>
-                                <tr className="bg-gray-50 border-t-2 border-gray-200 font-semibold text-xs text-gray-700">
+                                <tr className="bg-white/5 border-t-2 border-white/10 font-semibold text-xs text-gray-200">
                                   <td className="px-4 py-3">Total</td>
                                   <td />
                                   <td className="px-3 py-3 text-center">
@@ -2366,7 +2366,7 @@ export default function CivilEntry() {
                 {/* Building total mode */}
                 {state.entryMode === EntryMode.CUMULATIVE && (
                   <div className="space-y-5">
-                    <div className="inline-flex rounded-lg border border-gray-200 overflow-hidden">
+                    <div className="inline-flex rounded-lg border border-white/10 overflow-hidden">
                       {(
                         [
                           { value: 'bulk', label: 'Quick estimate' },
@@ -2386,7 +2386,7 @@ export default function CivilEntry() {
                             'px-5 py-2 text-sm font-medium transition-colors',
                             state.materialsData.estimationMode === opt.value
                               ? 'bg-iitbhu text-white'
-                              : 'bg-white text-gray-600 hover:bg-gray-50'
+                              : 'bg-black/40 backdrop-blur-md text-gray-300 hover:bg-white/5'
                           )}
                         >
                           {opt.label}
@@ -2397,7 +2397,7 @@ export default function CivilEntry() {
                     {state.materialsData.estimationMode === 'bulk' && (
                       <div className="space-y-5">
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-3">
+                          <label className="block text-sm font-medium text-gray-200 mb-3">
                             Furniture density
                           </label>
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -2415,11 +2415,11 @@ export default function CivilEntry() {
                                   'p-4 rounded-xl border-2 text-left transition-all',
                                   state.materialsData.furnitureDensity === opt.value
                                     ? 'border-iitbhu bg-blue-50'
-                                    : 'border-gray-200 hover:border-gray-300'
+                                    : 'border-white/10 hover:border-white/20'
                                 )}
                               >
-                                <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
-                                <p className="text-xs text-gray-500 mt-0.5">{opt.desc}</p>
+                                <p className="text-sm font-semibold text-gray-100">{opt.label}</p>
+                                <p className="text-xs text-gray-400 mt-0.5">{opt.desc}</p>
                               </button>
                             ))}
                           </div>
@@ -2434,7 +2434,7 @@ export default function CivilEntry() {
                           </div>
                         )}
                         <div>
-                          <p className="text-sm font-semibold text-gray-700 mb-3">
+                          <p className="text-sm font-semibold text-gray-200 mb-3">
                             Material mix{' '}
                             <span className="font-normal text-gray-400">
                               (preset by building type)
@@ -2450,16 +2450,16 @@ export default function CivilEntry() {
                               ] as const
                             ).map(({ key, label, color }) => (
                               <div key={key} className="flex items-center gap-3">
-                                <span className="text-xs text-gray-500 w-12 text-right">
+                                <span className="text-xs text-gray-400 w-12 text-right">
                                   {label}
                                 </span>
-                                <div className="flex-1 h-3 bg-gray-100 rounded-full overflow-hidden">
+                                <div className="flex-1 h-3 bg-white/10 rounded-full overflow-hidden">
                                   <div
                                     className={cn('h-full rounded-full transition-all', color)}
                                     style={{ width: `${materialMix[key]}%` }}
                                   />
                                 </div>
-                                <span className="text-xs text-gray-500 w-8">
+                                <span className="text-xs text-gray-400 w-8">
                                   {materialMix[key]}%
                                 </span>
                               </div>
@@ -2541,18 +2541,18 @@ export default function CivilEntry() {
                 )}
 
                 {/* ── Extended Materials Accordion ──────────────────────── */}
-                <div className="pt-4 border-t border-gray-100">
+                <div className="pt-4 border-t border-white/5">
                   <button
                     type="button"
                     onClick={() => setShowExtendedMaterials((v) => !v)}
                     className="flex items-center gap-2 w-full text-left"
                   >
                     {showExtendedMaterials ? (
-                      <ChevronDown className="w-4 h-4 text-gray-500 shrink-0" />
+                      <ChevronDown className="w-4 h-4 text-gray-400 shrink-0" />
                     ) : (
-                      <ChevronRight className="w-4 h-4 text-gray-500 shrink-0" />
+                      <ChevronRight className="w-4 h-4 text-gray-400 shrink-0" />
                     )}
-                    <span className="text-sm font-semibold text-gray-700">
+                    <span className="text-sm font-semibold text-gray-200">
                       Extended structural materials
                     </span>
                     <span className="ml-auto text-xs text-gray-400">Annexure 8 — optional</span>
@@ -2572,7 +2572,7 @@ export default function CivilEntry() {
 
                       {/* Group 1: Concrete & Masonry */}
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">
                           Concrete &amp; Masonry
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -2673,7 +2673,7 @@ export default function CivilEntry() {
                           </FieldGroup>
                           <FieldGroup
                             label="Kota stone (kg)"
-                            hint="Used for flooring in IIT BHU buildings"
+                            hint="Commonly used for flooring"
                           >
                             <Input
                               type="number"
@@ -2696,7 +2696,7 @@ export default function CivilEntry() {
 
                       {/* Group 2: Metals */}
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">
                           Metals
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -2765,7 +2765,7 @@ export default function CivilEntry() {
 
                       {/* Group 3: Finishes & Cladding */}
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">
                           Finishes &amp; Cladding
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -2877,7 +2877,7 @@ export default function CivilEntry() {
 
                       {/* Group 4: Insulation & Panels */}
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">
                           Insulation &amp; Panels
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -2986,17 +2986,17 @@ export default function CivilEntry() {
                 </div>
 
                 {/* Custom materials */}
-                <div className="pt-4 border-t border-gray-100">
-                  <p className="text-sm font-semibold text-gray-700 mb-3">Custom materials</p>
+                <div className="pt-4 border-t border-white/5">
+                  <p className="text-sm font-semibold text-gray-200 mb-3">Custom materials</p>
                   {(state.materialsData.customMaterials?.length ?? 0) > 0 && (
                     <div className="space-y-2 mb-3">
                       {state.materialsData.customMaterials?.map((m) => (
                         <div
                           key={m.id}
-                          className="flex items-center justify-between px-4 py-3 border border-gray-200 rounded-xl bg-white"
+                          className="flex items-center justify-between px-4 py-3 border border-white/10 rounded-xl bg-black/40 backdrop-blur-md"
                         >
                           <div>
-                            <p className="text-sm font-medium text-gray-700">{m.label}</p>
+                            <p className="text-sm font-medium text-gray-200">{m.label}</p>
                             <p className="text-xs text-gray-400">
                               {m.value} kg{m.notes ? ` · ${m.notes}` : ''}
                             </p>
@@ -3025,7 +3025,7 @@ export default function CivilEntry() {
                     </button>
                   ) : (
                     <div className="border border-dashed border-blue-300 rounded-xl p-4 bg-blue-50 space-y-3">
-                      <p className="text-sm font-semibold text-gray-700">Custom material</p>
+                      <p className="text-sm font-semibold text-gray-200">Custom material</p>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div className="sm:col-span-2">
                           <Input
@@ -3113,7 +3113,7 @@ export default function CivilEntry() {
                         payload: { scrapMaterialsUsed: e.target.value },
                       })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu resize-none"
+                    className="w-full rounded-lg border border-white/20 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu resize-none"
                   />
                 </FieldGroup>
                 <FieldGroup
@@ -3131,7 +3131,7 @@ export default function CivilEntry() {
                         payload: { reusePolicy: e.target.value },
                       })
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu resize-none"
+                    className="w-full rounded-lg border border-white/20 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu resize-none"
                   />
                 </FieldGroup>
               </div>
@@ -3141,10 +3141,10 @@ export default function CivilEntry() {
       </div>
 
       {/* ── MOBILE BOTTOM BAR ──────────────────────────────────────────────── */}
-      <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-gray-200 px-4 py-3 flex items-center gap-3">
+      <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-black/40 backdrop-blur-md border-t border-white/10 px-4 py-3 flex items-center gap-3">
         <div className="flex items-center gap-2 flex-1 min-w-0">
           <ProgressRing pct={completenessScore} />
-          <p className="text-xs text-gray-500 truncate">{saveStatus}</p>
+          <p className="text-xs text-gray-400 truncate">{saveStatus}</p>
         </div>
         <Button
           variant="ghost"
@@ -3152,7 +3152,7 @@ export default function CivilEntry() {
           disabled={!state.isDirty}
           isLoading={state.isSaving}
           onClick={() => saveRef.current?.()}
-          className="gap-1.5 border border-gray-200 shrink-0"
+          className="gap-1.5 border border-white/10 shrink-0"
         >
           <Save className="w-4 h-4" /> Save
         </Button>
@@ -3177,7 +3177,7 @@ export default function CivilEntry() {
         <div className="space-y-4">
           {(state.validationResult?.warnings?.length ?? 0) > 0 ? (
             <>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-300">
                 The following issues were found. You can submit anyway or go back and fix them.
               </p>
               <div className="space-y-2">
@@ -3213,7 +3213,7 @@ export default function CivilEntry() {
               variant="ghost"
               fullWidth
               onClick={() => setShowValidationModal(false)}
-              className="border border-gray-200"
+              className="border border-white/10"
             >
               Go back and fix
             </Button>

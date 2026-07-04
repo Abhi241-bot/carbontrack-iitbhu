@@ -38,7 +38,13 @@ export default function Login() {
   const loginMutation = useLogin(from);
 
   useEffect(() => {
-    if (user) navigate(from || '/dashboard', { replace: true });
+    if (user) {
+      if (user.role === 'admin') {
+        navigate('/admin', { replace: true });
+      } else {
+        navigate(from || '/map', { replace: true });
+      }
+    }
   }, [user, navigate, from]);
 
   const {
@@ -58,14 +64,14 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-8 w-full max-w-md">
+    <div className="min-h-screen bg-white/5 flex items-center justify-center px-4">
+      <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-md border border-white/5 p-8 w-full max-w-md">
         {/* Header */}
         <div className="flex flex-col items-center mb-6">
           <IITBHULogo />
           <span className="mt-2 text-sm font-semibold text-iitbhu tracking-wide">Carbon Portal</span>
-          <h2 className="text-2xl font-bold text-gray-900 mt-6 mb-1">Sign in to your account</h2>
-          <p className="text-sm text-gray-500">
+          <h2 className="text-2xl font-bold text-white mt-6 mb-1">Sign in to your account</h2>
+          <p className="text-sm text-gray-400">
             Don't have an account?{' '}
             <Link to="/register" className="text-iitbhu font-medium hover:underline">
               Register →
@@ -104,7 +110,7 @@ export default function Login() {
               <button
                 type="button"
                 onClick={() => setShowPassword((s) => !s)}
-                className="text-gray-400 hover:text-gray-600 focus:outline-none"
+                className="text-gray-400 hover:text-gray-300 focus:outline-none"
                 tabIndex={-1}
                 aria-label={showPassword ? 'Hide password' : 'Show password'}
               >

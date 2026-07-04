@@ -104,7 +104,7 @@ export function SubmissionDataDrawer({ submissionId, section, sectionTitle, onCl
       return (
         <div className="flex flex-col items-center justify-center h-48 gap-3 text-center">
           <AlertTriangle size={28} className="text-amber-400" />
-          <p className="text-sm text-gray-500">Could not load submission data.</p>
+          <p className="text-sm text-gray-400">Could not load submission data.</p>
         </div>
       );
     }
@@ -151,9 +151,9 @@ export function SubmissionDataDrawer({ submissionId, section, sectionTitle, onCl
       className="fixed inset-0 z-50 flex items-stretch justify-end bg-black/30"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="w-full max-w-3xl bg-white shadow-2xl flex flex-col h-full overflow-hidden animate-in slide-in-from-right duration-200">
+      <div className="w-full max-w-3xl bg-black/40 backdrop-blur-md shadow-2xl flex flex-col h-full overflow-hidden animate-in slide-in-from-right duration-200">
         {/* Header */}
-        <div className="flex items-start justify-between px-5 pt-5 pb-4 border-b border-gray-100 flex-shrink-0">
+        <div className="flex items-start justify-between px-5 pt-5 pb-4 border-b border-white/5 flex-shrink-0">
           <div>
             <div className="flex items-center gap-2 mb-0.5">
               <CheckCircle size={15} className="text-green-500 flex-shrink-0" />
@@ -161,7 +161,7 @@ export function SubmissionDataDrawer({ submissionId, section, sectionTitle, onCl
                 Verified — read only
               </span>
             </div>
-            <h2 className="text-base font-semibold text-gray-900">{title}</h2>
+            <h2 className="text-base font-semibold text-white">{title}</h2>
             {submission?.version && (
               <p className="text-xs text-gray-400 mt-0.5">Version {submission.version}</p>
             )}
@@ -169,7 +169,7 @@ export function SubmissionDataDrawer({ submissionId, section, sectionTitle, onCl
           <button
             type="button"
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors p-1 mt-0.5"
+            className="text-gray-400 hover:text-gray-300 transition-colors p-1 mt-0.5"
           >
             <X size={18} />
           </button>
@@ -177,17 +177,17 @@ export function SubmissionDataDrawer({ submissionId, section, sectionTitle, onCl
 
         {/* Meta bar */}
         {!loading && submission && (
-          <div className="flex-shrink-0 px-5 py-2 bg-green-50/60 border-b border-green-100 flex items-center gap-4 text-xs text-gray-500 flex-wrap">
+          <div className="flex-shrink-0 px-5 py-2 bg-green-50/60 border-b border-green-100 flex items-center gap-4 text-xs text-gray-400 flex-wrap">
             {submission.submittedBy?.name && (
               <span>
                 Submitted by{' '}
-                <strong className="text-gray-700">{submission.submittedBy.name}</strong>
+                <strong className="text-gray-200">{submission.submittedBy.name}</strong>
               </span>
             )}
             {submission.verifiedAt && (
               <span>
                 Verified on{' '}
-                <strong className="text-gray-700">
+                <strong className="text-gray-200">
                   {new Date(submission.verifiedAt).toLocaleDateString('en-IN', {
                     day: 'numeric',
                     month: 'short',
@@ -199,7 +199,7 @@ export function SubmissionDataDrawer({ submissionId, section, sectionTitle, onCl
             {submission.completionScore != null && (
               <span>
                 Completeness:{' '}
-                <strong className="text-gray-700">{submission.completionScore}%</strong>
+                <strong className="text-gray-200">{submission.completionScore}%</strong>
               </span>
             )}
           </div>
@@ -208,7 +208,7 @@ export function SubmissionDataDrawer({ submissionId, section, sectionTitle, onCl
         {/* Body: sub-nav + content */}
         <div className="flex flex-1 overflow-hidden">
           {showSubNav && (
-            <div className="w-52 flex-shrink-0 border-r border-gray-100 overflow-y-auto bg-gray-50/40 py-3">
+            <div className="w-52 flex-shrink-0 border-r border-white/5 overflow-y-auto bg-white/5/40 py-3">
               {subSections.map((nav) => (
                 <button
                   key={nav.id}
@@ -217,7 +217,7 @@ export function SubmissionDataDrawer({ submissionId, section, sectionTitle, onCl
                   className={`w-full text-left px-4 py-2.5 text-sm transition-colors flex items-center gap-2 ${
                     activeSubSection === nav.id
                       ? 'bg-green-50 text-green-700 font-medium border-r-2 border-green-500'
-                      : 'text-gray-600 hover:bg-gray-100'
+                      : 'text-gray-300 hover:bg-white/10'
                   }`}
                 >
                   <ChevronRight

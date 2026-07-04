@@ -62,7 +62,7 @@ export default function BuildingCard({
   const user = useAuthStore((s) => s.user);
   const { showToast } = useToast();
   const isAssigned = userAssignedBuildingIds.includes(building._id);
-  const canRequest = !!user && user.role !== UserRole.ADMIN && !isAssigned;
+  const canRequest = !!user && user.role === UserRole.MEMBER && !isAssigned;
 
   const requestMutation = useMutation({
     mutationFn: () => membershipRequestsApi.create(building._id),
@@ -93,11 +93,11 @@ export default function BuildingCard({
 
       {/* Body */}
       <div>
-        <p className="text-lg font-semibold text-gray-900 truncate">{building.name}</p>
+        <p className="text-lg font-semibold text-white truncate">{building.name}</p>
         {building.shortName && building.shortName !== building.name && (
-          <p className="text-sm text-gray-500">{building.shortName}</p>
+          <p className="text-sm text-gray-400">{building.shortName}</p>
         )}
-        <div className="flex flex-wrap gap-4 mt-2 text-sm text-gray-500">
+        <div className="flex flex-wrap gap-4 mt-2 text-sm text-gray-400">
           <span className="flex items-center gap-1">
             <Layers className="h-3.5 w-3.5" />
             {building.floors} floor{building.floors !== 1 ? 's' : ''}
@@ -117,8 +117,8 @@ export default function BuildingCard({
       </div>
 
       {/* Bottom row */}
-      <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-100">
-        {isAssigned ? (
+      <div className="flex items-center justify-between mt-auto pt-2 border-t border-white/5">
+        {isAssigned && user?.role !== UserRole.VIEWER ? (
           <>
             <Badge variant="success" label="Your Building" />
             <Button

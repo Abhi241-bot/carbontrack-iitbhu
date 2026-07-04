@@ -33,7 +33,7 @@ export default function Card({
   return (
     <div
       onClick={onClick}
-      className={`bg-white rounded-xl border border-gray-100 ${paddingClasses[padding]} ${shadowClasses[shadow]} ${hover ? 'hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer' : ''} ${className}`}
+      className={`bg-black/40 backdrop-blur-md/5 backdrop-blur-md rounded-xl border border-white/10 ${paddingClasses[padding]} ${shadowClasses[shadow]} ${hover ? 'hover:shadow-md hover:bg-black/40 backdrop-blur-md/10 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer' : ''} ${className}`}
     >
       {children}
     </div>

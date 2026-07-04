@@ -72,13 +72,13 @@ export async function getPublicStats(campusSlug?: string) {
         }),
       ]);
 
-    const carbonAgg = await Submission.aggregate([
-      { $match: { status: 'verified' } },
+    const carbonAgg = await Building.aggregate([
+      { $match: { isActive: true, combinedCarbonResults: { $exists: true }, ...baseFilter } },
       {
         $group: {
           _id: null,
-          totalEmbodiedCarbon: { $sum: '$carbonResults.embodiedCarbon' },
-          totalOperationalCarbon: { $sum: '$carbonResults.operationalCarbonPerYear' },
+          totalEmbodiedCarbon: { $sum: '$combinedCarbonResults.embodiedCarbon' },
+          totalOperationalCarbon: { $sum: '$combinedCarbonResults.operationalCarbonPerYear' },
         },
       },
     ]);
@@ -174,32 +174,13 @@ export async function getCampusByType() {
 export async function getTopBuildings(limit = 10) {
   return getCached('dashboard:top-buildings', 600, async () => {
     const results = await Building.aggregate([
-      { $match: { isActive: true } },
-      {
-        $lookup: {
-          from: 'submissions',
-          let: { bid: '$_id' },
-          pipeline: [
-            {
-              $match: {
-                $expr: {
-                  $and: [{ $eq: ['$buildingId', '$$bid'] }, { $eq: ['$status', 'verified'] }],
-                },
-              },
-            },
-            { $sort: { createdAt: -1 } },
-            { $limit: 1 },
-          ],
-          as: 'latestSubmission',
-        },
-      },
-      { $unwind: { path: '$latestSubmission', preserveNullAndEmptyArrays: false } },
+      { $match: { isActive: true, 'combinedCarbonResults': { $exists: true } } },
       {
         $addFields: {
           totalCarbon: {
             $add: [
-              { $ifNull: ['$latestSubmission.carbonResults.embodiedCarbon', 0] },
-              { $ifNull: ['$latestSubmission.carbonResults.operationalCarbonPerYear', 0] },
+              { $ifNull: ['$combinedCarbonResults.totalEmbodiedCarbon', 0] },
+              { $ifNull: ['$combinedCarbonResults.operationalCarbonPerYear', 0] },
             ],
           },
         },
@@ -212,8 +193,8 @@ export async function getTopBuildings(limit = 10) {
           name: 1,
           type: 1,
           submissionStatus: 1,
-          embodiedCarbon: '$latestSubmission.carbonResults.embodiedCarbon',
-          operationalCarbon: '$latestSubmission.carbonResults.operationalCarbonPerYear',
+          embodiedCarbon: '$combinedCarbonResults.totalEmbodiedCarbon',
+          operationalCarbon: '$combinedCarbonResults.operationalCarbonPerYear',
         },
       },
     ]);

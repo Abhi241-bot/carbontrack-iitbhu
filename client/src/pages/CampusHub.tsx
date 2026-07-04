@@ -94,7 +94,7 @@ function SectionCard({
   const StatusIcon = cfg.icon;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-5 flex flex-col min-h-[200px]">
+    <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-5 flex flex-col min-h-[200px]">
       <div className="flex items-start gap-4 flex-1">
         <div
           className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
@@ -104,10 +104,10 @@ function SectionCard({
         </div>
         <div className="flex-1 min-w-0 flex flex-col">
           <div className="flex items-center gap-2 mb-0.5">
-            <h3 className="font-semibold text-gray-900">{title}</h3>
+            <h3 className="font-semibold text-white">{title}</h3>
             {version > 0 && <span className="text-xs text-gray-400">v{version}</span>}
           </div>
-          <p className="text-sm text-gray-500 mb-3">{description}</p>
+          <p className="text-sm text-gray-400 mb-3">{description}</p>
 
           <div className="flex items-center gap-1.5 mb-3">
             <StatusIcon
@@ -162,7 +162,7 @@ export default function CampusHub() {
     queryKey: ['campus', campusSlug],
     queryFn: () => campusApi.getBySlug(campusSlug!).then((r) => r.data.data as CampusFull),
     enabled: !!campusSlug,
-    staleTime: 60_000,
+    staleTime: 5_000, // short stale time so membership changes reflect quickly
   });
 
   if (isLoading) {
@@ -182,7 +182,7 @@ export default function CampusHub() {
     return (
       <PageWrapper title="Not Found">
         <div className="text-center py-24">
-          <p className="text-gray-500">Campus not found.</p>
+          <p className="text-gray-400">Campus not found.</p>
           <Link to="/campus" className="text-iitbhu text-sm mt-2 inline-block">
             ← All campuses
           </Link>
@@ -201,10 +201,11 @@ export default function CampusHub() {
   const isInfraAssigned =
     user &&
     campus.infrastructureAssignedMembers?.some((m) => {
-      const id = typeof m === 'string' ? m : m._id;
-      return id === user.userId;
+      // m may be a populated object { _id: string } or a raw ObjectId string
+      const id = typeof m === 'string' ? m : String((m as { _id: unknown })._id ?? m);
+      return id === user._id;
     });
-  const canEditInfra = canEdit || !!isInfraAssigned;
+  const canEditInfra = user?.role !== UserRole.VIEWER && (canEdit || !!isInfraAssigned);
 
   // A non-admin, non-assigned, logged-in user can request access
   const canRequestInfra = !!user && !canEditInfra && user.role === UserRole.MEMBER;
@@ -218,35 +219,35 @@ export default function CampusHub() {
             Campus
           </Link>
           <span>/</span>
-          <span className="text-gray-700">{campus.name}</span>
+          <span className="text-gray-200">{campus.name}</span>
         </nav>
 
         {/* ── HEADER CARD ──────────────────────────────────────────────────── */}
-        <div className="bg-white border border-gray-200 rounded-xl p-6">
+        <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-6">
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-xl bg-iitbhu/10 flex items-center justify-center flex-shrink-0">
               <MapPin size={24} className="text-iitbhu" />
             </div>
             <div className="flex-1 min-w-0">
-              <h1 className="text-xl font-bold text-gray-900">{campus.name}</h1>
-              <p className="text-sm text-gray-500">{campus.institution}</p>
-              <div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-gray-500">
+              <h1 className="text-xl font-bold text-white">{campus.name}</h1>
+              <p className="text-sm text-gray-400">{campus.institution}</p>
+              <div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-gray-400">
                 <span>
                   {campus.city}, {campus.state}, {campus.country}
                 </span>
                 {campus.totalAreaAcres && (
-                  <span className="text-xs bg-gray-100 px-2 py-0.5 rounded-full">
+                  <span className="text-xs bg-white/10 px-2 py-0.5 rounded-full">
                     {campus.totalAreaAcres.toLocaleString()} acres
                   </span>
                 )}
                 {campus.establishedYear && (
-                  <span className="text-xs bg-gray-100 px-2 py-0.5 rounded-full">
+                  <span className="text-xs bg-white/10 px-2 py-0.5 rounded-full">
                     Est. {campus.establishedYear}
                   </span>
                 )}
               </div>
               {campus.description && (
-                <p className="text-sm text-gray-500 mt-2">{campus.description}</p>
+                <p className="text-sm text-gray-400 mt-2">{campus.description}</p>
               )}
               <div className="flex flex-wrap gap-3 mt-3">
                 {campus.website && (
@@ -263,7 +264,7 @@ export default function CampusHub() {
                 {campus.contactEmail && (
                   <a
                     href={`mailto:${campus.contactEmail}`}
-                    className="flex items-center gap-1 text-xs text-gray-500 hover:text-iitbhu"
+                    className="flex items-center gap-1 text-xs text-gray-400 hover:text-iitbhu"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <Mail size={11} /> {campus.contactEmail}
@@ -337,10 +338,10 @@ export default function CampusHub() {
               </div>
             )}
             {infraVerified && carbonResults && (
-              <div className="text-xs text-gray-500 space-y-0.5">
+              <div className="text-xs text-gray-400 space-y-0.5">
                 <div>
                   Road embodied:{' '}
-                  <span className="font-medium text-gray-700">
+                  <span className="font-medium text-gray-200">
                     +{carbonResults.roadsEmbodiedCarbon.toFixed(1)} tCO₂e
                   </span>
                 </div>
@@ -375,7 +376,7 @@ export default function CampusHub() {
               onClick: () => navigate(`/campus/${campusSlug}/buildings`),
             }}
           >
-            <p className="text-sm text-gray-600 mb-2">
+            <p className="text-sm text-gray-300 mb-2">
               {buildingCount} building{buildingCount !== 1 ? 's' : ''}
               {verifiedCount > 0 ? ` · ${verifiedCount} fully verified` : ''}
             </p>
@@ -385,7 +386,7 @@ export default function CampusHub() {
                   <span>Data coverage</span>
                   <span>{coveragePct}%</span>
                 </div>
-                <div className="w-full bg-gray-100 rounded-full h-1.5">
+                <div className="w-full bg-white/10 rounded-full h-1.5">
                   <div
                     className="bg-iitbhu h-1.5 rounded-full"
                     style={{ width: `${coveragePct}%` }}
@@ -398,15 +399,15 @@ export default function CampusHub() {
 
         {/* ── CAMPUS CARBON SUMMARY (infrastructure verified) ──────────────── */}
         {infraVerified && carbonResults && (
-          <div className="bg-white border border-gray-200 rounded-xl p-5">
-            <h2 className="text-base font-semibold text-gray-800 mb-4">Campus carbon results</h2>
+          <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-5">
+            <h2 className="text-base font-semibold text-gray-100 mb-4">Campus carbon results</h2>
             <div className="space-y-2">
               {[
                 {
                   label: 'Road construction (one-time)',
                   value: `+${carbonResults.roadsEmbodiedCarbon.toFixed(1)}`,
                   unit: 'tCO₂e',
-                  color: 'text-gray-700',
+                  color: 'text-gray-200',
                 },
                 {
                   label: 'Road lighting (annual)',
@@ -423,16 +424,16 @@ export default function CampusHub() {
               ].map(({ label, value, unit, color }) => (
                 <div
                   key={label}
-                  className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0"
+                  className="flex justify-between items-center py-2 border-b border-white/5 last:border-0"
                 >
-                  <span className="text-sm text-gray-600">{label}</span>
+                  <span className="text-sm text-gray-300">{label}</span>
                   <span className={`font-semibold ${color}`}>
                     {value} <span className="text-xs font-normal text-gray-400">{unit}</span>
                   </span>
                 </div>
               ))}
               <div className="flex justify-between items-center pt-2">
-                <span className="text-sm font-semibold text-gray-800">Net annual impact</span>
+                <span className="text-sm font-semibold text-gray-100">Net annual impact</span>
                 <span
                   className={`font-bold text-base ${carbonResults.netCampusCarbonPerYear <= 0 ? 'text-green-700' : 'text-amber-700'}`}
                 >
@@ -442,11 +443,11 @@ export default function CampusHub() {
               </div>
             </div>
             <div className="mt-4">
-              <div className="flex justify-between text-xs text-gray-500 mb-1">
+              <div className="flex justify-between text-xs text-gray-400 mb-1">
                 <span>Data confidence</span>
                 <span>{carbonResults.confidenceScore}%</span>
               </div>
-              <div className="w-full bg-gray-100 rounded-full h-2">
+              <div className="w-full bg-white/10 rounded-full h-2">
                 <div
                   className="bg-iitbhu h-2 rounded-full"
                   style={{ width: `${carbonResults.confidenceScore}%` }}

@@ -39,14 +39,14 @@ function ScatterTooltipContent({
   const d = payload[0].payload;
   return (
     <div
-      className="bg-white border border-gray-200 rounded-lg shadow-md p-3 text-sm"
+      className="bg-black/40 backdrop-blur-md border border-white/10 rounded-lg shadow-md p-3 text-sm"
       style={{ zIndex: 40 }}
     >
-      <p className="font-semibold text-gray-900 mb-1">{d.name}</p>
-      <p className="text-gray-600 text-xs capitalize">{d.type}</p>
-      <p className="text-gray-600 text-xs mt-1">Area: {d.totalArea.toLocaleString()} m²</p>
-      <p className="text-gray-600 text-xs">Total carbon: {d.totalCarbon.toFixed(2)} tCO₂e</p>
-      <p className="text-gray-600 text-xs font-medium">
+      <p className="font-semibold text-white mb-1">{d.name}</p>
+      <p className="text-gray-300 text-xs capitalize">{d.type}</p>
+      <p className="text-gray-300 text-xs mt-1">Area: {d.totalArea.toLocaleString()} m²</p>
+      <p className="text-gray-300 text-xs">Total carbon: {d.totalCarbon.toFixed(2)} tCO₂e</p>
+      <p className="text-gray-300 text-xs font-medium">
         Intensity: {d.intensityPerSqm.toFixed(4)} tCO₂e/m²
       </p>
     </div>
@@ -95,7 +95,7 @@ export default function IntensityScatter({ data, selectedIds = [], campusAvgInte
   return (
     <div>
       {avgIntensity > 0 && (
-        <p className="text-xs text-gray-500 mb-3">
+        <p className="text-xs text-gray-400 mb-3">
           <span className="font-semibold text-[#8B1A1A]">
             {aboveAvgCount} building{aboveAvgCount !== 1 ? 's' : ''}
           </span>{' '}
@@ -156,7 +156,7 @@ export default function IntensityScatter({ data, selectedIds = [], campusAvgInte
           const hasData = data.some((d) => d.type === type);
           if (!hasData) return null;
           return (
-            <span key={type} className="flex items-center gap-1.5 text-xs text-gray-600">
+            <span key={type} className="flex items-center gap-1.5 text-xs text-gray-300">
               <span
                 className="inline-block h-2.5 w-2.5 rounded-full"
                 style={{ background: color }}

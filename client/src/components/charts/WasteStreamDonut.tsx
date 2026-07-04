@@ -30,11 +30,11 @@ function WasteTooltip({
   if (!active || !payload?.length) return null;
   const d = payload[0].payload;
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-md p-3 text-sm">
-      <p className="font-semibold text-gray-900 mb-1">
+    <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-lg shadow-md p-3 text-sm">
+      <p className="font-semibold text-white mb-1">
         {METHOD_LABELS[d.disposalMethod] ?? d.disposalMethod}
       </p>
-      <p className="text-gray-600">{d.avgFractionPercent.toFixed(1)}% of solid waste</p>
+      <p className="text-gray-300">{d.avgFractionPercent.toFixed(1)}% of solid waste</p>
     </div>
   );
 }
@@ -71,7 +71,7 @@ export default function WasteStreamDonut({ data }: Props) {
           </PieChart>
         </ResponsiveContainer>
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <span className="text-[11px] font-semibold text-gray-700 text-center leading-tight px-4">
+          <span className="text-[11px] font-semibold text-gray-200 text-center leading-tight px-4">
             {METHOD_LABELS[dominant.disposalMethod] ?? dominant.disposalMethod}
           </span>
           <span className="text-[10px] text-gray-400 mt-0.5">dominant</span>
@@ -79,7 +79,7 @@ export default function WasteStreamDonut({ data }: Props) {
       </div>
       <div className="flex flex-wrap justify-center gap-3 mt-2">
         {data.map((d) => (
-          <span key={d.disposalMethod} className="flex items-center gap-1.5 text-xs text-gray-600">
+          <span key={d.disposalMethod} className="flex items-center gap-1.5 text-xs text-gray-300">
             <span
               className="inline-block h-2 w-2 rounded-full flex-shrink-0"
               style={{ background: WASTE_STREAM_COLORS[d.disposalMethod] ?? '#9CA3AF' }}

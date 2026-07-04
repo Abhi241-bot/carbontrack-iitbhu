@@ -7,3 +7,9 @@ coverage
 *.log
 .DS_Store
 data
+.agents/
+*.mp4
+building footprint with heights/
+migrate_theme.js
+server/fix-overview-status.js
+server/reset-status.js

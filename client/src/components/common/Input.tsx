@@ -17,7 +17,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(function Input(
   return (
     <div className="w-full">
       {label && (
-        <label htmlFor={inputId} className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor={inputId} className="block text-sm font-medium text-gray-200 mb-1">
           {label}
         </label>
       )}
@@ -30,7 +30,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(function Input(
         <input
           ref={ref}
           id={inputId}
-          className={`w-full rounded-lg border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-transparent ${prefix ? 'pl-10' : ''} ${suffix ? 'pr-10' : ''} ${error ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-iitbhu'} ${className}`}
+          className={`w-full rounded-lg border px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:border-transparent ${prefix ? 'pl-10' : ''} ${suffix ? 'pr-10' : ''} ${error ? 'border-red-500 focus:ring-red-500' : 'border-white/20 focus:ring-iitbhu'} ${className}`}
           {...props}
         />
         {suffix && (
@@ -40,7 +40,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(function Input(
         )}
       </div>
       {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
-      {!error && hint && <p className="mt-1 text-xs text-gray-500">{hint}</p>}
+      {!error && hint && <p className="mt-1 text-xs text-gray-400">{hint}</p>}
     </div>
   );
 });

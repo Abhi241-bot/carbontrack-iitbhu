@@ -101,7 +101,7 @@ interface SectionSummary {
 const STATUS_BADGE: Record<string, { label: string; className: string }> = {
   [SectionStatus.NOT_STARTED]: {
     label: 'Not started',
-    className: 'bg-gray-100 text-gray-600',
+    className: 'bg-white/10 text-gray-300',
   },
   [SectionStatus.DRAFT]: {
     label: 'Draft in progress',
@@ -154,8 +154,8 @@ function MemberAvatar({ name }: { name: string }) {
 function InfoItem({ label, value }: { label: string; value?: string | number }) {
   return (
     <div>
-      <p className="text-xs text-gray-500 uppercase tracking-wide">{label}</p>
-      <p className="mt-0.5 text-sm font-medium text-gray-900">{value ?? '—'}</p>
+      <p className="text-xs text-gray-400 uppercase tracking-wide">{label}</p>
+      <p className="mt-0.5 text-sm font-medium text-white">{value ?? '—'}</p>
     </div>
   );
 }
@@ -232,22 +232,22 @@ function ReviewModal({ submissionId, sectionTitle, onClose, onSuccess }: ReviewM
           {/* Submission meta */}
           <div className="grid grid-cols-2 gap-3 text-sm">
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wide">Section</p>
-              <p className="font-medium text-gray-900 mt-0.5 capitalize">{sub?.section ?? '—'}</p>
+              <p className="text-xs text-gray-400 uppercase tracking-wide">Section</p>
+              <p className="font-medium text-white mt-0.5 capitalize">{sub?.section ?? '—'}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wide">Version</p>
-              <p className="font-medium text-gray-900 mt-0.5">v{sub?.version ?? 1}</p>
+              <p className="text-xs text-gray-400 uppercase tracking-wide">Version</p>
+              <p className="font-medium text-white mt-0.5">v{sub?.version ?? 1}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wide">Entry mode</p>
-              <p className="font-medium text-gray-900 mt-0.5 capitalize">
+              <p className="text-xs text-gray-400 uppercase tracking-wide">Entry mode</p>
+              <p className="font-medium text-white mt-0.5 capitalize">
                 {sub?.entryMode?.replace('_', ' ') ?? '—'}
               </p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase tracking-wide">Submitted</p>
-              <p className="font-medium text-gray-900 mt-0.5">{formatDate(sub?.updatedAt)}</p>
+              <p className="text-xs text-gray-400 uppercase tracking-wide">Submitted</p>
+              <p className="font-medium text-white mt-0.5">{formatDate(sub?.updatedAt)}</p>
             </div>
           </div>
 
@@ -255,8 +255,8 @@ function ReviewModal({ submissionId, sectionTitle, onClose, onSuccess }: ReviewM
           {validation && (
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <p className="text-sm font-medium text-gray-700">Completeness score</p>
-                <span className="text-sm font-semibold text-gray-900">
+                <p className="text-sm font-medium text-gray-200">Completeness score</p>
+                <span className="text-sm font-semibold text-white">
                   {validation.completenessScore ?? 0}%
                 </span>
               </div>
@@ -272,7 +272,7 @@ function ReviewModal({ submissionId, sectionTitle, onClose, onSuccess }: ReviewM
                 </ul>
               )}
               {validation.estimatedFields?.length > 0 && (
-                <p className="mt-2 text-xs text-gray-500">
+                <p className="mt-2 text-xs text-gray-400">
                   {validation.estimatedFields.length} estimated field
                   {validation.estimatedFields.length !== 1 ? 's' : ''} using defaults
                 </p>
@@ -283,11 +283,11 @@ function ReviewModal({ submissionId, sectionTitle, onClose, onSuccess }: ReviewM
           {/* Revision notes textarea */}
           {mode === 'revision' && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block text-sm font-medium text-gray-200 mb-1.5">
                 Revision notes <span className="text-red-500">*</span>
               </label>
               <textarea
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu resize-none"
+                className="w-full border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu resize-none"
                 rows={4}
                 placeholder="Describe what needs to be corrected or clarified..."
                 value={revisionNotes}
@@ -297,7 +297,7 @@ function ReviewModal({ submissionId, sectionTitle, onClose, onSuccess }: ReviewM
           )}
 
           {/* Actions */}
-          <div className="flex gap-3 pt-2 border-t border-gray-100">
+          <div className="flex gap-3 pt-2 border-t border-white/5">
             {mode === 'summary' ? (
               <>
                 <Button
@@ -432,8 +432,8 @@ function SectionCard({
             />
           </div>
           <div>
-            <h3 className="text-base font-semibold text-gray-900">{title}</h3>
-            <p className="text-xs text-gray-500 mt-0.5">{description}</p>
+            <h3 className="text-base font-semibold text-white">{title}</h3>
+            <p className="text-xs text-gray-400 mt-0.5">{description}</p>
           </div>
         </div>
         <span
@@ -444,10 +444,10 @@ function SectionCard({
       </div>
 
       {/* Meta row */}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500 mb-4">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-400 mb-4">
         {submittedBy ? (
           <span>
-            By <span className="font-medium text-gray-700">{submittedBy.name}</span>
+            By <span className="font-medium text-gray-200">{submittedBy.name}</span>
           </span>
         ) : (
           <span>No data submitted yet</span>
@@ -476,7 +476,7 @@ function SectionCard({
 
       {/* Static verified lock notice */}
       {isVerified && isStatic && (
-        <div className="flex items-center gap-2 mb-4 text-xs text-gray-500 bg-gray-50 rounded-lg px-3 py-2">
+        <div className="flex items-center gap-2 mb-4 text-xs text-gray-400 bg-white/5 rounded-lg px-3 py-2">
           <Lock className="h-3.5 w-3.5 flex-shrink-0" />
           <span>Locked — admin unlock required to edit</span>
         </div>
@@ -494,7 +494,7 @@ function SectionCard({
       )}
 
       {/* Actions */}
-      <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-gray-100">
+      <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-white/5">
         {/* NOT STARTED */}
         {status === SectionStatus.NOT_STARTED && canEdit && (
           <Button size="sm" onClick={onEnterData}>
@@ -542,7 +542,7 @@ function SectionCard({
                 size="sm"
                 variant="ghost"
                 onClick={onWithdraw}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-400 hover:text-gray-200"
               >
                 Withdraw & re-enter
               </Button>
@@ -573,7 +573,7 @@ function SectionCard({
 
         {/* VERIFIED — static, non-admin */}
         {isVerified && isStatic && !isAdmin && (
-          <span className="text-xs text-gray-500">Locked · Contact admin to update</span>
+          <span className="text-xs text-gray-400">Locked · Contact admin to update</span>
         )}
 
         {/* VERIFIED — static, admin */}
@@ -640,8 +640,8 @@ function ReviewPanel({ sectionSummary, onReview }: ReviewPanelProps) {
         className="w-full flex items-center justify-between text-left"
       >
         <div>
-          <h3 className="text-base font-semibold text-gray-900">Review panel</h3>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <h3 className="text-base font-semibold text-white">Review panel</h3>
+          <p className="text-xs text-gray-400 mt-0.5">
             {submittedSections.length} section{submittedSections.length !== 1 ? 's' : ''} awaiting
             your review
           </p>
@@ -660,11 +660,11 @@ function ReviewPanel({ sectionSummary, onReview }: ReviewPanelProps) {
             return (
               <div
                 key={section}
-                className="flex items-center justify-between gap-3 bg-gray-50 rounded-lg px-3 py-2.5"
+                className="flex items-center justify-between gap-3 bg-white/5 rounded-lg px-3 py-2.5"
               >
                 <div>
-                  <p className="text-sm font-medium text-gray-900">{SECTION_TITLES[section]}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">
+                  <p className="text-sm font-medium text-white">{SECTION_TITLES[section]}</p>
+                  <p className="text-xs text-gray-400 mt-0.5">
                     {item.submittedBy ? `Submitted by ${item.submittedBy.name}` : 'Submitted'} · v
                     {item.version}
                   </p>
@@ -700,8 +700,8 @@ function ResultsPanel({
     <Card className="border-l-4 border-l-green-500">
       <div className="flex items-start justify-between gap-4 mb-4">
         <div>
-          <h3 className="text-base font-semibold text-gray-900">Combined carbon results</h3>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <h3 className="text-base font-semibold text-white">Combined carbon results</h3>
+          <p className="text-xs text-gray-400 mt-0.5">
             All sections verified — full calculation available
           </p>
         </div>
@@ -733,7 +733,7 @@ function ResultsPanel({
       </div>
       {results.confidenceScore !== undefined && (
         <div className="mt-4">
-          <div className="flex justify-between text-xs text-gray-500 mb-1.5">
+          <div className="flex justify-between text-xs text-gray-400 mb-1.5">
             <span>Data confidence</span>
             <span className="font-medium">{Math.round(results.confidenceScore)}%</span>
           </div>
@@ -756,7 +756,7 @@ interface DiscardModalProps {
 function DiscardModal({ sectionTitle, onConfirm, onClose, isLoading }: DiscardModalProps) {
   return (
     <Modal isOpen title="Discard draft?" onClose={onClose} size="sm">
-      <p className="text-sm text-gray-600 mb-5">
+      <p className="text-sm text-gray-300 mb-5">
         This will permanently delete the <strong>{sectionTitle}</strong> draft. Any entered data
         will be lost.
       </p>
@@ -785,12 +785,12 @@ function UnlockModal({ sectionTitle, onConfirm, onClose, isLoading }: UnlockModa
   const [reason, setReason] = useState('');
   return (
     <Modal isOpen title="Unlock for editing?" onClose={onClose} size="sm">
-      <p className="text-sm text-gray-600 mb-3">
+      <p className="text-sm text-gray-300 mb-3">
         Unlocking <strong>{sectionTitle}</strong> will create a new draft and allow edits. A reason
         is required.
       </p>
       <textarea
-        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu resize-none mb-4"
+        className="w-full border border-white/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu resize-none mb-4"
         rows={3}
         placeholder="Reason for unlock (e.g. major renovation, data correction)..."
         value={reason}
@@ -873,7 +873,7 @@ export default function BuildingDetail() {
   const isReviewer = user?.role === UserRole.REVIEWER || isAdmin;
   const isAssigned =
     user && building ? building.assignedMembers.some((m) => m._id === user._id) : false;
-  const canEdit = isAssigned || isAdmin;
+  const canEdit = user?.role !== UserRole.VIEWER && (isAssigned || isAdmin);
   const canReview = isReviewer;
 
   // ── Mutations ────────────────────────────────────────────────────────────────
@@ -1015,7 +1015,7 @@ export default function BuildingDetail() {
     <PageWrapper title={building.name}>
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-gray-500 mb-4 flex-wrap">
+        <nav className="flex items-center gap-2 text-sm text-gray-400 mb-4 flex-wrap">
           <Link to="/campus" className="hover:text-iitbhu transition-colors">
             Campus
           </Link>
@@ -1031,7 +1031,7 @@ export default function BuildingDetail() {
               <span>/</span>
             </>
           ) : null}
-          <span className="text-gray-900 font-medium truncate max-w-xs">{building.name}</span>
+          <span className="text-white font-medium truncate max-w-xs">{building.name}</span>
         </nav>
 
         {/* Mobile back button */}
@@ -1039,14 +1039,14 @@ export default function BuildingDetail() {
           onClick={() =>
             navigate(building.campusId ? `/campus/${building.campusId.slug}/buildings` : '/campus')
           }
-          className="flex items-center gap-1 text-sm text-gray-500 hover:text-iitbhu mb-4 lg:hidden"
+          className="flex items-center gap-1 text-sm text-gray-400 hover:text-iitbhu mb-4 lg:hidden"
         >
           <ArrowLeft className="h-4 w-4" /> Back to campus buildings
         </button>
 
         {/* Building header */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900">{building.name}</h1>
+          <h1 className="text-3xl font-bold text-white">{building.name}</h1>
           <div className="flex flex-wrap items-center gap-2 mt-2">
             <Badge variant="building-type" buildingType={building.type} label={building.type} />
             <Badge variant={overallCfg.variant} label={overallCfg.label} />
@@ -1055,7 +1055,7 @@ export default function BuildingDetail() {
             ))}
           </div>
           {building.description && (
-            <p className="mt-3 text-gray-600 text-sm max-w-2xl">{building.description}</p>
+            <p className="mt-3 text-gray-300 text-sm max-w-2xl">{building.description}</p>
           )}
         </div>
 
@@ -1069,14 +1069,14 @@ export default function BuildingDetail() {
                   {building.combinedCarbonResults.embodiedCarbon.toFixed(1)} tCO₂e
                 </p>
               </div>
-              <div className="h-8 w-px bg-white/20 hidden sm:block" />
+              <div className="h-8 w-px bg-black/40 backdrop-blur-md/20 hidden sm:block" />
               <div>
                 <p className="text-xs font-medium text-white/70 mb-0.5">Operational</p>
                 <p className="text-xl font-bold">
                   {building.combinedCarbonResults.operationalCarbonPerYear.toFixed(1)} tCO₂e/yr
                 </p>
               </div>
-              <div className="h-8 w-px bg-white/20 hidden sm:block" />
+              <div className="h-8 w-px bg-black/40 backdrop-blur-md/20 hidden sm:block" />
               <div>
                 <p className="text-xs font-medium text-white/70 mb-0.5">Waste</p>
                 <p className="text-xl font-bold">
@@ -1093,7 +1093,7 @@ export default function BuildingDetail() {
               </Link>
               <Link
                 to={`/buildings/${building._id}/carbon`}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold bg-white/15 hover:bg-white/25 text-white px-3 py-1.5 rounded-lg transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold bg-black/40 backdrop-blur-md/15 hover:bg-black/40 backdrop-blur-md/25 text-white px-3 py-1.5 rounded-lg transition-colors"
               >
                 📊 View Carbon Results
               </Link>
@@ -1103,10 +1103,10 @@ export default function BuildingDetail() {
 
         {/* Progress bar — not all verified */}
         {!allVerified && (
-          <div className="mb-6 bg-gray-50 border border-gray-200 rounded-xl px-5 py-4">
+          <div className="mb-6 bg-white/5 border border-white/10 rounded-xl px-5 py-4">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-sm font-medium text-gray-700">Carbon calculation pending</p>
-              <span className="text-sm font-semibold text-gray-900">
+              <p className="text-sm font-medium text-gray-200">Carbon calculation pending</p>
+              <span className="text-sm font-semibold text-white">
                 {verifiedCount} of 4 sections verified
               </span>
             </div>
@@ -1115,7 +1115,7 @@ export default function BuildingDetail() {
               <div className="mt-3">
                 <Link
                   to={`/buildings/${building._id}/carbon`}
-                  className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-600 border border-gray-200 bg-white px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-300 border border-white/10 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg hover:bg-white/5 transition-colors"
                 >
                   📊 View partial carbon results ({verifiedCount} section
                   {verifiedCount > 1 ? 's' : ''} verified)
@@ -1342,7 +1342,7 @@ export default function BuildingDetail() {
           <div className="lg:col-span-2 space-y-5 lg:sticky lg:top-6 lg:self-start">
             {/* Building info */}
             <Card>
-              <h2 className="text-base font-semibold text-gray-900 mb-4">Building info</h2>
+              <h2 className="text-base font-semibold text-white mb-4">Building info</h2>
               <div className="grid grid-cols-2 gap-4">
                 <InfoItem label="Floors" value={building.floors} />
                 <InfoItem
@@ -1357,8 +1357,8 @@ export default function BuildingDetail() {
               </div>
               {building.latitude && building.longitude && (
                 <div className="mt-4">
-                  <p className="text-xs text-gray-500 uppercase tracking-wide mb-2">Location</p>
-                  <div className="bg-gray-50 rounded-xl h-24 flex flex-col items-center justify-center text-gray-500 text-sm gap-1 border border-gray-100">
+                  <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">Location</p>
+                  <div className="bg-white/5 rounded-xl h-24 flex flex-col items-center justify-center text-gray-400 text-sm gap-1 border border-white/5">
                     <span className="font-medium text-sm">
                       {building.latitude.toFixed(4)}° N, {building.longitude.toFixed(4)}° E
                     </span>
@@ -1370,7 +1370,7 @@ export default function BuildingDetail() {
 
             {/* Assigned members */}
             <Card>
-              <h2 className="text-base font-semibold text-gray-900 mb-4">Assigned members</h2>
+              <h2 className="text-base font-semibold text-white mb-4">Assigned members</h2>
               {building.assignedMembers.length === 0 ? (
                 <EmptyState title="No members assigned yet" />
               ) : (
@@ -1396,7 +1396,7 @@ export default function BuildingDetail() {
                       <div key={member._id} className="flex items-center gap-3">
                         <MemberAvatar name={member.name} />
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate">
+                          <p className="text-sm font-medium text-white truncate">
                             {member.name}
                           </p>
                           {sectionLabel ? (
@@ -1404,7 +1404,7 @@ export default function BuildingDetail() {
                               {sectionLabel}
                             </p>
                           ) : member.department ? (
-                            <p className="text-xs text-gray-500 truncate">{member.department}</p>
+                            <p className="text-xs text-gray-400 truncate">{member.department}</p>
                           ) : null}
                         </div>
                       </div>

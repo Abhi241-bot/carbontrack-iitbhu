@@ -174,7 +174,7 @@ function ProgressRing({ pct }: { pct: number }) {
           style={{ transition: 'stroke-dashoffset 0.4s ease' }}
         />
       </svg>
-      <span className="absolute text-xs font-semibold text-gray-700">{pct}%</span>
+      <span className="absolute text-xs font-semibold text-gray-200">{pct}%</span>
     </div>
   );
 }
@@ -199,7 +199,7 @@ function MonthChips({
             'px-2.5 py-1 rounded-full text-xs font-medium transition-colors',
             selected.includes(m)
               ? 'bg-iitbhu text-white'
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              : 'bg-white/10 text-gray-300 hover:bg-gray-200'
           )}
         >
           {m}
@@ -211,7 +211,7 @@ function MonthChips({
 
 function SectionCard({ id, children }: { id: SectionId; children: React.ReactNode }) {
   return (
-    <div id={id} className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+    <div id={id} className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-sm">
       {children}
     </div>
   );
@@ -227,9 +227,9 @@ function SectionHeader({
   locked?: boolean;
 }) {
   return (
-    <div className="px-6 py-5 border-b border-gray-100 bg-gray-50">
+    <div className="px-6 py-5 border-b border-white/5 bg-white/5">
       <div className="flex items-center gap-2">
-        <h2 className="text-base font-semibold text-gray-900">{title}</h2>
+        <h2 className="text-base font-semibold text-white">{title}</h2>
         {locked && (
           <div className="relative group">
             <Lock className="w-3.5 h-3.5 text-gray-400" />
@@ -240,7 +240,7 @@ function SectionHeader({
           </div>
         )}
       </div>
-      {subtitle && <p className="mt-1 text-sm text-gray-500">{subtitle}</p>}
+      {subtitle && <p className="mt-1 text-sm text-gray-400">{subtitle}</p>}
     </div>
   );
 }
@@ -256,7 +256,7 @@ function FieldGroup({
 }) {
   return (
     <div className="space-y-1.5">
-      <label className="block text-sm font-medium text-gray-700">{label}</label>
+      <label className="block text-sm font-medium text-gray-200">{label}</label>
       {children}
       {hint && <p className="text-xs text-gray-400">{hint}</p>}
     </div>
@@ -482,14 +482,14 @@ export default function OverviewEntry() {
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
     <PageWrapper title={`Overview — ${building?.name ?? 'Building'}`}>
-      <div className="bg-gray-50 min-h-[calc(100vh-4rem)]">
+      <div className="bg-white/5 min-h-[calc(100vh-4rem)]">
         <div className="max-w-7xl mx-auto px-4 py-8 lg:flex lg:gap-8">
           {/* ── SIDEBAR ─────────────────────────────────────────────────── */}
           <aside className="hidden lg:block w-72 shrink-0">
             <div className="sticky top-20 space-y-4">
               {/* Identity card */}
-              <div className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
-                <p className="text-sm font-semibold text-gray-900 truncate">
+              <div className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-4 shadow-sm">
+                <p className="text-sm font-semibold text-white truncate">
                   {building?.name ?? '—'}
                 </p>
                 <div className="mt-1.5 flex items-center gap-2">
@@ -505,9 +505,9 @@ export default function OverviewEntry() {
               </div>
 
               {/* Table of contents */}
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                <div className="px-4 py-3 border-b border-gray-100">
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+              <div className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 shadow-sm overflow-hidden">
+                <div className="px-4 py-3 border-b border-white/5">
+                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
                     Contents
                   </p>
                 </div>
@@ -521,7 +521,7 @@ export default function OverviewEntry() {
                         'w-full text-left px-3 py-2 rounded-lg text-sm transition-colors flex items-center gap-2',
                         state.activeSection === id
                           ? 'bg-blue-50 text-iitbhu font-medium'
-                          : 'text-gray-600 hover:bg-gray-50'
+                          : 'text-gray-300 hover:bg-white/5'
                       )}
                     >
                       <ChevronRight
@@ -537,12 +537,12 @@ export default function OverviewEntry() {
               </div>
 
               {/* Progress */}
-              <div className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
+              <div className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 p-4 shadow-sm">
                 <div className="flex items-center justify-between mb-3">
                   <ProgressRing pct={completeness} />
                   <div className="text-right">
-                    <p className="text-xs text-gray-500">Completeness</p>
-                    <p className="text-sm font-semibold text-gray-700">{completeness}% done</p>
+                    <p className="text-xs text-gray-400">Completeness</p>
+                    <p className="text-sm font-semibold text-gray-200">{completeness}% done</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-gray-400">
@@ -583,7 +583,7 @@ export default function OverviewEntry() {
                   disabled={!state.isDirty}
                   isLoading={state.isSaving}
                   onClick={() => saveRef.current?.()}
-                  className="gap-2 border border-gray-200"
+                  className="gap-2 border border-white/10"
                 >
                   <Save className="w-4 h-4" />
                   Save as draft
@@ -606,13 +606,13 @@ export default function OverviewEntry() {
               <div className="p-6 space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <FieldGroup label="Building name">
-                    <div className="w-full rounded-lg border border-gray-200 px-3 py-2.5 text-sm bg-gray-50 text-gray-500">
+                    <div className="w-full rounded-lg border border-white/10 px-3 py-2.5 text-sm bg-white/5 text-gray-400">
                       {state.data.buildingName ?? '—'}
                     </div>
                   </FieldGroup>
 
                   <FieldGroup label="Building type">
-                    <div className="w-full rounded-lg border border-gray-200 px-3 py-2.5 text-sm bg-gray-50 text-gray-500">
+                    <div className="w-full rounded-lg border border-white/10 px-3 py-2.5 text-sm bg-white/5 text-gray-400">
                       {BUILDING_TYPE_LABELS[state.data.buildingType ?? ''] ??
                         state.data.buildingType ??
                         '—'}
@@ -716,7 +716,7 @@ export default function OverviewEntry() {
                           payload: { primaryPurpose: e.target.value || undefined },
                         })
                       }
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu focus:border-transparent resize-none"
+                      className="w-full rounded-lg border border-white/20 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu focus:border-transparent resize-none"
                     />
                     <span className="absolute bottom-2 right-3 text-xs text-gray-400">
                       {(state.data.primaryPurpose ?? '').length}/200
@@ -738,7 +738,7 @@ export default function OverviewEntry() {
                 {/* Operating hours slider */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <label className="text-sm font-medium text-gray-700">
+                    <label className="text-sm font-medium text-gray-200">
                       Operating hours per day
                     </label>
                     <span className="text-lg font-semibold text-iitbhu">
@@ -771,7 +771,7 @@ export default function OverviewEntry() {
                           'px-3 py-1 rounded-full text-xs font-medium border transition-colors',
                           state.data.operatingHoursPerDay === p.value
                             ? 'bg-iitbhu border-iitbhu text-white'
-                            : 'border-gray-200 text-gray-600 hover:border-iitbhu hover:text-iitbhu'
+                            : 'border-white/10 text-gray-300 hover:border-iitbhu hover:text-iitbhu'
                         )}
                       >
                         {p.label}
@@ -782,10 +782,10 @@ export default function OverviewEntry() {
 
                 {/* Operating days */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-200 mb-2">
                     Operating days per week
                   </label>
-                  <div className="inline-flex rounded-lg border border-gray-200 overflow-hidden">
+                  <div className="inline-flex rounded-lg border border-white/10 overflow-hidden">
                     {[5, 6, 7].map((d) => (
                       <button
                         key={d}
@@ -797,7 +797,7 @@ export default function OverviewEntry() {
                           'px-5 py-2 text-sm font-medium transition-colors',
                           state.data.operatingDaysPerWeek === d
                             ? 'bg-iitbhu text-white'
-                            : 'bg-white text-gray-600 hover:bg-gray-50'
+                            : 'bg-black/40 backdrop-blur-md text-gray-300 hover:bg-white/5'
                         )}
                       >
                         {d} days
@@ -808,7 +808,7 @@ export default function OverviewEntry() {
 
                 {/* Peak months */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-200 mb-2">
                     Which months is this building most active?
                   </label>
                   <MonthChips
@@ -821,7 +821,7 @@ export default function OverviewEntry() {
 
                 {/* AC / cooling months */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-200 mb-2">
                     Which months does the building use heating or cooling equipment?
                   </label>
                   <MonthChips
@@ -859,7 +859,7 @@ export default function OverviewEntry() {
 
                 {/* Occupancy during breaks */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                  <label className="block text-sm font-medium text-gray-200 mb-3">
                     Occupancy during semester breaks
                   </label>
                   {building?.type === BuildingType.HOSTEL ? (
@@ -897,11 +897,11 @@ export default function OverviewEntry() {
                             'p-4 rounded-xl border-2 text-left transition-all',
                             state.data.occupancyDuringBreaks === opt.value
                               ? 'border-iitbhu bg-blue-50'
-                              : 'border-gray-200 hover:border-gray-300'
+                              : 'border-white/10 hover:border-white/20'
                           )}
                         >
-                          <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
-                          <p className="text-xs text-gray-500 mt-0.5">{opt.desc}</p>
+                          <p className="text-sm font-semibold text-gray-100">{opt.label}</p>
+                          <p className="text-xs text-gray-400 mt-0.5">{opt.desc}</p>
                         </button>
                       ))}
                     </div>
@@ -922,7 +922,7 @@ export default function OverviewEntry() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {/* Ventilation type */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                    <label className="block text-sm font-medium text-gray-200 mb-3">
                       Ventilation type
                     </label>
                     <div className="grid grid-cols-3 gap-2">
@@ -943,11 +943,11 @@ export default function OverviewEntry() {
                             'p-3 rounded-xl border-2 text-left transition-all',
                             state.data.ventilationType === opt.value
                               ? 'border-iitbhu bg-blue-50'
-                              : 'border-gray-200 hover:border-gray-300'
+                              : 'border-white/10 hover:border-white/20'
                           )}
                         >
-                          <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
-                          <p className="text-xs text-gray-500 mt-0.5">{opt.desc}</p>
+                          <p className="text-sm font-semibold text-gray-100">{opt.label}</p>
+                          <p className="text-xs text-gray-400 mt-0.5">{opt.desc}</p>
                         </button>
                       ))}
                     </div>
@@ -955,7 +955,7 @@ export default function OverviewEntry() {
 
                   {/* Building nature */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">
+                    <label className="block text-sm font-medium text-gray-200 mb-3">
                       Building nature
                     </label>
                     <div className="grid grid-cols-2 gap-2">
@@ -983,11 +983,11 @@ export default function OverviewEntry() {
                             'p-3 rounded-xl border-2 text-left transition-all',
                             state.data.buildingNature === opt.value
                               ? 'border-iitbhu bg-blue-50'
-                              : 'border-gray-200 hover:border-gray-300'
+                              : 'border-white/10 hover:border-white/20'
                           )}
                         >
-                          <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
-                          <p className="text-xs text-gray-500 mt-0.5">{opt.desc}</p>
+                          <p className="text-sm font-semibold text-gray-100">{opt.label}</p>
+                          <p className="text-xs text-gray-400 mt-0.5">{opt.desc}</p>
                         </button>
                       ))}
                     </div>
@@ -1021,7 +1021,7 @@ export default function OverviewEntry() {
 
                 {/* Orientation */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-200 mb-1">
                     Building orientation (% of facade facing each direction)
                   </label>
                   <p className="text-xs text-gray-400 mb-3">
@@ -1170,7 +1170,7 @@ export default function OverviewEntry() {
                 {/* Custom land-use categories */}
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <label className="text-sm font-medium text-gray-700">
+                    <label className="text-sm font-medium text-gray-200">
                       Additional categories
                     </label>
                     <button
@@ -1213,7 +1213,7 @@ export default function OverviewEntry() {
                                   payload: { landUseCustomCategories: updated },
                                 });
                               }}
-                              className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu focus:border-transparent"
+                              className="w-full rounded-lg border border-white/20 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu focus:border-transparent"
                             />
                           </FieldGroup>
                           <FieldGroup label={idx === 0 ? 'Area (acres)' : ''}>
@@ -1263,11 +1263,11 @@ export default function OverviewEntry() {
       </div>
 
       {/* ── MOBILE BOTTOM BAR ──────────────────────────────────────────────── */}
-      <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-gray-200 px-4 py-3 flex items-center gap-3">
+      <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-black/40 backdrop-blur-md border-t border-white/10 px-4 py-3 flex items-center gap-3">
         <div className="flex items-center gap-2 flex-1 min-w-0">
           <ProgressRing pct={completeness} />
           <div className="min-w-0">
-            <p className="text-xs text-gray-500 truncate">{saveStatus}</p>
+            <p className="text-xs text-gray-400 truncate">{saveStatus}</p>
           </div>
         </div>
         <Button
@@ -1276,7 +1276,7 @@ export default function OverviewEntry() {
           disabled={!state.isDirty}
           isLoading={state.isSaving}
           onClick={() => saveRef.current?.()}
-          className="gap-1.5 border border-gray-200 shrink-0"
+          className="gap-1.5 border border-white/10 shrink-0"
         >
           <Save className="w-4 h-4" />
           Save
@@ -1304,7 +1304,7 @@ export default function OverviewEntry() {
         <div className="space-y-4">
           {(state.validationResult?.warnings?.length ?? 0) > 0 ? (
             <>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-300">
                 The following issues were found. You can submit anyway or go back and fix them.
               </p>
               <div className="space-y-2">
@@ -1341,7 +1341,7 @@ export default function OverviewEntry() {
               variant="ghost"
               fullWidth
               onClick={() => setShowValidationModal(false)}
-              className="border border-gray-200"
+              className="border border-white/10"
             >
               Go back and fix
             </Button>

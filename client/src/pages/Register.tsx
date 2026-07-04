@@ -33,7 +33,7 @@ const schema = z
       .email('Please enter a valid email')
       .refine(
         (val) => ALLOWED_DOMAINS.some((d) => val.endsWith(d)),
-        'Only IIT BHU email addresses are allowed'
+        'Only institutional email addresses are allowed'
       ),
     department: z.string().optional(),
     password: z
@@ -141,19 +141,19 @@ export default function Register() {
   // Success state
   if (registeredEmail) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-        <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-8 w-full max-w-md text-center">
+      <div className="min-h-screen bg-white/5 flex items-center justify-center px-4">
+        <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-md border border-white/5 p-8 w-full max-w-md text-center">
           <MailCheck size={48} className="text-iitbhu mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Check your email!</h2>
-          <p className="text-gray-600 mb-6">
+          <h2 className="text-2xl font-bold text-white mb-2">Check your email!</h2>
+          <p className="text-gray-300 mb-6">
             We've sent a verification link to{' '}
-            <span className="font-medium text-gray-900">{registeredEmail}</span>. Click it to
+            <span className="font-medium text-white">{registeredEmail}</span>. Click it to
             activate your account.
           </p>
           {resendStatus === 'sent' ? (
             <p className="text-sm text-green-600 mb-4">Sent! Check your inbox.</p>
           ) : (
-            <p className="text-sm text-gray-500 mb-4">
+            <p className="text-sm text-gray-400 mb-4">
               Didn't receive it?{' '}
               <button
                 onClick={handleResend}
@@ -166,7 +166,7 @@ export default function Register() {
           )}
           <Link
             to="/login"
-            className="inline-block text-sm font-medium text-gray-600 border border-gray-300 px-5 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+            className="inline-block text-sm font-medium text-gray-300 border border-white/20 px-5 py-2 rounded-lg hover:bg-white/5 transition-colors"
           >
             Back to Login
           </Link>
@@ -176,14 +176,14 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-10">
-      <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-8 w-full max-w-md">
+    <div className="min-h-screen bg-white/5 flex items-center justify-center px-4 py-10">
+      <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-md border border-white/5 p-8 w-full max-w-md">
         {/* Header */}
         <div className="flex flex-col items-center mb-6">
           <IITBHULogo />
           <span className="mt-2 text-sm font-semibold text-iitbhu tracking-wide">Carbon Portal</span>
-          <h2 className="text-2xl font-bold text-gray-900 mt-6 mb-1">Create your account</h2>
-          <p className="text-sm text-gray-500">
+          <h2 className="text-2xl font-bold text-white mt-6 mb-1">Create your account</h2>
+          <p className="text-sm text-gray-400">
             Already have an account?{' '}
             <Link to="/login" className="text-iitbhu font-medium hover:underline">
               Sign in →
@@ -210,7 +210,7 @@ export default function Register() {
               {...register('email')}
             />
             {!errors.email && (
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-gray-400">
                 Use your @itbhu.ac.in, @iitbhu.ac.in, or @bhu.ac.in email
               </p>
             )}
@@ -218,13 +218,13 @@ export default function Register() {
 
           {/* Department select */}
           <div className="w-full">
-            <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="department" className="block text-sm font-medium text-gray-200 mb-1">
               Department <span className="text-gray-400">(optional)</span>
             </label>
             <div className="relative">
               <select
                 id="department"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu focus:border-transparent appearance-none bg-white pr-10"
+                className="w-full rounded-lg border border-white/20 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu focus:border-transparent appearance-none bg-black/40 backdrop-blur-md pr-10"
                 {...register('department')}
               >
                 <option value="">Select department…</option>
@@ -251,7 +251,7 @@ export default function Register() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((s) => !s)}
-                  className="text-gray-400 hover:text-gray-600 focus:outline-none"
+                  className="text-gray-400 hover:text-gray-300 focus:outline-none"
                   tabIndex={-1}
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
@@ -272,7 +272,7 @@ export default function Register() {
               <button
                 type="button"
                 onClick={() => setShowConfirm((s) => !s)}
-                className="text-gray-400 hover:text-gray-600 focus:outline-none"
+                className="text-gray-400 hover:text-gray-300 focus:outline-none"
                 tabIndex={-1}
                 aria-label={showConfirm ? 'Hide password' : 'Show password'}
               >

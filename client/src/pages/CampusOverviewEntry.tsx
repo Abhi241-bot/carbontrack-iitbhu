@@ -109,7 +109,7 @@ export default function CampusOverviewEntry() {
     }
   ) => (
     <div className={opts?.half ? '' : 'col-span-2'}>
-      <label className="block text-xs font-medium text-gray-600 mb-1">
+      <label className="block text-xs font-medium text-gray-300 mb-1">
         {label}
         {opts?.required && <span className="text-red-500 ml-0.5">*</span>}
       </label>
@@ -119,7 +119,7 @@ export default function CampusOverviewEntry() {
         placeholder={opts?.placeholder}
         value={form[key]}
         onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
-        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
+        className="w-full border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-iitbhu"
       />
     </div>
   );
@@ -150,28 +150,28 @@ export default function CampusOverviewEntry() {
             {campus?.name}
           </Link>
           <span>/</span>
-          <span className="text-gray-700">Overview entry</span>
+          <span className="text-gray-200">Overview entry</span>
         </nav>
 
-        <div className="bg-white border border-gray-200 rounded-xl p-6">
-          <h1 className="text-lg font-semibold text-gray-900 mb-1">
+        <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-6">
+          <h1 className="text-lg font-semibold text-white mb-1">
             {campus?.name} — Overview data
           </h1>
-          <p className="text-sm text-gray-500 mb-6">
+          <p className="text-sm text-gray-400 mb-6">
             Fill in the campus identity and location details. This section can be updated after
             submission.
           </p>
 
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-4">
-              {F('name', 'Campus name', { required: true, placeholder: 'IIT BHU Campus' })}
+              {F('name', 'Campus name', { required: true, placeholder: 'Main Campus' })}
               {F('institution', 'Institution full name', {
                 required: true,
-                placeholder: 'Indian Institute of Technology (BHU) Varanasi',
+                placeholder: 'Indian Institute of Technology',
               })}
-              {F('shortName', 'Short name / abbreviation', { placeholder: 'IIT BHU' })}
-              {F('city', 'City', { required: true, placeholder: 'Varanasi', half: true })}
-              {F('state', 'State', { required: true, placeholder: 'Uttar Pradesh', half: true })}
+              {F('shortName', 'Short name / abbreviation', { placeholder: 'IIT' })}
+              {F('city', 'City', { required: true, placeholder: 'City', half: true })}
+              {F('state', 'State', { required: true, placeholder: 'State', half: true })}
               {F('country', 'Country', { required: true, half: true })}
 
               <div className="col-span-2 grid grid-cols-2 gap-4">
@@ -194,13 +194,13 @@ export default function CampusOverviewEntry() {
               })}
 
               <div className="col-span-2">
-                <label className="block text-xs font-medium text-gray-600 mb-1">Description</label>
+                <label className="block text-xs font-medium text-gray-300 mb-1">Description</label>
                 <textarea
                   value={form.description}
                   onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
                   rows={3}
                   placeholder="Brief description of the campus…"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-iitbhu"
+                  className="w-full border border-white/10 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-iitbhu"
                 />
               </div>
             </div>
@@ -209,7 +209,7 @@ export default function CampusOverviewEntry() {
               <button
                 type="button"
                 onClick={() => navigate(`/campus/${campusSlug}`)}
-                className="flex-1 border border-gray-200 text-gray-600 py-2.5 rounded-lg text-sm hover:bg-gray-50"
+                className="flex-1 border border-white/10 text-gray-300 py-2.5 rounded-lg text-sm hover:bg-white/5"
               >
                 Cancel
               </button>

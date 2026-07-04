@@ -34,7 +34,7 @@ function EfSourceBadge({ source, value }: { source?: string; value?: number }) {
     cls = 'bg-amber-100 text-amber-700';
   } else {
     label = `Default (${value?.toFixed(3) ?? '—'})`;
-    cls = 'bg-gray-100 text-gray-600';
+    cls = 'bg-white/10 text-gray-300';
   }
   return <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${cls}`}>{label}</span>;
 }
@@ -49,7 +49,7 @@ function ElectricalCarbonContribution({ carbonResults }: { carbonResults: any })
       label: 'Grid Electricity',
       scope: 2,
       details: (
-        <div className="text-xs text-gray-500 space-y-0.5 mt-1 pl-2">
+        <div className="text-xs text-gray-400 space-y-0.5 mt-1 pl-2">
           {meta.gridKwh > 0 && (
             <div>↳ kWh consumed: {Math.round(meta.gridKwh).toLocaleString()} kWh/yr</div>
           )}
@@ -74,7 +74,7 @@ function ElectricalCarbonContribution({ carbonResults }: { carbonResults: any })
       scope: 1,
       details:
         meta.dgLitresYr > 0 ? (
-          <div className="text-xs text-gray-500 space-y-0.5 mt-1 pl-2">
+          <div className="text-xs text-gray-400 space-y-0.5 mt-1 pl-2">
             <div>↳ Fuel consumed: {Math.round(meta.dgLitresYr).toLocaleString()} litres/yr</div>
             <div>↳ EF: 2.65 kg CO₂/litre</div>
           </div>
@@ -86,7 +86,7 @@ function ElectricalCarbonContribution({ carbonResults }: { carbonResults: any })
       scope: 1,
       details:
         meta.lpgKgYr > 0 ? (
-          <div className="text-xs text-gray-500 space-y-0.5 mt-1 pl-2">
+          <div className="text-xs text-gray-400 space-y-0.5 mt-1 pl-2">
             {meta.lpgCylindersYr > 0 && (
               <div>↳ Cylinders/yr: {Math.round(meta.lpgCylindersYr).toLocaleString()}</div>
             )}
@@ -115,7 +115,7 @@ function ElectricalCarbonContribution({ carbonResults }: { carbonResults: any })
   return (
     <div className="mt-8 border-t-2 border-dashed border-blue-100 pt-6">
       <div className="flex items-center gap-2 mb-4">
-        <h4 className="text-sm font-semibold text-gray-900">
+        <h4 className="text-sm font-semibold text-white">
           Carbon Contribution from Electrical Data
         </h4>
         <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">
@@ -125,11 +125,11 @@ function ElectricalCarbonContribution({ carbonResults }: { carbonResults: any })
 
       <div className="space-y-1 mb-4">
         {visibleRows.map((row) => (
-          <div key={row.key} className="border border-gray-100 rounded-lg overflow-hidden">
-            <div className="flex items-center gap-2 px-3 py-2 bg-gray-50/40">
-              <span className="flex-1 text-xs font-medium text-gray-700">{row.label}</span>
+          <div key={row.key} className="border border-white/5 rounded-lg overflow-hidden">
+            <div className="flex items-center gap-2 px-3 py-2 bg-white/5/40">
+              <span className="flex-1 text-xs font-medium text-gray-200">{row.label}</span>
               <ScopePill scope={row.scope} />
-              <span className="text-xs font-bold text-gray-900 w-24 text-right">
+              <span className="text-xs font-bold text-white w-24 text-right">
                 {fmt(bc[row.key])} tCO₂e/yr
               </span>
             </div>
@@ -138,12 +138,12 @@ function ElectricalCarbonContribution({ carbonResults }: { carbonResults: any })
         ))}
       </div>
 
-      <div className="border-t border-gray-200 pt-3 space-y-1">
+      <div className="border-t border-white/10 pt-3 space-y-1">
         <div className="flex items-center justify-between text-xs px-1">
-          <span className="font-bold text-gray-900">ELECTRICAL TOTAL</span>
-          <span className="font-bold text-gray-900">{fmt(electricalTotal)} tCO₂e/yr</span>
+          <span className="font-bold text-white">ELECTRICAL TOTAL</span>
+          <span className="font-bold text-white">{fmt(electricalTotal)} tCO₂e/yr</span>
         </div>
-        <div className="flex items-center gap-4 text-xs text-gray-500 px-1">
+        <div className="flex items-center gap-4 text-xs text-gray-400 px-1">
           {scope1Total > 0 && (
             <span>
               Scope 1: <strong className="text-red-700">{fmt(scope1Total)}</strong>
@@ -736,7 +736,7 @@ function ElectricalContent({ data, activePhase }: { data: any; activePhase: stri
                 key={i}
                 className="flex items-center justify-between py-2 border-b border-gray-50 text-sm"
               >
-                <span className="text-gray-600">{cmd.month}</span>
+                <span className="text-gray-300">{cmd.month}</span>
                 <div className="flex items-center gap-4 text-xs">
                   <span>
                     CMD: <strong>{cmd.contractedMdKva} kVA</strong>
@@ -745,7 +745,7 @@ function ElectricalContent({ data, activePhase }: { data: any; activePhase: stri
                     className={
                       cmd.billedMdKva > cmd.contractedMdKva
                         ? 'text-red-600 font-medium'
-                        : 'text-gray-700'
+                        : 'text-gray-200'
                     }
                   >
                     Billed: {cmd.billedMdKva ?? '—'} kVA
@@ -764,7 +764,7 @@ function ElectricalContent({ data, activePhase }: { data: any; activePhase: stri
                 key={i}
                 className="flex items-center justify-between py-2 border-b border-gray-50 text-sm"
               >
-                <span className="text-gray-600">{pf.month}</span>
+                <span className="text-gray-300">{pf.month}</span>
                 <div className="flex items-center gap-4 text-xs">
                   <span
                     className={`font-medium ${
@@ -992,20 +992,20 @@ function ElectricalContent({ data, activePhase }: { data: any; activePhase: stri
               <EmptyState message="No refrigerant data entered" />
             ) : (
               <>
-                <div className="overflow-x-auto rounded-xl border border-gray-100 mb-2">
+                <div className="overflow-x-auto rounded-xl border border-white/5 mb-2">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="bg-gray-50 border-b border-gray-100">
-                        <th className="px-3 py-2 text-left text-xs font-semibold text-gray-500">
+                      <tr className="bg-white/5 border-b border-white/5">
+                        <th className="px-3 py-2 text-left text-xs font-semibold text-gray-400">
                           Equipment
                         </th>
-                        <th className="px-3 py-2 text-left text-xs font-semibold text-gray-500">
+                        <th className="px-3 py-2 text-left text-xs font-semibold text-gray-400">
                           Type
                         </th>
-                        <th className="px-3 py-2 text-right text-xs font-semibold text-gray-500">
+                        <th className="px-3 py-2 text-right text-xs font-semibold text-gray-400">
                           Annual leakage (kg)
                         </th>
-                        <th className="px-3 py-2 text-right text-xs font-semibold text-gray-500">
+                        <th className="px-3 py-2 text-right text-xs font-semibold text-gray-400">
                           Source
                         </th>
                       </tr>
@@ -1018,12 +1018,12 @@ function ElectricalContent({ data, activePhase }: { data: any; activePhase: stri
                             : (r.installationChargeKg ?? 0) *
                               ((r.annualLeakageRatePercent ?? 5) / 100);
                         return (
-                          <tr key={r.id ?? i} className="hover:bg-gray-50/50">
-                            <td className="px-3 py-2 font-medium text-gray-800">
+                          <tr key={r.id ?? i} className="hover:bg-white/5/50">
+                            <td className="px-3 py-2 font-medium text-gray-100">
                               {r.equipmentName || '—'}
                             </td>
-                            <td className="px-3 py-2 text-gray-500">{r.refrigerantType}</td>
-                            <td className="px-3 py-2 text-right font-mono text-gray-800">
+                            <td className="px-3 py-2 text-gray-400">{r.refrigerantType}</td>
+                            <td className="px-3 py-2 text-right font-mono text-gray-100">
                               {leakKg > 0 ? leakKg.toFixed(2) : '—'}
                             </td>
                             <td className="px-3 py-2 text-right text-xs">

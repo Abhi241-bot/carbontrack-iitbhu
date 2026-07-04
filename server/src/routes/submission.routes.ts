@@ -328,6 +328,9 @@ router.post(
   }
 );
 
+// ── GET /:id/results — explicit results route for a single submission ─────────
+router.get('/:id/results', getSingleSubmissionController);
+
 // ── Single submission (catch-all last) ────────────────────────────────────────
 router.get('/:id', getSingleSubmissionController);
 

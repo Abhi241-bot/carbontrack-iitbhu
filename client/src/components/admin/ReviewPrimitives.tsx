@@ -35,7 +35,7 @@ export const DataField = ({
           ? 'bg-green-100 text-green-700'
           : source === 'estimated'
             ? 'bg-amber-100 text-amber-700'
-            : 'bg-gray-100 text-gray-500'
+            : 'bg-white/10 text-gray-400'
       }`}
     >
       {source}
@@ -47,11 +47,11 @@ export const DataField = ({
       className={`flex items-center justify-between py-2.5 border-b border-gray-50
                      ${highlight && !isEmpty ? 'bg-blue-50/60 -mx-4 px-4 rounded' : ''}`}
     >
-      <span className="text-sm text-gray-500 mr-4 flex-shrink-0">{label}</span>
+      <span className="text-sm text-gray-400 mr-4 flex-shrink-0">{label}</span>
       {isEmpty ? (
         <span className="text-xs text-gray-300 italic">not entered</span>
       ) : (
-        <div className="flex items-center text-sm font-medium text-gray-900 text-right">
+        <div className="flex items-center text-sm font-medium text-white text-right">
           {display}
           {unit && <span className="text-gray-400 ml-1 font-normal text-xs">{unit}</span>}
           {sourcePill}
@@ -83,9 +83,9 @@ export const DataSection = ({
         onClick={() => collapsible && setOpen((o) => !o)}
         type="button"
       >
-        <h4 className="text-sm font-semibold text-gray-900">{title}</h4>
+        <h4 className="text-sm font-semibold text-white">{title}</h4>
         {count !== undefined && (
-          <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">
+          <span className="text-xs bg-white/10 text-gray-400 px-2 py-0.5 rounded-full">
             {count} record{count !== 1 ? 's' : ''}
           </span>
         )}
@@ -108,11 +108,11 @@ export const RecordCard = ({
   children: ReactNode;
   sourceBadge?: 'measured' | 'estimated';
 }) => (
-  <div className="border border-gray-100 rounded-xl p-4 mb-3 bg-white">
+  <div className="border border-white/5 rounded-xl p-4 mb-3 bg-black/40 backdrop-blur-md">
     <div className="flex items-start justify-between mb-3">
       <div>
-        <div className="text-sm font-semibold text-gray-900">{title}</div>
-        {subtitle && <div className="text-xs text-gray-500 mt-0.5">{subtitle}</div>}
+        <div className="text-sm font-semibold text-white">{title}</div>
+        {subtitle && <div className="text-xs text-gray-400 mt-0.5">{subtitle}</div>}
       </div>
       {sourceBadge && (
         <span
@@ -162,7 +162,7 @@ export const MonthlyMatrix = ({
   return (
     <div className="mb-4">
       <div className="flex items-center gap-2 mb-1.5">
-        <span className="text-xs font-medium text-gray-600">{label}</span>
+        <span className="text-xs font-medium text-gray-300">{label}</span>
         {unit && <span className="text-xs text-gray-400">({unit})</span>}
         {limitValue !== undefined && (
           <span className="text-xs text-gray-400">limit ≤{limitValue}</span>
@@ -181,7 +181,7 @@ export const MonthlyMatrix = ({
                   exceeded
                     ? 'text-red-600'
                     : raw !== undefined && raw !== ''
-                      ? 'text-gray-900'
+                      ? 'text-white'
                       : 'text-gray-300'
                 }`}
               >

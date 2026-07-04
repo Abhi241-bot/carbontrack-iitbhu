@@ -26,11 +26,11 @@ export default function ProtectedRoute({
 
   if (requireRoles && requireRoles.length > 0 && !requireRoles.includes(user.role as UserRole)) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-white/5">
         <div className="text-center p-8 max-w-sm">
           <p className="text-4xl font-bold text-gray-200 mb-3">403</p>
-          <p className="text-lg font-semibold text-gray-700 mb-2">Access restricted</p>
-          <p className="text-sm text-gray-500">
+          <p className="text-lg font-semibold text-gray-200 mb-2">Access restricted</p>
+          <p className="text-sm text-gray-400">
             This page requires {requireRoles.join(' or ')} access.
           </p>
         </div>

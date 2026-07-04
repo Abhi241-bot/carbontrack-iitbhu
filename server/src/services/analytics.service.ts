@@ -54,7 +54,33 @@ export async function getDomainBreakdown(campusSlug?: string) {
     }
 
     // byBuildingType
-    const byTypeAgg = await Submission.aggregate([
+    const buildingMatch: Record<string, unknown> = { isActive: true, combinedCarbonResults: { $exists: true } };
+    if (campusSlug) {
+      const ids = await getCampusBuildingIds(campusSlug);
+      if (ids) buildingMatch._id = { $in: ids };
+    }
+
+    const byTypeBuildingAgg = await Building.aggregate([
+      { $match: buildingMatch },
+      {
+        $group: {
+          _id: '$type',
+          buildingCount: { $sum: 1 },
+          embodiedCarbon: { $sum: '$combinedCarbonResults.embodiedCarbon' },
+          operationalCarbon: { $sum: '$combinedCarbonResults.operationalCarbonPerYear' },
+          totalArea: { $sum: '$totalArea' },
+          scope1: { $sum: '$combinedCarbonResults.breakdown.byScope.scope1' },
+          scope2: { $sum: '$combinedCarbonResults.breakdown.byScope.scope2' },
+          scope3: { $sum: '$combinedCarbonResults.breakdown.byScope.scope3' },
+          solidWasteCO2e: { $sum: '$combinedCarbonResults.breakdown.byCategory.solidWaste' },
+          liquidWasteCO2e: { $sum: '$combinedCarbonResults.breakdown.byCategory.liquidWaste' },
+          wasteCO2e: { $sum: '$combinedCarbonResults.breakdown.byCategory.waste' },
+          wasteCarbonPerYear: { $sum: '$combinedCarbonResults.wasteCarbonPerYear' },
+        },
+      },
+    ]);
+
+    const byTypeMaterialsAgg = await Submission.aggregate([
       { $match: submissionMatch },
       {
         $lookup: {
@@ -68,17 +94,6 @@ export async function getDomainBreakdown(campusSlug?: string) {
       {
         $group: {
           _id: '$building.type',
-          buildingCount: { $addToSet: '$buildingId' },
-          embodiedCarbon: { $sum: '$carbonResults.embodiedCarbon' },
-          operationalCarbon: { $sum: '$carbonResults.operationalCarbonPerYear' },
-          totalArea: { $sum: '$building.totalArea' },
-          scope1: { $sum: '$carbonResults.breakdown.byScope.scope1' },
-          scope2: { $sum: '$carbonResults.breakdown.byScope.scope2' },
-          scope3: { $sum: '$carbonResults.breakdown.byScope.scope3' },
-          solidWasteCO2e: { $sum: '$carbonResults.breakdown.byCategory.solidWaste' },
-          liquidWasteCO2e: { $sum: '$carbonResults.breakdown.byCategory.liquidWaste' },
-          wasteCO2e: { $sum: '$carbonResults.breakdown.byCategory.waste' },
-          wasteCarbonPerYear: { $sum: '$carbonResults.wasteCarbonPerYear' },
           woodKg: { $sum: '$data.materials.woodenFurnitureKg' },
           steelFurnitureKg: { $sum: '$data.materials.steelFurnitureKg' },
           plasticKg: { $sum: '$data.materials.plasticKg' },
@@ -87,11 +102,12 @@ export async function getDomainBreakdown(campusSlug?: string) {
       },
     ]);
 
-    const byBuildingType = byTypeAgg.map((t) => {
+    const byBuildingType = byTypeBuildingAgg.map((t) => {
+      const mat = byTypeMaterialsAgg.find(m => m._id === t._id) || {};
       const totalCarbon = parseFloat(
         ((t.embodiedCarbon ?? 0) + (t.operationalCarbon ?? 0)).toFixed(3)
       );
-      const count = Array.isArray(t.buildingCount) ? t.buildingCount.length : 0;
+      const count = t.buildingCount ?? 0;
       const area = t.totalArea ?? 0;
       return {
         type: t._id as string,
@@ -108,23 +124,33 @@ export async function getDomainBreakdown(campusSlug?: string) {
         liquidWasteCO2e: parseFloat((t.liquidWasteCO2e ?? 0).toFixed(3)),
         wasteCO2e: parseFloat((t.wasteCO2e ?? 0).toFixed(3)),
         wasteCarbonPerYear: parseFloat((t.wasteCarbonPerYear ?? 0).toFixed(3)),
-        woodKg: parseFloat((t.woodKg ?? 0).toFixed(1)),
-        steelFurnitureKg: parseFloat((t.steelFurnitureKg ?? 0).toFixed(1)),
-        plasticKg: parseFloat((t.plasticKg ?? 0).toFixed(1)),
-        glassKg: parseFloat((t.glassKg ?? 0).toFixed(1)),
+        woodKg: parseFloat((mat.woodKg ?? 0).toFixed(1)),
+        steelFurnitureKg: parseFloat((mat.steelFurnitureKg ?? 0).toFixed(1)),
+        plasticKg: parseFloat((mat.plasticKg ?? 0).toFixed(1)),
+        glassKg: parseFloat((mat.glassKg ?? 0).toFixed(1)),
       };
     });
 
     // byScope (global or campus-scoped)
-    const byScopeAgg = await Submission.aggregate([
+    const buildingScopeAgg = await Building.aggregate([
+      { $match: buildingMatch },
+      {
+        $group: {
+          _id: null,
+          scope1: { $sum: '$combinedCarbonResults.breakdown.byScope.scope1' },
+          scope2: { $sum: '$combinedCarbonResults.breakdown.byScope.scope2' },
+          scope3: { $sum: '$combinedCarbonResults.breakdown.byScope.scope3' },
+          wasteCarbonTotal: { $sum: '$combinedCarbonResults.wasteCarbonPerYear' },
+        },
+      },
+    ]);
+    const rawScope = buildingScopeAgg[0] ?? { scope1: 0, scope2: 0, scope3: 0, wasteCarbonTotal: 0 };
+
+    const solarAgg = await Submission.aggregate([
       { $match: submissionMatch },
       {
         $group: {
           _id: null,
-          scope1: { $sum: '$carbonResults.breakdown.byScope.scope1' },
-          scope2: { $sum: '$carbonResults.breakdown.byScope.scope2' },
-          scope3: { $sum: '$carbonResults.breakdown.byScope.scope3' },
-          wasteCarbonTotal: { $sum: '$carbonResults.wasteCarbonPerYear' },
           solarAdoptionCount: {
             $sum: {
               $cond: [{ $gt: ['$data.energy.solarCapacityKw', 0] }, 1, 0],
@@ -133,7 +159,8 @@ export async function getDomainBreakdown(campusSlug?: string) {
         },
       },
     ]);
-    const rawScope = byScopeAgg[0] ?? { scope1: 0, scope2: 0, scope3: 0 };
+    const solarAdoptionCount = solarAgg[0]?.solarAdoptionCount ?? 0;
+
     const scopeTotal = (rawScope.scope1 ?? 0) + (rawScope.scope2 ?? 0) + (rawScope.scope3 ?? 0);
     const byScope = {
       scope1: parseFloat((rawScope.scope1 ?? 0).toFixed(3)),
@@ -141,7 +168,7 @@ export async function getDomainBreakdown(campusSlug?: string) {
       scope3: parseFloat((rawScope.scope3 ?? 0).toFixed(3)),
       total: parseFloat(scopeTotal.toFixed(3)),
       wasteCarbonTotal: parseFloat((rawScope.wasteCarbonTotal ?? 0).toFixed(3)),
-      solarAdoptionCount: rawScope.solarAdoptionCount ?? 0,
+      solarAdoptionCount,
     };
 
     // byApplianceCategory — iterate submission.data.appliances.categories

@@ -10,7 +10,7 @@ interface BadgeProps {
 }
 
 const variantClasses: Record<Exclude<BadgeVariant, 'building-type'>, string> = {
-  default: 'bg-gray-100 text-gray-700',
+  default: 'bg-white/10 text-gray-200',
   success: 'bg-green-100 text-green-700',
   warning: 'bg-amber-100 text-amber-700',
   danger: 'bg-red-100 text-red-700',
@@ -21,7 +21,7 @@ const buildingTypeClasses: Record<BuildingType, string> = {
   [BuildingType.ACADEMIC]: 'bg-blue-100 text-blue-700',
   [BuildingType.HOSTEL]: 'bg-green-100 text-green-700',
   [BuildingType.LAB]: 'bg-orange-100 text-orange-700',
-  [BuildingType.ADMINISTRATIVE]: 'bg-gray-100 text-gray-700',
+  [BuildingType.ADMINISTRATIVE]: 'bg-white/10 text-gray-200',
   [BuildingType.RESIDENTIAL]: 'bg-purple-100 text-purple-700',
   [BuildingType.COMMERCIAL]: 'bg-yellow-100 text-yellow-700',
   [BuildingType.INFRASTRUCTURE]: 'bg-slate-100 text-slate-700',
