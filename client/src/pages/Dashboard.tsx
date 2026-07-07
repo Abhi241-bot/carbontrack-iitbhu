@@ -1165,25 +1165,7 @@ export default function Dashboard() {
 
   // ── Global error state (server down / cold start) ─────────────────────────
 
-  if (campusSummaryError) {
-    return (
-      <PageWrapper title="Campus Carbon Network">
-        <div className="max-w-7xl mx-auto px-4 py-16 flex flex-col items-center text-center gap-4">
-          <h1 className="text-2xl font-bold text-white">Could not load campus data</h1>
-          <p className="text-gray-400 max-w-md">
-            The server may be starting up. Please wait a moment and try refreshing.
-          </p>
-          <button
-            onClick={() => queryClient.invalidateQueries({ queryKey: ['analytics'] })}
-            className="mt-2 px-6 py-2.5 rounded-lg text-white text-sm font-medium"
-            style={{ background: '#8B1A1A' }}
-          >
-            Retry
-          </button>
-        </div>
-      </PageWrapper>
-    );
-  }
+  // Error early return moved below hooks to satisfy React Hook rules
 
   // ── Global empty state ────────────────────────────────────────────────────
 
@@ -1193,25 +1175,7 @@ export default function Dashboard() {
     (domainBreakdown?.byBuildingType?.every((t) => t.buildingCount === 0) ?? true) &&
     leaderboard.length === 0;
 
-  if (allEmpty && !campusSummaryLoading && campuses.length === 0) {
-    return (
-      <PageWrapper title="Campus Carbon Network">
-        <div className="max-w-7xl mx-auto px-4 py-16 flex flex-col items-center text-center gap-4">
-          <h1 className="text-2xl font-bold text-white">No campuses yet</h1>
-          <p className="text-gray-400 max-w-md">
-            Add your first campus and buildings to start tracking carbon emissions.
-          </p>
-          <button
-            onClick={() => navigate('/campus')}
-            className="mt-2 px-6 py-2.5 rounded-lg text-white text-sm font-medium"
-            style={{ background: '#8B1A1A' }}
-          >
-            Manage campuses
-          </button>
-        </div>
-      </PageWrapper>
-    );
-  }
+  // Early return moved below hooks to satisfy React Hook rules
 
   // ── Derived metrics ───────────────────────────────────────────────────────
 
@@ -1298,6 +1262,45 @@ export default function Dashboard() {
   const filteredWastewaterByType = (wasteBreakdown?.wastewaterByType ?? []).filter((t) =>
     filteredTypes.includes(t.type)
   );
+  if (campusSummaryError) {
+    return (
+      <PageWrapper title="Campus Carbon Network">
+        <div className="max-w-7xl mx-auto px-4 py-16 flex flex-col items-center text-center gap-4">
+          <h1 className="text-2xl font-bold text-white">Could not load campus data</h1>
+          <p className="text-gray-400 max-w-md">
+            The server may be starting up. Please wait a moment and try refreshing.
+          </p>
+          <button
+            onClick={() => queryClient.invalidateQueries({ queryKey: ['analytics'] })}
+            className="mt-2 px-6 py-2.5 rounded-lg text-white text-sm font-medium"
+            style={{ background: '#8B1A1A' }}
+          >
+            Retry
+          </button>
+        </div>
+      </PageWrapper>
+    );
+  }
+
+  if (allEmpty && !campusSummaryLoading && campuses.length === 0) {
+    return (
+      <PageWrapper title="Campus Carbon Network">
+        <div className="max-w-7xl mx-auto px-4 py-16 flex flex-col items-center text-center gap-4">
+          <h1 className="text-2xl font-bold text-white">No campuses yet</h1>
+          <p className="text-gray-400 max-w-md">
+            Add your first campus and buildings to start tracking carbon emissions.
+          </p>
+          <button
+            onClick={() => navigate('/campus')}
+            className="mt-2 px-6 py-2.5 rounded-lg text-white text-sm font-medium"
+            style={{ background: '#8B1A1A' }}
+          >
+            Manage campuses
+          </button>
+        </div>
+      </PageWrapper>
+    );
+  }
 
   function toggleCompareBuilding(id: string) {
     if (compareSelectedIds.includes(id)) {
