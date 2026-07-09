@@ -192,7 +192,7 @@ const campusRecordSchema = new Schema<ICampusRecordDocument>(
 campusRecordSchema.index({ campusId: 1 }, { unique: true });
 campusRecordSchema.index({ status: 1 });
 
-export const CampusRecord = mongoose.model<ICampusRecordDocument>(
+export const CampusRecord = (mongoose.models.CampusRecord as mongoose.Model<ICampusRecordDocument>) || mongoose.model<ICampusRecordDocument>(
   'CampusRecord',
   campusRecordSchema
 );

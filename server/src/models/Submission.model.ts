@@ -143,4 +143,4 @@ submissionSchema.index({ buildingId: 1, section: 1, status: 1 });
 submissionSchema.index({ buildingId: 1, section: 1, version: -1 });
 submissionSchema.index({ submittedBy: 1, createdAt: -1 });
 
-export const Submission = mongoose.model<ISubmissionDocument>('Submission', submissionSchema);
+export const Submission = (mongoose.models.Submission as mongoose.Model<ISubmissionDocument>) || mongoose.model<ISubmissionDocument>('Submission', submissionSchema);

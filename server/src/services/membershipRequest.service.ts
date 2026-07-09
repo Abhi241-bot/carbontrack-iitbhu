@@ -21,7 +21,7 @@ export async function createRequest(userId: string, buildingId: string, message?
   if (!building) throw new AppError('Building not found', 404);
 
   // Check if user is already a member
-  const alreadyMember = building.assignedMembers.some((m) => m.toString() === userId);
+  const alreadyMember = building.assignedMembers.some((m: any) => m.toString() === userId);
   if (alreadyMember) throw new AppError('You are already a member of this building', 400);
 
   // Check for existing pending request
@@ -55,7 +55,7 @@ export async function createCampusInfrastructureRequest(
   if (!campus) throw new AppError('Campus not found', 404);
 
   // Check if user is already assigned
-  const alreadyAssigned = campus.infrastructureAssignedMembers.some((m) => m.toString() === userId);
+  const alreadyAssigned = campus.infrastructureAssignedMembers.some((m: any) => m.toString() === userId);
   if (alreadyAssigned)
     throw new AppError('You are already assigned to this campus infrastructure', 400);
 

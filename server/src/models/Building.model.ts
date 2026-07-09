@@ -282,4 +282,4 @@ buildingSchema.index({ campusId: 1, type: 1 });
 buildingSchema.index({ campusId: 1, isActive: 1 });
 buildingSchema.index({ campusId: 1, civilStatus: 1 });
 
-export const Building = mongoose.model<IBuildingDocument>('Building', buildingSchema);
+export const Building = (mongoose.models.Building as mongoose.Model<IBuildingDocument>) || mongoose.model<IBuildingDocument>('Building', buildingSchema);

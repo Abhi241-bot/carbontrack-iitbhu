@@ -23,4 +23,4 @@ const auditLogSchema = new Schema<IAuditLogDocument>({
 // No timestamps plugin — has its own timestamp field
 auditLogSchema.index({ performedBy: 1, timestamp: 1 });
 
-export const AuditLog = mongoose.model<IAuditLogDocument>('AuditLog', auditLogSchema);
+export const AuditLog = (mongoose.models.AuditLog as mongoose.Model<IAuditLogDocument>) || mongoose.model<IAuditLogDocument>('AuditLog', auditLogSchema);

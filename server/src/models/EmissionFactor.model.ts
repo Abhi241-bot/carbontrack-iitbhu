@@ -178,7 +178,7 @@ const emissionFactorSchema = new Schema<IEmissionFactorDocument>(
 // Unique index on composite key used for idempotent upserts
 emissionFactorSchema.index({ category: 1, name: 1 }, { unique: true });
 
-export const EmissionFactor = mongoose.model<IEmissionFactorDocument>(
+export const EmissionFactor = (mongoose.models.EmissionFactor as mongoose.Model<IEmissionFactorDocument>) || mongoose.model<IEmissionFactorDocument>(
   'EmissionFactor',
   emissionFactorSchema
 );

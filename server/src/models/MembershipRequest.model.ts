@@ -54,7 +54,7 @@ const membershipRequestSchema = new Schema<IMembershipRequestDocument>(
 membershipRequestSchema.index({ userId: 1, buildingId: 1, status: 1 });
 membershipRequestSchema.index({ userId: 1, campusId: 1, status: 1 });
 
-export const MembershipRequest = mongoose.model<IMembershipRequestDocument>(
+export const MembershipRequest = (mongoose.models.MembershipRequest as mongoose.Model<IMembershipRequestDocument>) || mongoose.model<IMembershipRequestDocument>(
   'MembershipRequest',
   membershipRequestSchema
 );

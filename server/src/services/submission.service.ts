@@ -723,7 +723,7 @@ export async function getSectionSummary(buildingId: string, requestingUserId?: s
   if (!building) throw makeError('Building not found', '404');
 
   const isAssigned = requestingUserId
-    ? building.assignedMembers.some((m) => m.toString() === requestingUserId)
+    ? building.assignedMembers.some((m: any) => m.toString() === requestingUserId)
     : false;
 
   const sections = ['overview', 'civil', 'electrical', 'waste'] as const;

@@ -375,7 +375,7 @@ export async function assignInfrastructureMember(slug: string, userId: string, a
   if (!campus) throw new AppError('Campus not found', 404);
   if (!user) throw new AppError('User not found', 404);
 
-  const alreadyAssigned = campus.infrastructureAssignedMembers.some((m) => m.toString() === userId);
+  const alreadyAssigned = campus.infrastructureAssignedMembers.some((m: any) => m.toString() === userId);
   if (alreadyAssigned)
     throw new AppError('User already assigned to this campus infrastructure', 400);
 
@@ -403,7 +403,7 @@ export async function removeInfrastructureMember(slug: string, userId: string, a
   if (!user) throw new AppError('User not found', 404);
 
   campus.infrastructureAssignedMembers = campus.infrastructureAssignedMembers.filter(
-    (m) => m.toString() !== userId
+    (m: any) => m.toString() !== userId
   ) as typeof campus.infrastructureAssignedMembers;
 
   user.assignedCampuses = user.assignedCampuses.filter(

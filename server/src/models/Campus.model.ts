@@ -254,5 +254,5 @@ campusSchema.index({ slug: 1 }, { unique: true });
 campusSchema.index({ isActive: 1 });
 campusSchema.index({ country: 1, city: 1 });
 
-export const Campus = mongoose.model<ICampusDocument>('Campus', campusSchema);
+export const Campus = (mongoose.models.Campus as mongoose.Model<ICampusDocument>) || mongoose.model<ICampusDocument>('Campus', campusSchema);
 export default Campus;
