@@ -61,7 +61,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // Delegate to Express
   return new Promise<void>((resolve) => {
-    // @ts-expect-error — VercelRequest is compatible with Express IncomingMessage
+    // @ts-ignore — VercelRequest is compatible with Express IncomingMessage
     app(req, res, () => resolve());
     res.on('finish', resolve);
   });

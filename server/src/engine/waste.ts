@@ -199,7 +199,7 @@ export function calculateSolidWastePhase3(
           .reduce((s, r) => s + (r.wasteTonnes ?? 0), 0);
         calculationMethod = 'ipcc_fod_monthly';
       } else if (site.yearWiseAnnualTotals?.length) {
-        annualTonnes = site.yearWiseAnnualTotals.at(-1)?.totalTonnes ?? 0;
+        annualTonnes = site.yearWiseAnnualTotals[site.yearWiseAnnualTotals.length - 1]?.totalTonnes ?? 0;
         calculationMethod = 'ipcc_fod_annual';
       }
       if (annualTonnes <= 0) continue;
@@ -830,7 +830,7 @@ export function calculateWaste(data: ISubmissionData, ef: ResolvedEmissionFactor
           .filter((r) => r.year === recentYear)
           .reduce((s, r) => s + (r.wasteTonnes ?? 0), 0);
       } else if (site.yearWiseAnnualTotals?.length) {
-        annualTonnes = site.yearWiseAnnualTotals.at(-1)?.totalTonnes ?? 0;
+        annualTonnes = site.yearWiseAnnualTotals[site.yearWiseAnnualTotals.length - 1]?.totalTonnes ?? 0;
       }
 
       if (annualTonnes <= 0) continue;

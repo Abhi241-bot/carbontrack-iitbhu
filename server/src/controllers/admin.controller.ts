@@ -324,7 +324,7 @@ export const getCampusBuildings = async (
         const carbonTotal = submissions
           .filter((s) => s.status === 'verified')
           .reduce((sum, s) => {
-            const cr = s.carbonResults as Record<string, number> | undefined;
+            const cr = s.carbonResults as any;
             return sum + (cr?.operationalCarbonPerYear ?? 0) + (cr?.wasteCarbonPerYear ?? 0);
           }, 0);
 

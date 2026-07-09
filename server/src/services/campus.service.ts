@@ -236,16 +236,16 @@ export async function updateInfrastructureDraft(
   if (!campus) throw new AppError('Campus not found', 404);
 
   if (data.roads)
-    campus.infrastructureData.roads = { ...campus.infrastructureData.roads, ...data.roads } as any;
+    campus.infrastructureData.roads = { ...(campus.infrastructureData.roads as any), ...(data.roads as any) } as any;
   if (data.vegetation)
     campus.infrastructureData.vegetation = {
-      ...campus.infrastructureData.vegetation,
-      ...data.vegetation,
+      ...(campus.infrastructureData.vegetation as any),
+      ...(data.vegetation as any),
     } as any;
   if (data.waterBodies)
     campus.infrastructureData.waterBodies = {
-      ...campus.infrastructureData.waterBodies,
-      ...data.waterBodies,
+      ...(campus.infrastructureData.waterBodies as any),
+      ...(data.waterBodies as any),
     } as any;
   if (data.commutation !== undefined)
     campus.infrastructureData.commutation = data.commutation as any;
