@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { useAuthStore } from '@/features/auth/authStore';
 
+// On Vercel, VITE_API_URL is empty so the baseURL is just '/api' (same origin).
+// In local dev it is 'http://localhost:5000/api'.
 const apiClient = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}/api`,
+  baseURL: `${import.meta.env.VITE_API_URL ?? ''}/api`,
   withCredentials: true,
 });
 

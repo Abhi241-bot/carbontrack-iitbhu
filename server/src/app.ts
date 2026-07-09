@@ -27,6 +27,10 @@ const corsOptions: cors.CorsOptions = {
     if (config.nodeEnv !== 'production' && /^https?:\/\/localhost(:\d+)?$/.test(origin)) {
       return callback(null, true);
     }
+    // Allow all Vercel preview & production deployments for this project
+    if (/^https:\/\/carbontrack(-[a-z0-9-]+)?\.vercel\.app$/.test(origin)) {
+      return callback(null, true);
+    }
     if (config.allowedOrigins.includes(origin)) {
       return callback(null, true);
     }

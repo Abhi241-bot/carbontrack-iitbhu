@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.17.24",
+    "@vercel/node": "^5.8.22",
     "vitest": "^1.4.0"
   }
 }

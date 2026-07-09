@@ -1,17 +1,12 @@
-import dotenvSafe from 'dotenv-safe';
 import dotenv from 'dotenv';
 import path from 'path';
 
+// In development, load from .env file. In production (Vercel/Render),
+// environment variables are injected by the platform — no file to load.
 if (process.env.NODE_ENV !== 'production') {
-  dotenvSafe.config({
-    path: path.resolve(__dirname, '../../.env'),
-    example: path.resolve(__dirname, '../../.env.example'),
-    allowEmptyValues: false,
-  });
-} else {
-  // In production, env vars are injected directly (e.g. Render dashboard)
   dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 }
+
 
 const config = {
   nodeEnv: process.env.NODE_ENV as string,
