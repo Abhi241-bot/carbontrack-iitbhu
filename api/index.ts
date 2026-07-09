@@ -39,13 +39,7 @@ async function connectIfNeeded(): Promise<void> {
   await global._mongoConnectionPromise;
 }
 
-// ------------------------------------------------------------------
-// 2. Import the Express app
-//    `app.ts` is a pure Express app — no listen() call inside it.
-// ------------------------------------------------------------------
-// We use require() so that the module is loaded after env vars are set
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { default: app } = require('../server/src/app');
+import app from '../server/src/app';
 
 // ------------------------------------------------------------------
 // 3. Vercel handler — called on every HTTP request
