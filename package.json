@@ -13,7 +13,7 @@
     "build:server": "cd shared && npm install && npm run build && cd ../server && npm install && npm run build",
     "start:server": "cd server && node -r tsconfig-paths/register dist/server.js",
     "build:client": "cd shared && npm install && npm run build && cd ../client && npm install && npm run build",
-    "vercel-build": "npm install --workspace=shared && npm run build --workspace=shared && npm install --workspace=client && npm run build --workspace=client",
+    "vercel-build": "if [ -d \"shared\" ]; then cd shared && npm install && npm run build && cd ../client && npm run build; else cd ../shared && npm install && npm run build && cd ../client && npm run build; fi",
     "lint": "npm run lint --workspace=client && npm run lint --workspace=server",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\""
   },
