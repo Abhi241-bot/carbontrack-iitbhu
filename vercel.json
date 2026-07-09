@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm run build --workspace=shared && npm run build --workspace=client",
+  "buildCommand": "cd shared && npm install && npm run build && cd ../client && npm install && npm run build",
   "outputDirectory": "client/dist",
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/index" }
