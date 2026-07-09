@@ -1,7 +1,7 @@
 {
   "version": 2,
   "buildCommand": "if [ -d \"shared\" ]; then cd shared && npm install && npm run build && cd ../client && npm run build; else cd ../shared && npm install && npm run build && cd ../client && npm run build; fi",
-  "outputDirectory": "dist",
+  "outputDirectory": "client/dist",
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/index" }
   ],
