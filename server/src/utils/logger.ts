@@ -19,7 +19,7 @@ const logger = winston.createLogger({
   transports: [new winston.transports.Console()],
 });
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' && !process.env.VERCEL) {
   logger.add(new winston.transports.File({ filename: 'logs/error.log', level: 'error' }));
   logger.add(new winston.transports.File({ filename: 'logs/combined.log' }));
 }
