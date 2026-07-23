@@ -142,5 +142,5 @@ userSchema.statics.findByEmail = function (email: string) {
   return this.findOne({ email }).select('+password +refreshTokens');
 };
 
-const User = mongoose.model<IUserDocument, IUserModel>('User', userSchema);
+const User = (mongoose.models.User as IUserModel) || mongoose.model<IUserDocument, IUserModel>('User', userSchema);
 export default User;
